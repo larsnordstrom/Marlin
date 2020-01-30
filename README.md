@@ -1,5 +1,9 @@
 # Marlin 3D Printer Firmware
 
+This branch is for Prusa Mk3/Mk3s without filament sensor and with Bondtech BMG extruder upgrade.
+Compile with VSCode and platformio.
+
+
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
 ![GitHub Release Date](https://img.shields.io/github/release-date/marlinfirmware/marlin.svg)
