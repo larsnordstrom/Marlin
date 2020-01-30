@@ -484,9 +484,10 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // 
-  #define DEFAULT_Kp 22.2
-  #define DEFAULT_Ki 1.08
-  #define DEFAULT_Kd 114
+    // E3d full 24v // M303 E0 C10 S235
+  #define DEFAULT_Kp 20.90
+  #define DEFAULT_Ki 1.53
+  #define DEFAULT_Kd 71.48
 
 
 
@@ -525,11 +526,10 @@
   //#define MIN_BED_POWER 0
   //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
-  //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
-  //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #define DEFAULT_bedKp 10.00
-  #define DEFAULT_bedKi .023
-  #define DEFAULT_bedKd 305.4
+   // MK52 24v heated to 75degrees 5times.
+  #define DEFAULT_bedKp 140.65
+  #define DEFAULT_bedKi 7.84
+  #define DEFAULT_bedKd 630.53
 
   
 
