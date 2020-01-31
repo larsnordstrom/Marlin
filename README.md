@@ -1,15 +1,15 @@
 # Marlin 3D Printer Firmware
 
-This branch is for Einsy Rambo and should be PNP for the most part. It's configured to be use with Prusa MK3/s or DIY MK3 with self sourced parts. 
+This branch is for Einsy Rambo and should be PNP for the most part. It's configured to be use with Prusa MK3/s or DIY MK3 with self sourced parts. This is the exact config used on my personal main 3d printer.
 
 ### Features enable (Some of them...)
-* UBL
-* Spreadcycle/stealthchop
-* Sensorless Homing
-* S-curve
-* L_Advanced
-* Adaptive Stepsmoothing
-* Junction Deviation
+* UBL.
+* Spreadcycle/stealthchop.
+* Sensorless Homing.
+* S-curve.
+* L_Advanced.
+* Adaptive Stepsmoothing.
+* Junction Deviation.
 
 ### Hardware
 * Stock Mk52 bed.
@@ -17,6 +17,7 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 * LDO 0.9 extruder motor. 
 * Bondtech BMG extruder. 
 * 24V PSU.
+* Stock display.
 
 ### Features Not enabled (Yet..):
 * Filamentsensor (I don't personally use it).
