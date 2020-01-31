@@ -4,7 +4,8 @@ This branch is for the SKR 1.4Turbo with TMC2209 drivers and should be PNP for t
 
 ### Features enable (Some of them...)
 * UBL
-* Spreadcycle/stealtchop
+* Spreadcycle/stealthchop
+* Sensorless Homing
 * S-curve
 * L_Advanced
 * Adaptive Stepsmoothing
