@@ -1,6 +1,8 @@
 # Marlin 3D Printer Firmware
 
-This branch is for stock ender3 pro with SKRmini board TMC2209, BondtechBMG extruder. It has all features except Auto bedlevel.
+Based on _bugfix-2.0.x_
+
+This branch is for stock ender3 pro with SKRmini board TMC2209, Bondtech BMG extruder. It has all features except Auto bedlevel.
 
 
 
