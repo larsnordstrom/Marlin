@@ -3,13 +3,13 @@
 This branch is for the SKR 1.4Turbo with TMC2209 drivers and should be PNP for the most part. It's configured to be use with Prusa MK3/s or DIY MK3 with self sourced parts. 
 
 ### Features enable (Some of them...)
-* UBL
-* Spreadcycle/stealthchop
-* Sensorless Homing
-* S-curve
-* L_Advanced
-* Adaptive Stepsmoothing
-* Junction Deviation
+* UBL.
+* Spreadcycle/stealthchop.
+* Sensorless Homing.
+* S-curve.
+* L_Advanced.
+* Adaptive Stepsmoothing.
+* Junction Deviation.
 
 ### Hardware
 * Stock Mk52 bed.
