@@ -103,7 +103,7 @@
  *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-#define SERIAL_PORT 0
+#define SERIAL_PORT 2
 
 /**
  * Select a secondary serial port on the board to use for communication with the host.
@@ -130,7 +130,7 @@
 
 // Choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-#define MOTHERBOARD BOARD_BIGTREE_SKR_MINI_E3
+#define MOTHERBOARD BOARD_BTT_SKR_MINI_E3_V1_2
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
@@ -1051,20 +1051,20 @@
 
 // @section extruder
 
-#define DISABLE_E false           // For all extruders
-#define DISABLE_INACTIVE_EXTRUDER // Keep only the active extruder enabled
+#define DISABLE_E false // For all extruders
+//#define DISABLE_INACTIVE_EXTRUDER // Keep only the active extruder enabled
 
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
+#define INVERT_X_DIR true
 #define INVERT_Y_DIR true
 #define INVERT_Z_DIR false
 
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR false
+#define INVERT_E0_DIR true
 #define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
@@ -1100,7 +1100,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS 235
 #define Y_MAX_POS 235
-#define Z_MAX_POS 235
+#define Z_MAX_POS 250
 
 /**
  * Software Endstops
@@ -1443,7 +1443,7 @@
 //#define DISABLE_M503        // Saves ~2700 bytes of PROGMEM. Disable for release!
 #define EEPROM_CHITCHAT // Give feedback on EEPROM commands. Disable to save PROGMEM.
 #if ENABLED(EEPROM_SETTINGS)
-//#define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
+#define EEPROM_AUTO_INIT // Init EEPROM automatically on any errors.
 #endif
 
 //
@@ -2267,280 +2267,3 @@
 
 // Allow servo angle to be edited and saved to EEPROM
 //#define EDITABLE_SERVO_ANGLES
-*R / C SERVO support
-         *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        *R / C SERVO support *Sponsored by TrinityLabs,
-    Reworked by codexmas
-            * /
-
-/**
- * Number of servos
- *
- * For some servo-related options NUM_SERVOS will be set automatically.
- * Set this manually if there are extra servos needing manual control.
- * Leave undefined or set to 0 to entirely disable the servo subsystem.
- */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
-
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
-// 300ms is a good value but you can try less delay.
-// If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY \
-  {                 \
-    300             \
-  }
-
-        // Only power servos during movement, otherwise leave off to prevent jitter
-        //#define DEACTIVATE_SERVOS_AFTER_MOVE
-
-        // Allow servo angle to be edited and saved to EEPROM
-        
