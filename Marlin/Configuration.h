@@ -424,7 +424,7 @@
  *   998 : Dummy Table that ALWAYS reads 25°C or the temperature defined below.
  *   999 : Dummy Table that ALWAYS reads 100°C or the temperature defined below.
  */
-#define TEMP_SENSOR_0 5
+#define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -2270,6 +2270,56 @@
 //#define EDITABLE_SERVO_ANGLES
 *R / C SERVO support
          *Sponsored by TrinityLabs,
+    Reworked by codexmas
+            * /
+
+/**
+ * Number of servos
+ *
+ * For some servo-related options NUM_SERVOS will be set automatically.
+ * Set this manually if there are extra servos needing manual control.
+ * Leave undefined or set to 0 to entirely disable the servo subsystem.
+ */
+//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
+
+// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
+// 300ms is a good value but you can try less delay.
+// If the servo can't reach the requested position, increase it.
+#define SERVO_DELAY \
+  {                 \
+    300             \
+  }
+
+        // Only power servos during movement, otherwise leave off to prevent jitter
+        //#define DEACTIVATE_SERVOS_AFTER_MOVE
+
+        // Allow servo angle to be edited and saved to EEPROM
+        *R / C SERVO support *Sponsored by TrinityLabs,
+    Reworked by codexmas
+            * /
+
+/**
+ * Number of servos
+ *
+ * For some servo-related options NUM_SERVOS will be set automatically.
+ * Set this manually if there are extra servos needing manual control.
+ * Leave undefined or set to 0 to entirely disable the servo subsystem.
+ */
+//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
+
+// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
+// 300ms is a good value but you can try less delay.
+// If the servo can't reach the requested position, increase it.
+#define SERVO_DELAY \
+  {                 \
+    300             \
+  }
+
+        // Only power servos during movement, otherwise leave off to prevent jitter
+        //#define DEACTIVATE_SERVOS_AFTER_MOVE
+
+        // Allow servo angle to be edited and saved to EEPROM
+        *R / C SERVO support *Sponsored by TrinityLabs,
     Reworked by codexmas
             * /
 
