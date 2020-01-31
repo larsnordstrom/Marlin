@@ -4,7 +4,8 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 
 ### Features enable (Some of them...)
 * UBL
-* Spreadcycle/stealtchop
+* Spreadcycle/stealthchop
+* Sensorless Homing
 * S-curve
 * L_Advanced
 * Adaptive Stepsmoothing
@@ -18,7 +19,7 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 * 24V PSU.
 
 ### Features Not enabled (Yet..):
-* Filamentsensor (I dont personally use it).
+* Filamentsensor (I don't personally use it).
 * P.I.N.D.A Temp compensation.
 
 Compile with VSCode and platformio.
