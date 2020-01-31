@@ -1,6 +1,26 @@
 # Marlin 3D Printer Firmware
 
-This branch is for the SKR 1.4Turbo with TMC2209 drivers and full Prusa Bear frame, Bondtech BMG extruder upgrade, 24V PSU. 
+This branch is for the SKR 1.4Turbo with TMC2209 drivers and should be PNP for the most part. It's configured to be use with Prusa MK3/s or DIY MK3 with self sourced parts. 
+
+### Features enable (Some of them...)
+* UBL
+* Spreadcycle/stealtchop
+* S-curve
+* L_Advanced
+* Adaptive Stepsmoothing
+* Junction Deviation
+
+### Hardware
+* Stock Mk52 bed.
+* Prusa Bear frame.(Full upgrade)
+* LDO 0.9 extruder motor. 
+* Bondtech BMG extruder. 
+* 24V PSU.
+* REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER 
+
+### Features Not enabled (Yet..):
+* Filamentsensor (I dont personally use it).
+* P.I.N.D.A Temp compensation.
 
 Compile with VSCode and platformio.
 
