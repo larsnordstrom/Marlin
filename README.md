@@ -1,5 +1,7 @@
 # Marlin 3D Printer Firmware
 
+Based on _bugfix-2.0.x_
+
 This branch is for Ender3 Pro stock printer controller board with Bondtech BMG geared extruder. It has all the features enabled and is highly optimized to fit the stock ender3 board.
 Compile with VSCode and platformio.
 
