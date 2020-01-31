@@ -123,7 +123,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 115200
+#define BAUDRATE 250000
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -676,7 +676,7 @@
 #define X_DRIVER_TYPE TMC2209
 #define Y_DRIVER_TYPE TMC2209
 #define Z_DRIVER_TYPE TMC2209
-//#define Z2_DRIVER_TYPE TMC2209
+#define Z2_DRIVER_TYPE TMC2209
 #define E0_DRIVER_TYPE TMC2209
 
 // Enable this feature if all enabled endstop pins are interrupt-capable.
@@ -1364,7 +1364,7 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (2700)
-#define HOMING_FEEDRATE_Z (700)
+#define HOMING_FEEDRATE_Z (480)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -1471,14 +1471,14 @@
 // @section temperature
 
 // Preheat Constants
-#define PREHEAT_1_LABEL "PLA"
-#define PREHEAT_1_TEMP_HOTEND 180
-#define PREHEAT_1_TEMP_BED 70
+#define PREHEAT_1_LABEL "PETG"
+#define PREHEAT_1_TEMP_HOTEND 240
+#define PREHEAT_1_TEMP_BED 85
 #define PREHEAT_1_FAN_SPEED 0 // Value from 0 to 255
 
-#define PREHEAT_2_LABEL "ABS"
-#define PREHEAT_2_TEMP_HOTEND 240
-#define PREHEAT_2_TEMP_BED 110
+#define PREHEAT_2_LABEL "PLA"
+#define PREHEAT_2_TEMP_HOTEND 215
+#define PREHEAT_2_TEMP_BED 60
 #define PREHEAT_2_FAN_SPEED 0 // Value from 0 to 255
 
 /**
@@ -1492,7 +1492,7 @@
  *    P1  Raise the nozzle always to Z-park height.
  *    P2  Raise the nozzle by Z-park amount, limited to Z_MAX_POS.
  */
-//#define NOZZLE_PARK_FEATURE
+#define NOZZLE_PARK_FEATURE
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
 // Specify a park position as { X, Y, Z_raise }
