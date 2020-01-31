@@ -1,4 +1,5 @@
 # Marlin 3D Printer Firmware
+Based on _bugfix-2.0.x_
 
 This branch is for Einsy Rambo and should be PNP for the most part. It's configured to be use with Prusa MK3/s or DIY MK3 with self sourced parts. This is the exact config used on my personal main 3d printer.
 
