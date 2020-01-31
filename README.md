@@ -12,6 +12,7 @@ This branch is for the SKR 1.4Turbo with TMC2209 drivers and should be PNP for t
 * L_Advanced.
 * Adaptive Stepsmoothing.
 * Junction Deviation.
+* ....
 
 ### Hardware
 * Stock Mk52 bed.
