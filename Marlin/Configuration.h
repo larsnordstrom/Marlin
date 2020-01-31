@@ -502,10 +502,10 @@
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
 //
-// E3d full 24v // M303 E0 C10 S235
-#define DEFAULT_Kp 20.90
-#define DEFAULT_Ki 1.53
-#define DEFAULT_Kd 71.48
+// Creality Ender-3
+#define DEFAULT_Kp 25.39
+#define DEFAULT_Ki 2.31
+#define DEFAULT_Kd 69.67
 
 #endif // PIDTEMP
 
@@ -542,10 +542,9 @@
 //#define MIN_BED_POWER 0
 //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
-// MK52 24v heated to 75degrees 5times.
-#define DEFAULT_bedKp 140.65
-#define DEFAULT_bedKi 7.84
-#define DEFAULT_bedKd 630.53
+#define DEFAULT_bedKp 98.44
+#define DEFAULT_bedKi 18.78
+#define DEFAULT_bedKd 344.10
 
 // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -2270,6 +2269,31 @@
 //#define EDITABLE_SERVO_ANGLES
 *R / C SERVO support
          *Sponsored by TrinityLabs,
+    Reworked by codexmas
+            * /
+
+/**
+ * Number of servos
+ *
+ * For some servo-related options NUM_SERVOS will be set automatically.
+ * Set this manually if there are extra servos needing manual control.
+ * Leave undefined or set to 0 to entirely disable the servo subsystem.
+ */
+//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
+
+// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
+// 300ms is a good value but you can try less delay.
+// If the servo can't reach the requested position, increase it.
+#define SERVO_DELAY \
+  {                 \
+    300             \
+  }
+
+        // Only power servos during movement, otherwise leave off to prevent jitter
+        //#define DEACTIVATE_SERVOS_AFTER_MOVE
+
+        // Allow servo angle to be edited and saved to EEPROM
+        *R / C SERVO support *Sponsored by TrinityLabs,
     Reworked by codexmas
             * /
 
