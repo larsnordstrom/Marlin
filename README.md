@@ -1,5 +1,35 @@
 # Marlin 3D Printer Firmware
 
+This branch is for Einsy Rambo and should be PNP for the most part. It's configured to be use with Prusa MK3/s or DIY MK3 with self sourced parts. This is the exact config used on my personal main 3d printer when running stable firmware. 
+
+
+### Features enable (Some of them...)
+* UBL.
+* Spreadcycle/stealthchop.
+* Sensorless Homing.
+* S-curve.
+* L_Advanced.
+* Adaptive Stepsmoothing.
+* Junction Deviation.
+
+### Hardware
+* Stock Mk52 bed.
+* Prusa Bear frame.(Full upgrade)
+* LDO 0.9 extruder motor. 
+* Bondtech BMG extruder. 
+* 24V PSU.
+* Stock display.
+
+### Features Not enabled (Yet..):
+* Filamentsensor (I don't personally use it).
+* P.I.N.D.A Temp compensation.
+
+Compile with VSCode and platformio.
+
+
+
+
+
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
 ![GitHub Release Date](https://img.shields.io/github/release-date/marlinfirmware/marlin.svg)
