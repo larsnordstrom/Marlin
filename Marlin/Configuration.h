@@ -807,7 +807,7 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-#define JUNCTION_DEVIATION_MM 0.02 // (mm) Distance from real junction edge
+#define JUNCTION_DEVIATION_MM 0.021 // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -956,7 +956,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, -0.8                   \
+    23, 5, -0.8                \
   }
 
 // Most probes should stay away from the edges of the bed, but
