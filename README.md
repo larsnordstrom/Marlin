@@ -12,7 +12,7 @@ This branch is for the SKR 1.4Turbo with TMC2209 drivers and should be PNP for t
 * L_Advanced.
 * Adaptive Stepsmoothing.
 * Junction Deviation.
-* ....
+* P.I.N.D.A Temp compensation.
 
 ### Hardware
 * Stock Mk52 bed.
@@ -23,8 +23,8 @@ This branch is for the SKR 1.4Turbo with TMC2209 drivers and should be PNP for t
 * REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER 
 
 ### Features Not enabled (Yet..):
-* Filamentsensor (I dont personally use it).
-* P.I.N.D.A Temp compensation.
+* Filamentsensor (I don't personally use it).
+
 
 Compile with VSCode and platformio.
 
