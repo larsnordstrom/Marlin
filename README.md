@@ -11,6 +11,7 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 * L_Advanced.
 * Adaptive Stepsmoothing.
 * Junction Deviation.
+* P.I.N.D.A temp compensation.
 
 ### Hardware
 * Stock Mk52 bed.
@@ -22,7 +23,7 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 
 ### Features Not enabled (Yet..):
 * Filamentsensor (I don't personally use it).
-* P.I.N.D.A Temp compensation.
+
 
 Compile with VSCode and platformio.
 
