@@ -809,7 +809,7 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-#define JUNCTION_DEVIATION_MM 0.02 // (mm) Distance from real junction edge
+#define JUNCTION_DEVIATION_MM 0.022 // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -972,7 +972,7 @@
 #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
 
 // Feedrate (mm/m) for the "accurate" probe of each point
-#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
+#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 4)
 
 /**
  * Multiple Probing
@@ -1363,8 +1363,8 @@
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (2700)
-#define HOMING_FEEDRATE_Z (700)
+#define HOMING_FEEDRATE_XY (2400)
+#define HOMING_FEEDRATE_Z (480)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
