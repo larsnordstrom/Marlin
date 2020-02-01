@@ -503,9 +503,9 @@
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
 // E3d full 24v // M303 E0 C10 S230
-#define DEFAULT_Kp 28.07
-#define DEFAULT_Ki 3.57
-#define DEFAULT_Kd 55.19
+#define DEFAULT_Kp 28.60
+#define DEFAULT_Ki 3.46
+#define DEFAULT_Kd 59.16
 
 #endif // PIDTEMP
 
@@ -956,7 +956,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, 0                   \
+    23, 5, -0.8                   \
   }
 
 // Most probes should stay away from the edges of the bed, but
@@ -970,7 +970,7 @@
 #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
 
 // Feedrate (mm/m) for the "accurate" probe of each point
-#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
+#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 4)
 
 /**
  * Multiple Probing
@@ -1282,7 +1282,7 @@
 //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
 #define MESH_INSET 1         // Set Mesh bounds as an inset region of the bed
-#define GRID_MAX_POINTS_X 10 // Don't use more than 15 points per axis, implementation limited.
+#define GRID_MAX_POINTS_X 12 // Don't use more than 15 points per axis, implementation limited.
 #define GRID_MAX_POINTS_Y 10
 
 #define UBL_MESH_EDIT_MOVES_Z   // Sophisticated users prefer no movement of nozzle
