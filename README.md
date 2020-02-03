@@ -1,5 +1,14 @@
 # Marlin 3D Printer Firmware
 
+
+This branch is for Ender3 Pro stock printer controller board with Bondtech BMG geared extruder. It has all the features enabled and is highly optimized to fit the stock ender3 board. Since the stock board don't have enough memory - things like bootscreen, custom machine names and some other unneeded things have been disabled to save space.
+
+You might need to flash the bootloader to be able to upload firmware.
+
+Compile with VSCode and platformio.
+
+___
+
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
 ![GitHub Release Date](https://img.shields.io/github/release-date/marlinfirmware/marlin.svg)
