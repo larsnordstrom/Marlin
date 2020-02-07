@@ -434,7 +434,7 @@
 #define TEMP_SENSOR_6 0
 #define TEMP_SENSOR_7 0
 #define TEMP_SENSOR_BED 1
-#define TEMP_SENSOR_PROBE 0//1
+#define TEMP_SENSOR_PROBE 0 //1
 #define TEMP_SENSOR_CHAMBER 0
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
@@ -447,12 +447,12 @@
 #define MAX_REDUNDANT_TEMP_SENSOR_DIFF 10
 
 #define TEMP_RESIDENCY_TIME 10 // (seconds) Time to wait for hotend to "settle" in M109
-#define TEMP_WINDOW 1          // (°C) Temperature proximity for the "temperature reached" timer
-#define TEMP_HYSTERESIS 3      // (°C) Temperature proximity considered "close enough" to the target
+#define TEMP_WINDOW 5          // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_HYSTERESIS 8      // (°C) Temperature proximity considered "close enough" to the target
 
 #define TEMP_BED_RESIDENCY_TIME 10 // (seconds) Time to wait for bed to "settle" in M190
-#define TEMP_BED_WINDOW 1          // (°C) Temperature proximity for the "temperature reached" timer
-#define TEMP_BED_HYSTERESIS 3      // (°C) Temperature proximity considered "close enough" to the target
+#define TEMP_BED_WINDOW 5          // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_BED_HYSTERESIS 8      // (°C) Temperature proximity considered "close enough" to the target
 
 // Below this temperature the heater will be switched off
 // because it probably indicates a broken thermistor wire.
@@ -588,7 +588,7 @@
 
 #define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
 #define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
-#define THERMAL_PROTECTION_CHAMBER // Enable thermal protection for the heated chamber
+//#define THERMAL_PROTECTION_CHAMBER // Enable thermal protection for the heated chamber
 
 //===========================================================================
 //============================= Mechanical Settings =========================
@@ -956,7 +956,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, 0              \
+    23, 5, 0                   \
   }
 
 // Most probes should stay away from the edges of the bed, but
