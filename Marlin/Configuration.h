@@ -804,7 +804,7 @@
 #endif
 #endif
 
-#define DEFAULT_EJERK 1.5 // May be used by Linear Advance
+#define DEFAULT_EJERK 3.5 // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
@@ -977,7 +977,7 @@
 #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
 
 // Feedrate (mm/m) for the "accurate" probe of each point
-#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
+#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 4)
 
 /**
  * Multiple Probing
