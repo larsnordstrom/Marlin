@@ -123,7 +123,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 250000
+#define BAUDRATE 115200
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -434,7 +434,7 @@
 #define TEMP_SENSOR_6 0
 #define TEMP_SENSOR_7 0
 #define TEMP_SENSOR_BED 1
-#define TEMP_SENSOR_PROBE 1
+#define TEMP_SENSOR_PROBE 0 //1
 #define TEMP_SENSOR_CHAMBER 0
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
@@ -734,7 +734,7 @@
  */
 #define DEFAULT_MAX_FEEDRATE \
   {                          \
-    200, 200, 12, 50         \
+    200, 200, 30, 120        \
   }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
@@ -799,7 +799,7 @@
 #endif
 #endif
 
-#define DEFAULT_EJERK 1.5 // May be used by Linear Advance
+#define DEFAULT_EJERK 3.5 // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
@@ -1081,8 +1081,8 @@
 
 //#define UNKNOWN_Z_NO_RAISE      // Don't raise Z (lower the bed) if Z is "unknown." For beds that fall when Z is powered off.
 
-#define Z_HOMING_HEIGHT  5      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
-                                  // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
+#define Z_HOMING_HEIGHT 5 // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ... \
+                          // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
 
 //#define Z_AFTER_HOMING  10      // (mm) Height to move to after homing Z
 
@@ -1239,15 +1239,15 @@
 /**
    * Enable the G26 Mesh Validation Pattern tool.
    */
-  //#define G26_MESH_VALIDATION
-  #if ENABLED(G26_MESH_VALIDATION)
-    #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
-    #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for the G26 Mesh Validation Tool.
-    #define MESH_TEST_HOTEND_TEMP  205    // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
-    #define MESH_TEST_BED_TEMP      60    // (°C) Default bed temperature for the G26 Mesh Validation Tool.
-    #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for XY Moves for the G26 Mesh Validation Tool.
-    #define G26_RETRACT_MULTIPLIER   1.0  // G26 Q (retraction) used by default between mesh test elements.
-  #endif
+//#define G26_MESH_VALIDATION
+#if ENABLED(G26_MESH_VALIDATION)
+#define MESH_TEST_NOZZLE_SIZE 0.4  // (mm) Diameter of primary nozzle.
+#define MESH_TEST_LAYER_HEIGHT 0.2 // (mm) Default layer height for the G26 Mesh Validation Tool.
+#define MESH_TEST_HOTEND_TEMP 205  // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
+#define MESH_TEST_BED_TEMP 60      // (°C) Default bed temperature for the G26 Mesh Validation Tool.
+#define G26_XY_FEEDRATE 20         // (mm/s) Feedrate for XY Moves for the G26 Mesh Validation Tool.
+#define G26_RETRACT_MULTIPLIER 1.0 // G26 Q (retraction) used by default between mesh test elements.
+#endif
 
 #endif
 
@@ -1326,10 +1326,13 @@
 //#define LEVEL_BED_CORNERS
 
 #if ENABLED(LEVEL_BED_CORNERS)
-  #define LEVEL_CORNERS_INSET_LFRB { 30, 30, 30, 30 } // (mm) Left, Front, Right, Back insets
-  #define LEVEL_CORNERS_HEIGHT      0.0   // (mm) Z height of nozzle at leveling points
-  #define LEVEL_CORNERS_Z_HOP       4.0   // (mm) Z height of nozzle between leveling points
-  //#define LEVEL_CENTER_TOO              // Move to the center after the last corner
+#define LEVEL_CORNERS_INSET_LFRB \
+  {                              \
+    30, 30, 30, 30               \
+  }                              // (mm) Left, Front, Right, Back insets
+#define LEVEL_CORNERS_HEIGHT 0.0 // (mm) Z height of nozzle at leveling points
+#define LEVEL_CORNERS_Z_HOP 4.0  // (mm) Z height of nozzle between leveling points
+//#define LEVEL_CENTER_TOO              // Move to the center after the last corner
 #endif
 
 /**
@@ -1346,8 +1349,8 @@
 // Manually set the home position. Leave these undefined for automatic settings.
 // For DELTA this is the top-center of the Cartesian print volume.
 //#define MANUAL_X_HOME_POS 0
-//#define MANUAL_Y_HOME_POS 0
-//#define MANUAL_Z_HOME_POS 0
+//#define MANUAL_Y_HOME_POS -2.2
+//#define MANUAL_Z_HOME_POS 0.2
 
 // Use "Z Safe Homing" to avoid homing with a Z probe outside the bed area.
 //
