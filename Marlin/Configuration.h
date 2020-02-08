@@ -447,12 +447,12 @@
 #define MAX_REDUNDANT_TEMP_SENSOR_DIFF 10
 
 #define TEMP_RESIDENCY_TIME 10 // (seconds) Time to wait for hotend to "settle" in M109
-#define TEMP_WINDOW 1          // (°C) Temperature proximity for the "temperature reached" timer
-#define TEMP_HYSTERESIS 3      // (°C) Temperature proximity considered "close enough" to the target
+#define TEMP_WINDOW 5          // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_HYSTERESIS 8      // (°C) Temperature proximity considered "close enough" to the target
 
 #define TEMP_BED_RESIDENCY_TIME 10 // (seconds) Time to wait for bed to "settle" in M190
-#define TEMP_BED_WINDOW 1          // (°C) Temperature proximity for the "temperature reached" timer
-#define TEMP_BED_HYSTERESIS 3      // (°C) Temperature proximity considered "close enough" to the target
+#define TEMP_BED_WINDOW 5          // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_BED_HYSTERESIS 8      // (°C) Temperature proximity considered "close enough" to the target
 
 // Below this temperature the heater will be switched off
 // because it probably indicates a broken thermistor wire.
@@ -469,7 +469,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 305
+#define HEATER_0_MAXTEMP 295
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -477,7 +477,7 @@
 #define HEATER_5_MAXTEMP 275
 #define HEATER_6_MAXTEMP 275
 #define HEATER_7_MAXTEMP 275
-#define BED_MAXTEMP 125
+#define BED_MAXTEMP 120
 
 //===========================================================================
 //============================= PID Settings ================================
@@ -956,7 +956,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, 0              \
+    23, 5, -0.7985             \
   }
 
 // Most probes should stay away from the edges of the bed, but
@@ -964,7 +964,7 @@
 #define MIN_PROBE_EDGE 0
 
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 6000
+#define XY_PROBE_SPEED 7200
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
@@ -1361,7 +1361,7 @@
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (2400)
+#define HOMING_FEEDRATE_XY (2700)
 #define HOMING_FEEDRATE_Z (480)
 
 // Validate that endstops are triggered on homing moves
