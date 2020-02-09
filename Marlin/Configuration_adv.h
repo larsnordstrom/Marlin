@@ -31,7 +31,7 @@
  * Basic settings can be found in Configuration.h
  *
  */
-#define CONFIGURATION_ADV_H_VERSION 020000
+#define CONFIGURATION_ADV_H_VERSION 020004
 
 // @section temperature
 
@@ -450,9 +450,9 @@
 //#define CASE_LIGHT_USE_NEOPIXEL           // Use Neopixel LED as case light, requires NEOPIXEL_LED.
 #if ENABLED(CASE_LIGHT_USE_NEOPIXEL)
 #define CASE_LIGHT_NEOPIXEL_COLOR \
-  {                               \
-    255, 255, 255, 255            \
-  } // { Red, Green, Blue, White }
+   {                              \
+      255, 255, 255, 255          \
+   } // { Red, Green, Blue, White }
 #endif
 #endif
 
@@ -564,10 +564,10 @@
 #define X2_MIN_POS 80          // Set a minimum to ensure the  second X-carriage can't hit the parked first X-carriage
 #define X2_MAX_POS 353         // Set this to the distance between toolheads when both heads are homed
 #define X2_HOME_DIR 1          // Set to 1. The second X-carriage always homes to the maximum endstop position
-#define X2_HOME_POS X2_MAX_POS // Default X2 home position. Set to X2_MAX_POS.
-                               // However: In this mode the HOTEND_OFFSET_X value for the second extruder provides a software
-                               // override for X2_HOME_POS. This also allow recalibration of the distance between the two endstops
-                               // without modifying the firmware (through the "M218 T1 X???" command).
+#define X2_HOME_POS X2_MAX_POS // Default X2 home position. Set to X2_MAX_POS.                                                     \
+                               // However: In this mode the HOTEND_OFFSET_X value for the second extruder provides a software      \
+                               // override for X2_HOME_POS. This also allow recalibration of the distance between the two endstops \
+                               // without modifying the firmware (through the "M218 T1 X???" command).                             \
                                // Remember: you should set the second extruder x-offset to 0 in your slicer.
 
 // This is the default power-up mode which can be later using M605.
@@ -589,9 +589,9 @@
 #define Y_HOME_BUMP_MM 5
 #define Z_HOME_BUMP_MM 2
 #define HOMING_BUMP_DIVISOR \
-  {                         \
-    2, 2, 4                 \
-  }                // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+   {                        \
+      2, 2, 4               \
+   }               // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 #define QUICK_HOME // If homing includes X and Y, do a diagonal move initially
 //#define HOMING_BACKOFF_MM { 2, 2, 2 }  // (mm) Move away from the endstops after homing
 
@@ -710,10 +710,10 @@
 // Define Stepper XY positions for Z1, Z2, Z3 corresponding to
 // the Z screw positions in the bed carriage.
 // Define one position per Z stepper in stepper driver order.
-#define Z_STEPPER_ALIGN_STEPPER_XY                  \
-  {                                                 \
-    {210.7, 102.5}, {152.6, 220.0}, { 94.5, 102.5 } \
-  }
+#define Z_STEPPER_ALIGN_STEPPER_XY                    \
+   {                                                  \
+      {210.7, 102.5}, {152.6, 220.0}, { 94.5, 102.5 } \
+   }
 #else
 // Amplification factor. Used to scale the correction step up or down in case
 // the stepper (spindle) position is farther out than the test point.
@@ -729,10 +729,10 @@
 
 // @section motion
 
-#define AXIS_RELATIVE_MODES    \
-  {                            \
-    false, false, false, false \
-  }
+#define AXIS_RELATIVE_MODES      \
+   {                             \
+      false, false, false, false \
+   }
 
 // Add a Duplicate option for well-separated conjoined nozzles
 //#define MULTI_NOZZLE_DUPLICATION
@@ -782,9 +782,9 @@
 // Define values for backlash distance and correction.
 // If BACKLASH_GCODE is enabled these values are the defaults.
 #define BACKLASH_DISTANCE_MM \
-  {                          \
-    0, 0, 0                  \
-  }                             // (mm)
+   {                         \
+      0, 0, 0                \
+   }                            // (mm)
 #define BACKLASH_CORRECTION 0.0 // 0.0 = no correction; 1.0 = full correction
 
 // Set BACKLASH_SMOOTHING_MM to spread backlash correction over multiple segments
@@ -840,13 +840,13 @@
 
 // The true location and dimension the cube/bolt/washer on the bed.
 #define CALIBRATION_OBJECT_CENTER \
-  {                               \
-    264.0, -22.0, -2.0            \
-  } // mm
+   {                              \
+      264.0, -22.0, -2.0          \
+   } // mm
 #define CALIBRATION_OBJECT_DIMENSIONS \
-  {                                   \
-    10.0, 10.0, 10.0                  \
-  } // mm
+   {                                  \
+      10.0, 10.0, 10.0                \
+   } // mm
 
 // Comment out any sides which are unreachable by the probe. For best
 // auto-calibration results, all sides must be reachable.
@@ -859,13 +859,13 @@
 // probing on a screwhead or hollow washer, probe near the edges.
 //#define CALIBRATION_MEASURE_AT_TOP_EDGES
 
-  // Define the pin to read during calibration
-  #ifndef CALIBRATION_PIN
-    //#define CALIBRATION_PIN -1            // Define here to override the default pin
-    #define CALIBRATION_PIN_INVERTING false // Set to true to invert the custom pin
-    //#define CALIBRATION_PIN_PULLDOWN
-    #define CALIBRATION_PIN_PULLUP
-  #endif
+// Define the pin to read during calibration
+#ifndef CALIBRATION_PIN
+//#define CALIBRATION_PIN -1            // Define here to override the default pin
+#define CALIBRATION_PIN_INVERTING false // Set to true to invert the custom pin
+//#define CALIBRATION_PIN_PULLDOWN
+#define CALIBRATION_PIN_PULLUP
+#endif
 #endif
 
 /**
@@ -888,10 +888,10 @@
 //#define MICROSTEP32 HIGH,LOW,HIGH
 
 // Microstep setting (Only functional when stepper driver microstep pins are connected to MCU.
-#define MICROSTEP_MODES    \
-  {                        \
-    16, 16, 16, 16, 16, 16 \
-  } // [1,2,4,8,16]
+#define MICROSTEP_MODES      \
+   {                         \
+      16, 16, 16, 16, 16, 16 \
+   } // [1,2,4,8,16]
 
 /**
  *  @section  stepper motor current
@@ -938,10 +938,10 @@
 #define DIGIPOT_I2C_NUM_CHANNELS 8 // 5DPRINT: 4     AZTEEG_X3_PRO: 8     MKS SBASE: 5
 // Actual motor currents in Amps. The number of entries must match DIGIPOT_I2C_NUM_CHANNELS.
 // These correspond to the physical drivers, so be mindful if the order is changed.
-#define DIGIPOT_I2C_MOTOR_CURRENTS         \
-  {                                        \
-    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 \
-  } //  AZTEEG_X3_PRO
+#define DIGIPOT_I2C_MOTOR_CURRENTS           \
+   {                                         \
+      1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 \
+   } //  AZTEEG_X3_PRO
 
 //===========================================================================
 //=============================Additional Features===========================
@@ -950,10 +950,10 @@
 // @section lcd
 
 #if EITHER(ULTIPANEL, EXTENSIBLE_UI)
-#define MANUAL_FEEDRATE              \
-  {                                  \
-    50 * 60, 50 * 60, 4 * 60, 2 * 60 \
-  }                               // Feedrates for manual moves along X, Y, Z, E from panel
+#define MANUAL_FEEDRATE                \
+   {                                   \
+      50 * 60, 50 * 60, 4 * 60, 2 * 60 \
+   }                              // Feedrates for manual moves along X, Y, Z, E from panel
 #define SHORT_MANUAL_Z_MOVE 0.025 // (mm) Smallest manual Z move (< 0.1mm)
 #if ENABLED(ULTIPANEL)
 #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -1598,29 +1598,29 @@
  * For a more detailed explanation of the process see G76_M871.cpp.
  */
 #if HAS_BED_PROBE && TEMP_SENSOR_PROBE && TEMP_SENSOR_BED
-  // Enable thermal first layer compensation using bed and probe temperatures
-  #define PROBE_TEMP_COMPENSATION
+// Enable thermal first layer compensation using bed and probe temperatures
+#define PROBE_TEMP_COMPENSATION
 
-  // Add additional compensation depending on hotend temperature
-  // Note: this values cannot be calibrated and have to be set manually
-  #if ENABLED(PROBE_TEMP_COMPENSATION)
-    // Max temperature that can be reached by heated bed.
-    // This is required only for the calibration process.
-    #define PTC_MAX_BED_TEMP 110
+// Add additional compensation depending on hotend temperature
+// Note: this values cannot be calibrated and have to be set manually
+#if ENABLED(PROBE_TEMP_COMPENSATION)
+// Max temperature that can be reached by heated bed.
+// This is required only for the calibration process.
+#define PTC_MAX_BED_TEMP 110
 
-    // Park position to wait for probe cooldown
-    #define PTC_PARK_POS_X 0.0F
-    #define PTC_PARK_POS_Y 0.0F
-    #define PTC_PARK_POS_Z 100.0F
+// Park position to wait for probe cooldown
+#define PTC_PARK_POS_X 0.0F
+#define PTC_PARK_POS_Y 0.0F
+#define PTC_PARK_POS_Z 100.0F
 
-    // Probe position to probe and wait for probe to reach target temperature
-    #define PTC_PROBE_POS_X  90.0F
-    #define PTC_PROBE_POS_Y 100.0F
+// Probe position to probe and wait for probe to reach target temperature
+#define PTC_PROBE_POS_X 90.0F
+#define PTC_PROBE_POS_Y 100.0F
 
-    // Enable additional compensation using hotend temperature
-    // Note: this values cannot be calibrated automatically but have to be set manually
-    //#define USE_TEMP_EXT_COMPENSATION
-  #endif
+// Enable additional compensation using hotend temperature
+// Note: this values cannot be calibrated automatically but have to be set manually
+//#define USE_TEMP_EXT_COMPENSATION
+#endif
 #endif
 
 // @section extras
@@ -1857,10 +1857,10 @@
    */
 //#define TOOLCHANGE_PARK
 #if ENABLED(TOOLCHANGE_PARK)
-#define TOOLCHANGE_PARK_XY         \
-  {                                \
-    X_MIN_POS + 10, Y_MIN_POS + 10 \
-  }
+#define TOOLCHANGE_PARK_XY           \
+   {                                 \
+      X_MIN_POS + 10, Y_MIN_POS + 10 \
+   }
 #define TOOLCHANGE_PARK_XY_FEEDRATE 6000 // (mm/m)
 #endif
 #endif
@@ -2316,6 +2316,166 @@
 #define E7_HYBRID_THRESHOLD 30
 
 /**
+   * CoolStep. Currently supported for TMC2130, TMC2209, TMC5130 and TMC5160 only.
+   * This mode allows for cooler steppers and energy savings.
+   * The driver will switch to coolStep when stepper speed is over COOLSTEP_THRESHOLD mm/s.
+   *
+   * If SG_RESULT goes below COOLSTEP_LOWER_LOAD_THRESHOLD * 32 stepper current will be increased.
+   * Set to 0 to disable CoolStep.
+   *
+   * If SG_RESULT goes above (COOLSTEP_LOWER_LOAD_THRESHOLD + COOLSTEP_UPPER_LOAD_THRESHOLD + 1) * 32
+   * stepper current will be decreased.
+   *
+   * SEUP sets the increase step width. Value range is 0..3 and computed as 2^SEUP.
+   * SEDN sets the decrease delay. Value range is 0..3, 0 being the slowest.
+   * SEIMIN sets the lower current limit. 0: 1/2 of IRUN, 1:1/4 of IRUN
+   */
+
+#if AXIS_HAS_COOLSTEP(X)
+#define X_COOLSTEP_SPEED_THRESHOLD 5
+#define X_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define X_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define X_COOLSTEP_SEUP 2
+#define X_COOLSTEP_SEDN 0
+#define X_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(X2)
+#define X2_COOLSTEP_SPEED_THRESHOLD 5
+#define X2_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define X2_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define X2_COOLSTEP_SEUP 2
+#define X2_COOLSTEP_SEDN 0
+#define X2_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(Y)
+#define Y_COOLSTEP_SPEED_THRESHOLD 5
+#define Y_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define Y_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define Y_COOLSTEP_SEUP 2
+#define Y_COOLSTEP_SEDN 0
+#define Y_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(Y2)
+#define Y2_COOLSTEP_SPEED_THRESHOLD 5
+#define Y2_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define Y2_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define Y2_COOLSTEP_SEUP 2
+#define Y2_COOLSTEP_SEDN 0
+#define Y2_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(Z)
+#define Z_COOLSTEP_SPEED_THRESHOLD 5
+#define Z_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define Z_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define Z_COOLSTEP_SEUP 2
+#define Z_COOLSTEP_SEDN 0
+#define Z_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(Z2)
+#define Z2_COOLSTEP_SPEED_THRESHOLD 5
+#define Z2_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define Z2_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define Z2_COOLSTEP_SEUP 2
+#define Z2_COOLSTEP_SEDN 0
+#define Z2_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(Z3)
+#define Z3_COOLSTEP_SPEED_THRESHOLD 5
+#define Z3_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define Z3_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define Z3_COOLSTEP_SEUP 2
+#define Z3_COOLSTEP_SEDN 0
+#define Z3_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(Z4)
+#define Z4_COOLSTEP_SPEED_THRESHOLD 5
+#define Z4_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define Z4_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define Z4_COOLSTEP_SEUP 2
+#define Z4_COOLSTEP_SEDN 0
+#define Z4_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(E0)
+#define E0_COOLSTEP_SPEED_THRESHOLD 5
+#define E0_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define E0_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define E0_COOLSTEP_SEUP 2
+#define E0_COOLSTEP_SEDN 0
+#define E0_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(E1)
+#define E1_COOLSTEP_SPEED_THRESHOLD 5
+#define E1_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define E1_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define E1_COOLSTEP_SEUP 2
+#define E1_COOLSTEP_SEDN 0
+#define E1_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(E2)
+#define E2_COOLSTEP_SPEED_THRESHOLD 5
+#define E2_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define E2_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define E2_COOLSTEP_SEUP 2
+#define E2_COOLSTEP_SEDN 0
+#define E2_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(E3)
+#define E3_COOLSTEP_SPEED_THRESHOLD 5
+#define E3_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define E3_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define E3_COOLSTEP_SEUP 2
+#define E3_COOLSTEP_SEDN 0
+#define E3_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(E4)
+#define E4_COOLSTEP_SPEED_THRESHOLD 5
+#define E4_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define E4_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define E4_COOLSTEP_SEUP 2
+#define E4_COOLSTEP_SEDN 0
+#define E4_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(E5)
+#define E5_COOLSTEP_SPEED_THRESHOLD 5
+#define E5_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define E5_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define E5_COOLSTEP_SEUP 2
+#define E5_COOLSTEP_SEDN 0
+#define E5_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(E6)
+#define E6_COOLSTEP_SPEED_THRESHOLD 5
+#define E6_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define E6_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define E6_COOLSTEP_SEUP 2
+#define E6_COOLSTEP_SEDN 0
+#define E6_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(E7)
+#define E7_COOLSTEP_SPEED_THRESHOLD 5
+#define E7_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define E7_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define E7_COOLSTEP_SEUP 2
+#define E7_COOLSTEP_SEDN 0
+#define E7_COOLSTEP_SEIMIN 1
+#endif
+
+/**
    * Use StallGuard2 to home / probe X, Y, Z.
    *
    * TMC2130, TMC2160, TMC2209, TMC2660, TMC5130, and TMC5160 only
@@ -2382,8 +2542,8 @@
    * }
    */
 #define TMC_ADV() \
-  {               \
-  }
+   {              \
+   }
 
 #endif // HAS_TRINAMIC
 
@@ -3007,18 +3167,18 @@
 //#define INVERT_JOY_Z  // Enable if Z direction is reversed
 
 // Use M119 with JOYSTICK_DEBUG to find reasonable values after connecting:
-#define JOY_X_LIMITS                    \
-  {                                     \
-    5600, 8190 - 100, 8190 + 100, 10800 \
-  } // min, deadzone start, deadzone end, max
-#define JOY_Y_LIMITS                    \
-  {                                     \
-    5600, 8250 - 100, 8250 + 100, 11000 \
-  }
-#define JOY_Z_LIMITS                    \
-  {                                     \
-    4800, 8080 - 100, 8080 + 100, 11550 \
-  }
+#define JOY_X_LIMITS                      \
+   {                                      \
+      5600, 8190 - 100, 8190 + 100, 10800 \
+   } // min, deadzone start, deadzone end, max
+#define JOY_Y_LIMITS                      \
+   {                                      \
+      5600, 8250 - 100, 8250 + 100, 11000 \
+   }
+#define JOY_Z_LIMITS                      \
+   {                                      \
+      4800, 8080 - 100, 8080 + 100, 11550 \
+   }
 #endif
 
 /**
@@ -3074,11 +3234,11 @@
 //#define ESP3D_WIFISUPPORT   // ESP3D Library WiFi management (https://github.com/luc-github/ESP3DLib)
 
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
-  //#define WEBSUPPORT          // Start a webserver (which may include auto-discovery)
-  //#define OTASUPPORT          // Support over-the-air firmware updates
-  //#define WIFI_CUSTOM_COMMAND // Accept feature config commands (e.g., WiFi ESP3D) from the host
+//#define WEBSUPPORT          // Start a webserver (which may include auto-discovery)
+//#define OTASUPPORT          // Support over-the-air firmware updates
+//#define WIFI_CUSTOM_COMMAND // Accept feature config commands (e.g., WiFi ESP3D) from the host
 
-  /**
+/**
    * To set a default WiFi SSID / Password, create a file called Configuration_Secure.h with
    * the following defines, customized for your network. This specific file is excluded via
    * .gitignore to prevent it from accidentally leaking to the public.
@@ -3086,7 +3246,7 @@
    *   #define WIFI_SSID "WiFi SSID"
    *   #define WIFI_PWD  "WiFi Password"
    */
-  //#include "Configuration_Secure.h" // External file with WiFi SSID / Password
+//#include "Configuration_Secure.h" // External file with WiFi SSID / Password
 #endif
 
 /**
@@ -3117,28 +3277,28 @@
 // This is for Prusa MK3-style extruders. Customize for your hardware.
 #define MMU2_FILAMENTCHANGE_EJECT_FEED 80.0
 #define MMU2_LOAD_TO_NOZZLE_SEQUENCE \
-  {7.2, 562},                        \
-      {14.4, 871},                   \
-      {36.0, 1393},                  \
-      {14.4, 871},                   \
-  {                                  \
-    50.0, 198                        \
-  }
+   {7.2, 562},                       \
+       {14.4, 871},                  \
+       {36.0, 1393},                 \
+       {14.4, 871},                  \
+   {                                 \
+      50.0, 198                      \
+   }
 
 #define MMU2_RAMMING_SEQUENCE \
-  {1.0, 1000},                \
-      {1.0, 1500},            \
-      {2.0, 2000},            \
-      {1.5, 3000},            \
-      {2.5, 4000},            \
-      {-15.0, 5000},          \
-      {-14.0, 1200},          \
-      {-6.0, 600},            \
-      {10.0, 700},            \
-      {-10.0, 400},           \
-  {                           \
-    -50.0, 2000               \
-  }
+   {1.0, 1000},               \
+       {1.0, 1500},           \
+       {2.0, 2000},           \
+       {1.5, 3000},           \
+       {2.5, 4000},           \
+       {-15.0, 5000},         \
+       {-14.0, 1200},         \
+       {-6.0, 600},           \
+       {10.0, 700},           \
+       {-10.0, 400},          \
+   {                          \
+      -50.0, 2000             \
+   }
 
 #endif
 
