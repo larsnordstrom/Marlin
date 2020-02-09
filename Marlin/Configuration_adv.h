@@ -564,10 +564,10 @@
 #define X2_MIN_POS 80          // Set a minimum to ensure the  second X-carriage can't hit the parked first X-carriage
 #define X2_MAX_POS 353         // Set this to the distance between toolheads when both heads are homed
 #define X2_HOME_DIR 1          // Set to 1. The second X-carriage always homes to the maximum endstop position
-#define X2_HOME_POS X2_MAX_POS // Default X2 home position. Set to X2_MAX_POS.
-                               // However: In this mode the HOTEND_OFFSET_X value for the second extruder provides a software
-                               // override for X2_HOME_POS. This also allow recalibration of the distance between the two endstops
-                               // without modifying the firmware (through the "M218 T1 X???" command).
+#define X2_HOME_POS X2_MAX_POS // Default X2 home position. Set to X2_MAX_POS.                                                     \
+                               // However: In this mode the HOTEND_OFFSET_X value for the second extruder provides a software      \
+                               // override for X2_HOME_POS. This also allow recalibration of the distance between the two endstops \
+                               // without modifying the firmware (through the "M218 T1 X???" command).                             \
                                // Remember: you should set the second extruder x-offset to 0 in your slicer.
 
 // This is the default power-up mode which can be later using M605.
@@ -859,13 +859,13 @@
 // probing on a screwhead or hollow washer, probe near the edges.
 //#define CALIBRATION_MEASURE_AT_TOP_EDGES
 
-  // Define the pin to read during calibration
-  #ifndef CALIBRATION_PIN
-    //#define CALIBRATION_PIN -1            // Define here to override the default pin
-    #define CALIBRATION_PIN_INVERTING false // Set to true to invert the custom pin
-    //#define CALIBRATION_PIN_PULLDOWN
-    #define CALIBRATION_PIN_PULLUP
-  #endif
+// Define the pin to read during calibration
+#ifndef CALIBRATION_PIN
+//#define CALIBRATION_PIN -1            // Define here to override the default pin
+#define CALIBRATION_PIN_INVERTING false // Set to true to invert the custom pin
+//#define CALIBRATION_PIN_PULLDOWN
+#define CALIBRATION_PIN_PULLUP
+#endif
 #endif
 
 /**
@@ -1600,29 +1600,29 @@
 //#define TEMP_PROBE_PIN TEMP_1_PIN
 
 #if HAS_BED_PROBE && TEMP_SENSOR_PROBE && TEMP_SENSOR_BED
-  // Enable thermal first layer compensation using bed and probe temperatures
-  #define PROBE_TEMP_COMPENSATION
+// Enable thermal first layer compensation using bed and probe temperatures
+#define PROBE_TEMP_COMPENSATION
 
-  // Add additional compensation depending on hotend temperature
-  // Note: this values cannot be calibrated and have to be set manually
-  #if ENABLED(PROBE_TEMP_COMPENSATION)
-    // Max temperature that can be reached by heated bed.
-    // This is required only for the calibration process.
-    #define PTC_MAX_BED_TEMP 110
+// Add additional compensation depending on hotend temperature
+// Note: this values cannot be calibrated and have to be set manually
+#if ENABLED(PROBE_TEMP_COMPENSATION)
+// Max temperature that can be reached by heated bed.
+// This is required only for the calibration process.
+#define PTC_MAX_BED_TEMP 110
 
-    // Park position to wait for probe cooldown
-    #define PTC_PARK_POS_X 0.0F
-    #define PTC_PARK_POS_Y 0.0F
-    #define PTC_PARK_POS_Z 100.0F
+// Park position to wait for probe cooldown
+#define PTC_PARK_POS_X 0.0F
+#define PTC_PARK_POS_Y 0.0F
+#define PTC_PARK_POS_Z 100.0F
 
-    // Probe position to probe and wait for probe to reach target temperature
-    #define PTC_PROBE_POS_X  90.0F
-    #define PTC_PROBE_POS_Y 100.0F
+// Probe position to probe and wait for probe to reach target temperature
+#define PTC_PROBE_POS_X 90.0F
+#define PTC_PROBE_POS_Y 100.0F
 
-    // Enable additional compensation using hotend temperature
-    // Note: this values cannot be calibrated automatically but have to be set manually
-    //#define USE_TEMP_EXT_COMPENSATION
-  #endif
+// Enable additional compensation using hotend temperature
+// Note: this values cannot be calibrated automatically but have to be set manually
+//#define USE_TEMP_EXT_COMPENSATION
+#endif
 #endif
 
 // @section extras
@@ -2204,10 +2204,57 @@
    */
 #define HYBRID_THRESHOLD
 
-#define X_HYBRID_THRESHOLD 120 // [mm/s]
-#define Y_HYBRID_THRESHOLD 120
-#define Z_HYBRID_THRESHOLD 3
-#define E0_HYBRID_THRESHOLD 45
+/**
+   * CoolStep. Currently supported for TMC2130, TMC2209, TMC5130 and TMC5160 only.
+   * This mode allows for cooler steppers and energy savings.
+   * The driver will switch to coolStep when stepper speed is over COOLSTEP_THRESHOLD mm/s.
+   *
+   * If SG_RESULT goes below COOLSTEP_LOWER_LOAD_THRESHOLD * 32 stepper current will be increased.
+   * Set to 0 to disable CoolStep.
+   *
+   * If SG_RESULT goes above (COOLSTEP_LOWER_LOAD_THRESHOLD + COOLSTEP_UPPER_LOAD_THRESHOLD + 1) * 32
+   * stepper current will be decreased.
+   *
+   * SEUP sets the increase step width. Value range is 0..3 and computed as 2^SEUP.
+   * SEDN sets the decrease delay. Value range is 0..3, 0 being the slowest.
+   * SEIMIN sets the lower current limit. 0: 1/2 of IRUN, 1:1/4 of IRUN
+   */
+
+#if AXIS_HAS_COOLSTEP(X)
+#define X_COOLSTEP_SPEED_THRESHOLD 5
+#define X_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define X_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define X_COOLSTEP_SEUP 2
+#define X_COOLSTEP_SEDN 0
+#define X_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(Y)
+#define Y_COOLSTEP_SPEED_THRESHOLD 5
+#define Y_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define Y_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define Y_COOLSTEP_SEUP 2
+#define Y_COOLSTEP_SEDN 0
+#define Y_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(Z)
+#define Z_COOLSTEP_SPEED_THRESHOLD 5
+#define Z_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define Z_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define Z_COOLSTEP_SEUP 2
+#define Z_COOLSTEP_SEDN 0
+#define Z_COOLSTEP_SEIMIN 1
+#endif
+
+#if AXIS_HAS_COOLSTEP(E0)
+#define E0_COOLSTEP_SPEED_THRESHOLD 5
+#define E0_COOLSTEP_LOWER_LOAD_THRESHOLD 7
+#define E0_COOLSTEP_UPPER_LOAD_THRESHOLD 0
+#define E0_COOLSTEP_SEUP 2
+#define E0_COOLSTEP_SEDN 0
+#define E0_COOLSTEP_SEIMIN 1
+#endif
 
 /**
    * Use StallGuard2 to home / probe X, Y, Z.
@@ -2968,11 +3015,11 @@
 //#define ESP3D_WIFISUPPORT   // ESP3D Library WiFi management (https://github.com/luc-github/ESP3DLib)
 
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
-  //#define WEBSUPPORT          // Start a webserver (which may include auto-discovery)
-  //#define OTASUPPORT          // Support over-the-air firmware updates
-  //#define WIFI_CUSTOM_COMMAND // Accept feature config commands (e.g., WiFi ESP3D) from the host
+//#define WEBSUPPORT          // Start a webserver (which may include auto-discovery)
+//#define OTASUPPORT          // Support over-the-air firmware updates
+//#define WIFI_CUSTOM_COMMAND // Accept feature config commands (e.g., WiFi ESP3D) from the host
 
-  /**
+/**
    * To set a default WiFi SSID / Password, create a file called Configuration_Secure.h with
    * the following defines, customized for your network. This specific file is excluded via
    * .gitignore to prevent it from accidentally leaking to the public.
@@ -2980,7 +3027,7 @@
    *   #define WIFI_SSID "WiFi SSID"
    *   #define WIFI_PWD  "WiFi Password"
    */
-  //#include "Configuration_Secure.h" // External file with WiFi SSID / Password
+//#include "Configuration_Secure.h" // External file with WiFi SSID / Password
 #endif
 
 /**
