@@ -993,10 +993,10 @@
 #endif // HAS_LCD_MENU
 
 // Scroll a longer status message into view
-//#define STATUS_MESSAGE_SCROLLING
+#define STATUS_MESSAGE_SCROLLING
 
 // On the Info Screen, display XY with one decimal place when possible
-//#define LCD_DECIMAL_SMALL_XY
+#define LCD_DECIMAL_SMALL_XY
 
 // The timeout (in ms) to return to the status screen from sub-menus
 #define LCD_TIMEOUT_TO_STATUS 15000
@@ -2961,6 +2961,9 @@
 #define WIFISUPPORT // Marlin embedded WiFi managenent
 //#define ESP3D_WIFISUPPORT   // ESP3D Library WiFi management (https://github.com/luc-github/ESP3DLib)
 
+// Create this file in Marlin root, add following lines:
+// #define SSID "Name of you Wifi"
+// #define PASS "Your wifi password"
 #include "./wifi-secrets.h"
 
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
