@@ -2967,8 +2967,8 @@
 #include "./wifi-secrets.h"
 
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
-#define WIFI_SSID "Google"
-#define WIFI_PWD "Hugo6859"
+#define WIFI_SSID SSID
+#define WIFI_PWD PASS
 //#define WEBSUPPORT // Start a webserver (which may include auto-discovery)
 #define OTASUPPORT // Support over-the-air firmware updates
 //#define WIFI_CUSTOM_COMMAND // Accept feature config commands (e.g., WiFi ESP3D) from the host
