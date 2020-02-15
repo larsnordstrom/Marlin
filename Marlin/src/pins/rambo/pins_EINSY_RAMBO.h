@@ -110,6 +110,9 @@
 #define TEMP_1_PIN          1   // Analog Input
 #define TEMP_BED_PIN        2   // Analog Input
 
+#if HOTENDS == 1 && TEMP_SENSOR_PROBE
+  #define TEMP_PROBE_PIN TEMP_1_PIN
+#endif
 //
 // Heaters / Fans
 //
