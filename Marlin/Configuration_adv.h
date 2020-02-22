@@ -31,7 +31,7 @@
  * Basic settings can be found in Configuration.h
  *
  */
-#define CONFIGURATION_ADV_H_VERSION 020000
+#define CONFIGURATION_ADV_H_VERSION 020004
 
 // @section temperature
 
@@ -859,10 +859,10 @@
 // probing on a screwhead or hollow washer, probe near the edges.
 //#define CALIBRATION_MEASURE_AT_TOP_EDGES
 
-// Define pin which is read during calibration
+// Define the pin to read during calibration
 #ifndef CALIBRATION_PIN
-#define CALIBRATION_PIN -1              // Override in pins.h or set to -1 to use your Z endstop
-#define CALIBRATION_PIN_INVERTING false // Set to true to invert the pin
+//#define CALIBRATION_PIN -1            // Define here to override the default pin
+#define CALIBRATION_PIN_INVERTING false // Set to true to invert the custom pin
 //#define CALIBRATION_PIN_PULLDOWN
 #define CALIBRATION_PIN_PULLUP
 #endif
@@ -1363,9 +1363,11 @@
 //#define AO_EXP1_PINMAP    // AlephObjects CLCD UI EXP1 mapping
 //#define AO_EXP2_PINMAP    // AlephObjects CLCD UI EXP2 mapping
 //#define CR10_TFT_PINMAP   // Rudolph Riedel's CR10 pin mapping
+//#define S6_TFT_PINMAP     // FYSETC S6 pin mapping
+
 //#define OTHER_PIN_LAYOUT  // Define pins manually below
 #if ENABLED(OTHER_PIN_LAYOUT)
-// The pins for CS and MOD_RESET (PD) must be chosen.
+// Pins for CS and MOD_RESET (PD) must be chosen
 #define CLCD_MOD_RESET 9
 #define CLCD_SPI_CS 10
 
@@ -1475,15 +1477,16 @@
  */
 #define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
+//#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
 //#define BABYSTEP_WITHOUT_HOMING
 //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
 #define BABYSTEP_INVERT_Z false    // Change if Z babysteps should go the other way
-#define BABYSTEP_MULTIPLICATOR_Z 2 // Babysteps are very small. Increase for faster motion.
+#define BABYSTEP_MULTIPLICATOR_Z 1 // Babysteps are very small. Increase for faster motion.
 #define BABYSTEP_MULTIPLICATOR_XY 1
 
-#define DOUBLECLICK_FOR_Z_BABYSTEPPING // Double-click on the Status Screen for Z Babystepping.
+//#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
 #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
-#define DOUBLECLICK_MAX_INTERVAL 2000 // Maximum interval between clicks, in milliseconds. \
+#define DOUBLECLICK_MAX_INTERVAL 1250 // Maximum interval between clicks, in milliseconds. \
                                       // Note: Extra time may be added to mitigate controller latency.
 //#define BABYSTEP_ALWAYS_AVAILABLE     // Allow babystepping at all times (not just during movement).
 //#define MOVE_Z_WHEN_IDLE              // Jump to the move Z menu on doubleclick when printer is idle.
@@ -1603,7 +1606,7 @@
 
 // Add additional compensation depending on hotend temperature
 // Note: this values cannot be calibrated and have to be set manually
-#ifdef PROBE_TEMP_COMPENSATION
+#if ENABLED(PROBE_TEMP_COMPENSATION)
 // Max temperature that can be reached by heated bed.
 // This is required only for the calibration process.
 #define PTC_MAX_BED_TEMP 110
@@ -2826,6 +2829,10 @@
  */
 #define FASTER_GCODE_PARSER
 
+#if ENABLED(FASTER_GCODE_PARSER)
+//#define GCODE_QUOTED_STRINGS  // Support for quoted string parameters
+#endif
+
 /**
  * CNC G-code options
  * Support CNC-style G-code dialects used by laser cutters, drawing machine cams, etc.
@@ -3074,11 +3081,19 @@
 //#define ESP3D_WIFISUPPORT   // ESP3D Library WiFi management (https://github.com/luc-github/ESP3DLib)
 
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
-#define WIFI_SSID "Wifi SSID"
-#define WIFI_PWD "Wifi Password"
 //#define WEBSUPPORT          // Start a webserver (which may include auto-discovery)
 //#define OTASUPPORT          // Support over-the-air firmware updates
 //#define WIFI_CUSTOM_COMMAND // Accept feature config commands (e.g., WiFi ESP3D) from the host
+
+/**
+   * To set a default WiFi SSID / Password, create a file called Configuration_Secure.h with
+   * the following defines, customized for your network. This specific file is excluded via
+   * .gitignore to prevent it from accidentally leaking to the public.
+   *
+   *   #define WIFI_SSID "WiFi SSID"
+   *   #define WIFI_PWD  "WiFi Password"
+   */
+//#include "Configuration_Secure.h" // External file with WiFi SSID / Password
 #endif
 
 /**
