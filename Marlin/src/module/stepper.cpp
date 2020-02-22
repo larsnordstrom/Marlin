@@ -2204,10 +2204,9 @@ uint32_t Stepper::advance_isr()
   // with potentially multiple steps. Set all.
   if (LA_steps >= 0)
     MIXER_STEPPER_LOOP(j)
-    NORM_E_DIR(j);
-  else
-    MIXER_STEPPER_LOOP(j)
-    REV_E_DIR(j);
+  NORM_E_DIR(j);
+  else MIXER_STEPPER_LOOP(j)
+      REV_E_DIR(j);
 #else
   if (LA_steps >= 0)
     NORM_E_DIR(stepper_extruder);
@@ -2820,8 +2819,11 @@ void Stepper::do_babystep(const AxisEnum axis, const bool direction)
 #elif CORE_IS_YZ
     BABYSTEP_CORE(Y, Z, 0, direction, (CORESIGN(1) < 0));
 #else
+    BABYSTEP_AXIS(Y, 0, direction);
+#endif
+    break;
 
-    BABYSTEP_AXIS(Y, 0, direction, (CORESIGN(1) < 0));
+#endif
 
   case Z_AXIS:
   {
@@ -2831,7 +2833,7 @@ void Stepper::do_babystep(const AxisEnum axis, const bool direction)
 #elif CORE_IS_YZ
     BABYSTEP_CORE(Y, Z, BABYSTEP_INVERT_Z, direction, (CORESIGN(1) < 0));
 #elif DISABLED(DELTA)
-    BABYSTEP_AXIS(Z, BABYSTEP_INVERT_Z, direction, (CORESIGN(1) < 0));
+    BABYSTEP_AXIS(Z, BABYSTEP_INVERT_Z, direction);
 
 #else // DELTA
 
@@ -2887,49 +2889,49 @@ void Stepper::do_babystep(const AxisEnum axis, const bool direction)
 
 #endif // BABYSTEPPING
 
-    /**
+/**
  * Software-controlled Stepper Motor Current
  */
 
 #if HAS_DIGIPOTSS
 
-    // From Arduino DigitalPotControl example
-    void Stepper::digitalPotWrite(const int16_t address, const int16_t value)
-    {
-      WRITE(DIGIPOTSS_PIN, LOW); // Take the SS pin low to select the chip
-      SPI.transfer(address);     // Send the address and value via SPI
-      SPI.transfer(value);
-      WRITE(DIGIPOTSS_PIN, HIGH); // Take the SS pin high to de-select the chip
-      //delay(10);
-    }
+// From Arduino DigitalPotControl example
+void Stepper::digitalPotWrite(const int16_t address, const int16_t value)
+{
+  WRITE(DIGIPOTSS_PIN, LOW); // Take the SS pin low to select the chip
+  SPI.transfer(address);     // Send the address and value via SPI
+  SPI.transfer(value);
+  WRITE(DIGIPOTSS_PIN, HIGH); // Take the SS pin high to de-select the chip
+  //delay(10);
+}
 
 #endif // HAS_DIGIPOTSS
 
 #if HAS_MOTOR_CURRENT_PWM
 
-    void Stepper::refresh_motor_power()
+void Stepper::refresh_motor_power()
+{
+  if (!initialized)
+    return;
+  LOOP_L_N(i, COUNT(motor_current_setting))
+  {
+    switch (i)
     {
-      if (!initialized)
-        return;
-      LOOP_L_N(i, COUNT(motor_current_setting))
-      {
-        switch (i)
-        {
 #if ANY_PIN(MOTOR_CURRENT_PWM_XY, MOTOR_CURRENT_PWM_X, MOTOR_CURRENT_PWM_Y)
-        case 0:
+    case 0:
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_Z)
-        case 1:
+    case 1:
 #endif
 #if ANY_PIN(MOTOR_CURRENT_PWM_E, MOTOR_CURRENT_PWM_E0, MOTOR_CURRENT_PWM_E1)
-        case 2:
+    case 2:
 #endif
-          digipot_current(i, motor_current_setting[i]);
-        default:
-          break;
-        }
-      }
+      digipot_current(i, motor_current_setting[i]);
+    default:
+      break;
     }
+  }
+}
 
 #endif // HAS_MOTOR_CURRENT_PWM
 
@@ -2937,104 +2939,104 @@ void Stepper::do_babystep(const AxisEnum axis, const bool direction)
 
 #if HAS_DIGIPOTSS || HAS_MOTOR_CURRENT_PWM
 
-    void Stepper::digipot_current(const uint8_t driver, const int16_t current)
-    {
+void Stepper::digipot_current(const uint8_t driver, const int16_t current)
+{
 
 #if HAS_DIGIPOTSS
 
-      const uint8_t digipot_ch[] = DIGIPOT_CHANNELS;
-      digitalPotWrite(digipot_ch[driver], current);
+  const uint8_t digipot_ch[] = DIGIPOT_CHANNELS;
+  digitalPotWrite(digipot_ch[driver], current);
 
 #elif HAS_MOTOR_CURRENT_PWM
 
-      if (!initialized)
-        return;
+  if (!initialized)
+    return;
 
-      if (WITHIN(driver, 0, COUNT(motor_current_setting) - 1))
-        motor_current_setting[driver] = current; // update motor_current_setting
+  if (WITHIN(driver, 0, COUNT(motor_current_setting) - 1))
+    motor_current_setting[driver] = current; // update motor_current_setting
 
 #define _WRITE_CURRENT_PWM(P) analogWrite(pin_t(MOTOR_CURRENT_PWM_##P##_PIN), 255L * current / (MOTOR_CURRENT_PWM_RANGE))
-      switch (driver)
-      {
-      case 0:
+  switch (driver)
+  {
+  case 0:
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_X)
-        _WRITE_CURRENT_PWM(X);
+    _WRITE_CURRENT_PWM(X);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_Y)
-        _WRITE_CURRENT_PWM(Y);
+    _WRITE_CURRENT_PWM(Y);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_XY)
-        _WRITE_CURRENT_PWM(XY);
+    _WRITE_CURRENT_PWM(XY);
 #endif
-        break;
-      case 1:
+    break;
+  case 1:
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_Z)
-        _WRITE_CURRENT_PWM(Z);
+    _WRITE_CURRENT_PWM(Z);
 #endif
-        break;
-      case 2:
+    break;
+  case 2:
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_E)
-        _WRITE_CURRENT_PWM(E);
+    _WRITE_CURRENT_PWM(E);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_E0)
-        _WRITE_CURRENT_PWM(E0);
+    _WRITE_CURRENT_PWM(E0);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_E1)
-        _WRITE_CURRENT_PWM(E1);
+    _WRITE_CURRENT_PWM(E1);
 #endif
-        break;
-      }
+    break;
+  }
 #endif
-    }
+}
 
-    void Stepper::digipot_init()
-    {
+void Stepper::digipot_init()
+{
 
 #if HAS_DIGIPOTSS
 
-      static const uint8_t digipot_motor_current[] = DIGIPOT_MOTOR_CURRENT;
+  static const uint8_t digipot_motor_current[] = DIGIPOT_MOTOR_CURRENT;
 
-      SPI.begin();
-      SET_OUTPUT(DIGIPOTSS_PIN);
+  SPI.begin();
+  SET_OUTPUT(DIGIPOTSS_PIN);
 
-      for (uint8_t i = 0; i < COUNT(digipot_motor_current); i++)
-      {
-        //digitalPotWrite(digipot_ch[i], digipot_motor_current[i]);
-        digipot_current(i, digipot_motor_current[i]);
-      }
+  for (uint8_t i = 0; i < COUNT(digipot_motor_current); i++)
+  {
+    //digitalPotWrite(digipot_ch[i], digipot_motor_current[i]);
+    digipot_current(i, digipot_motor_current[i]);
+  }
 
 #elif HAS_MOTOR_CURRENT_PWM
 
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_X)
-      SET_PWM(MOTOR_CURRENT_PWM_X_PIN);
+  SET_PWM(MOTOR_CURRENT_PWM_X_PIN);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_Y)
-      SET_PWM(MOTOR_CURRENT_PWM_Y_PIN);
+  SET_PWM(MOTOR_CURRENT_PWM_Y_PIN);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_XY)
-      SET_PWM(MOTOR_CURRENT_PWM_XY_PIN);
+  SET_PWM(MOTOR_CURRENT_PWM_XY_PIN);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_Z)
-      SET_PWM(MOTOR_CURRENT_PWM_Z_PIN);
+  SET_PWM(MOTOR_CURRENT_PWM_Z_PIN);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_E)
-      SET_PWM(MOTOR_CURRENT_PWM_E_PIN);
+  SET_PWM(MOTOR_CURRENT_PWM_E_PIN);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_E0)
-      SET_PWM(MOTOR_CURRENT_PWM_E0_PIN);
+  SET_PWM(MOTOR_CURRENT_PWM_E0_PIN);
 #endif
 #if PIN_EXISTS(MOTOR_CURRENT_PWM_E1)
-      SET_PWM(MOTOR_CURRENT_PWM_E1_PIN);
+  SET_PWM(MOTOR_CURRENT_PWM_E1_PIN);
 #endif
 
-      refresh_motor_power();
+  refresh_motor_power();
 
 // Set Timer5 to 31khz so the PWM of the motor power is as constant as possible. (removes a buzzing noise)
 #ifdef __AVR__
-      SET_CS5(PRESCALER_1);
+  SET_CS5(PRESCALER_1);
 #endif
 #endif
-    }
+}
 
 #endif
 
@@ -3046,527 +3048,527 @@ void Stepper::do_babystep(const AxisEnum axis, const bool direction)
 
 #if HAS_MICROSTEPS
 
-    /**
+/**
    * Software-controlled Microstepping
    */
 
-    void Stepper::microstep_init()
-    {
+void Stepper::microstep_init()
+{
 #if HAS_X_MICROSTEPS
-      SET_OUTPUT(X_MS1_PIN);
-      SET_OUTPUT(X_MS2_PIN);
+  SET_OUTPUT(X_MS1_PIN);
+  SET_OUTPUT(X_MS2_PIN);
 #if PIN_EXISTS(X_MS3)
-      SET_OUTPUT(X_MS3_PIN);
+  SET_OUTPUT(X_MS3_PIN);
 #endif
 #endif
 #if HAS_X2_MICROSTEPS
-      SET_OUTPUT(X2_MS1_PIN);
-      SET_OUTPUT(X2_MS2_PIN);
+  SET_OUTPUT(X2_MS1_PIN);
+  SET_OUTPUT(X2_MS2_PIN);
 #if PIN_EXISTS(X2_MS3)
-      SET_OUTPUT(X2_MS3_PIN);
+  SET_OUTPUT(X2_MS3_PIN);
 #endif
 #endif
 #if HAS_Y_MICROSTEPS
-      SET_OUTPUT(Y_MS1_PIN);
-      SET_OUTPUT(Y_MS2_PIN);
+  SET_OUTPUT(Y_MS1_PIN);
+  SET_OUTPUT(Y_MS2_PIN);
 #if PIN_EXISTS(Y_MS3)
-      SET_OUTPUT(Y_MS3_PIN);
+  SET_OUTPUT(Y_MS3_PIN);
 #endif
 #endif
 #if HAS_Y2_MICROSTEPS
-      SET_OUTPUT(Y2_MS1_PIN);
-      SET_OUTPUT(Y2_MS2_PIN);
+  SET_OUTPUT(Y2_MS1_PIN);
+  SET_OUTPUT(Y2_MS2_PIN);
 #if PIN_EXISTS(Y2_MS3)
-      SET_OUTPUT(Y2_MS3_PIN);
+  SET_OUTPUT(Y2_MS3_PIN);
 #endif
 #endif
 #if HAS_Z_MICROSTEPS
-      SET_OUTPUT(Z_MS1_PIN);
-      SET_OUTPUT(Z_MS2_PIN);
+  SET_OUTPUT(Z_MS1_PIN);
+  SET_OUTPUT(Z_MS2_PIN);
 #if PIN_EXISTS(Z_MS3)
-      SET_OUTPUT(Z_MS3_PIN);
+  SET_OUTPUT(Z_MS3_PIN);
 #endif
 #endif
 #if HAS_Z2_MICROSTEPS
-      SET_OUTPUT(Z2_MS1_PIN);
-      SET_OUTPUT(Z2_MS2_PIN);
+  SET_OUTPUT(Z2_MS1_PIN);
+  SET_OUTPUT(Z2_MS2_PIN);
 #if PIN_EXISTS(Z2_MS3)
-      SET_OUTPUT(Z2_MS3_PIN);
+  SET_OUTPUT(Z2_MS3_PIN);
 #endif
 #endif
 #if HAS_Z3_MICROSTEPS
-      SET_OUTPUT(Z3_MS1_PIN);
-      SET_OUTPUT(Z3_MS2_PIN);
+  SET_OUTPUT(Z3_MS1_PIN);
+  SET_OUTPUT(Z3_MS2_PIN);
 #if PIN_EXISTS(Z3_MS3)
-      SET_OUTPUT(Z3_MS3_PIN);
+  SET_OUTPUT(Z3_MS3_PIN);
 #endif
 #endif
 #if HAS_Z4_MICROSTEPS
-      SET_OUTPUT(Z4_MS1_PIN);
-      SET_OUTPUT(Z4_MS2_PIN);
+  SET_OUTPUT(Z4_MS1_PIN);
+  SET_OUTPUT(Z4_MS2_PIN);
 #if PIN_EXISTS(Z4_MS3)
-      SET_OUTPUT(Z4_MS3_PIN);
+  SET_OUTPUT(Z4_MS3_PIN);
 #endif
 #endif
 #if HAS_E0_MICROSTEPS
-      SET_OUTPUT(E0_MS1_PIN);
-      SET_OUTPUT(E0_MS2_PIN);
+  SET_OUTPUT(E0_MS1_PIN);
+  SET_OUTPUT(E0_MS2_PIN);
 #if PIN_EXISTS(E0_MS3)
-      SET_OUTPUT(E0_MS3_PIN);
+  SET_OUTPUT(E0_MS3_PIN);
 #endif
 #endif
 #if HAS_E1_MICROSTEPS
-      SET_OUTPUT(E1_MS1_PIN);
-      SET_OUTPUT(E1_MS2_PIN);
+  SET_OUTPUT(E1_MS1_PIN);
+  SET_OUTPUT(E1_MS2_PIN);
 #if PIN_EXISTS(E1_MS3)
-      SET_OUTPUT(E1_MS3_PIN);
+  SET_OUTPUT(E1_MS3_PIN);
 #endif
 #endif
 #if HAS_E2_MICROSTEPS
-      SET_OUTPUT(E2_MS1_PIN);
-      SET_OUTPUT(E2_MS2_PIN);
+  SET_OUTPUT(E2_MS1_PIN);
+  SET_OUTPUT(E2_MS2_PIN);
 #if PIN_EXISTS(E2_MS3)
-      SET_OUTPUT(E2_MS3_PIN);
+  SET_OUTPUT(E2_MS3_PIN);
 #endif
 #endif
 #if HAS_E3_MICROSTEPS
-      SET_OUTPUT(E3_MS1_PIN);
-      SET_OUTPUT(E3_MS2_PIN);
+  SET_OUTPUT(E3_MS1_PIN);
+  SET_OUTPUT(E3_MS2_PIN);
 #if PIN_EXISTS(E3_MS3)
-      SET_OUTPUT(E3_MS3_PIN);
+  SET_OUTPUT(E3_MS3_PIN);
 #endif
 #endif
 #if HAS_E4_MICROSTEPS
-      SET_OUTPUT(E4_MS1_PIN);
-      SET_OUTPUT(E4_MS2_PIN);
+  SET_OUTPUT(E4_MS1_PIN);
+  SET_OUTPUT(E4_MS2_PIN);
 #if PIN_EXISTS(E4_MS3)
-      SET_OUTPUT(E4_MS3_PIN);
+  SET_OUTPUT(E4_MS3_PIN);
 #endif
 #endif
 #if HAS_E5_MICROSTEPS
-      SET_OUTPUT(E5_MS1_PIN);
-      SET_OUTPUT(E5_MS2_PIN);
+  SET_OUTPUT(E5_MS1_PIN);
+  SET_OUTPUT(E5_MS2_PIN);
 #if PIN_EXISTS(E5_MS3)
-      SET_OUTPUT(E5_MS3_PIN);
+  SET_OUTPUT(E5_MS3_PIN);
 #endif
 #endif
 #if HAS_E6_MICROSTEPS
-      SET_OUTPUT(E6_MS1_PIN);
-      SET_OUTPUT(E6_MS2_PIN);
+  SET_OUTPUT(E6_MS1_PIN);
+  SET_OUTPUT(E6_MS2_PIN);
 #if PIN_EXISTS(E6_MS3)
-      SET_OUTPUT(E6_MS3_PIN);
+  SET_OUTPUT(E6_MS3_PIN);
 #endif
 #endif
 #if HAS_E7_MICROSTEPS
-      SET_OUTPUT(E7_MS1_PIN);
-      SET_OUTPUT(E7_MS2_PIN);
+  SET_OUTPUT(E7_MS1_PIN);
+  SET_OUTPUT(E7_MS2_PIN);
 #if PIN_EXISTS(E7_MS3)
-      SET_OUTPUT(E7_MS3_PIN);
+  SET_OUTPUT(E7_MS3_PIN);
 #endif
 #endif
 
-      static const uint8_t microstep_modes[] = MICROSTEP_MODES;
-      for (uint16_t i = 0; i < COUNT(microstep_modes); i++)
-        microstep_mode(i, microstep_modes[i]);
-    }
+  static const uint8_t microstep_modes[] = MICROSTEP_MODES;
+  for (uint16_t i = 0; i < COUNT(microstep_modes); i++)
+    microstep_mode(i, microstep_modes[i]);
+}
 
-    void Stepper::microstep_ms(const uint8_t driver, const int8_t ms1, const int8_t ms2, const int8_t ms3)
+void Stepper::microstep_ms(const uint8_t driver, const int8_t ms1, const int8_t ms2, const int8_t ms3)
+{
+  if (ms1 >= 0)
+    switch (driver)
     {
-      if (ms1 >= 0)
-        switch (driver)
-        {
 #if HAS_X_MICROSTEPS || HAS_X2_MICROSTEPS
-        case 0:
+    case 0:
 #if HAS_X_MICROSTEPS
-          WRITE(X_MS1_PIN, ms1);
+      WRITE(X_MS1_PIN, ms1);
 #endif
 #if HAS_X2_MICROSTEPS
-          WRITE(X2_MS1_PIN, ms1);
+      WRITE(X2_MS1_PIN, ms1);
 #endif
-          break;
+      break;
 #endif
 #if HAS_Y_MICROSTEPS || HAS_Y2_MICROSTEPS
-        case 1:
+    case 1:
 #if HAS_Y_MICROSTEPS
-          WRITE(Y_MS1_PIN, ms1);
+      WRITE(Y_MS1_PIN, ms1);
 #endif
 #if HAS_Y2_MICROSTEPS
-          WRITE(Y2_MS1_PIN, ms1);
+      WRITE(Y2_MS1_PIN, ms1);
 #endif
-          break;
+      break;
 #endif
 #if HAS_SOME_Z_MICROSTEPS
-        case 2:
+    case 2:
 #if HAS_Z_MICROSTEPS
-          WRITE(Z_MS1_PIN, ms1);
+      WRITE(Z_MS1_PIN, ms1);
 #endif
 #if HAS_Z2_MICROSTEPS
-          WRITE(Z2_MS1_PIN, ms1);
+      WRITE(Z2_MS1_PIN, ms1);
 #endif
 #if HAS_Z3_MICROSTEPS
-          WRITE(Z3_MS1_PIN, ms1);
+      WRITE(Z3_MS1_PIN, ms1);
 #endif
 #if HAS_Z4_MICROSTEPS
-          WRITE(Z4_MS1_PIN, ms1);
+      WRITE(Z4_MS1_PIN, ms1);
 #endif
-          break;
+      break;
 #endif
 #if HAS_E0_MICROSTEPS
-        case 3:
-          WRITE(E0_MS1_PIN, ms1);
-          break;
+    case 3:
+      WRITE(E0_MS1_PIN, ms1);
+      break;
 #endif
 #if HAS_E1_MICROSTEPS
-        case 4:
-          WRITE(E1_MS1_PIN, ms1);
-          break;
+    case 4:
+      WRITE(E1_MS1_PIN, ms1);
+      break;
 #endif
 #if HAS_E2_MICROSTEPS
-        case 5:
-          WRITE(E2_MS1_PIN, ms1);
-          break;
+    case 5:
+      WRITE(E2_MS1_PIN, ms1);
+      break;
 #endif
 #if HAS_E3_MICROSTEPS
-        case 6:
-          WRITE(E3_MS1_PIN, ms1);
-          break;
+    case 6:
+      WRITE(E3_MS1_PIN, ms1);
+      break;
 #endif
 #if HAS_E4_MICROSTEPS
-        case 7:
-          WRITE(E4_MS1_PIN, ms1);
-          break;
+    case 7:
+      WRITE(E4_MS1_PIN, ms1);
+      break;
 #endif
 #if HAS_E5_MICROSTEPS
-        case 8:
-          WRITE(E5_MS1_PIN, ms1);
-          break;
+    case 8:
+      WRITE(E5_MS1_PIN, ms1);
+      break;
 #endif
 #if HAS_E6_MICROSTEPS
-        case 9:
-          WRITE(E6_MS1_PIN, ms1);
-          break;
+    case 9:
+      WRITE(E6_MS1_PIN, ms1);
+      break;
 #endif
 #if HAS_E7_MICROSTEPS
-        case 10:
-          WRITE(E7_MS1_PIN, ms1);
-          break;
+    case 10:
+      WRITE(E7_MS1_PIN, ms1);
+      break;
 #endif
-        }
-      if (ms2 >= 0)
-        switch (driver)
-        {
+    }
+  if (ms2 >= 0)
+    switch (driver)
+    {
 #if HAS_X_MICROSTEPS || HAS_X2_MICROSTEPS
-        case 0:
+    case 0:
 #if HAS_X_MICROSTEPS
-          WRITE(X_MS2_PIN, ms2);
+      WRITE(X_MS2_PIN, ms2);
 #endif
 #if HAS_X2_MICROSTEPS
-          WRITE(X2_MS2_PIN, ms2);
+      WRITE(X2_MS2_PIN, ms2);
 #endif
-          break;
+      break;
 #endif
 #if HAS_Y_MICROSTEPS || HAS_Y2_MICROSTEPS
-        case 1:
+    case 1:
 #if HAS_Y_MICROSTEPS
-          WRITE(Y_MS2_PIN, ms2);
+      WRITE(Y_MS2_PIN, ms2);
 #endif
 #if HAS_Y2_MICROSTEPS
-          WRITE(Y2_MS2_PIN, ms2);
+      WRITE(Y2_MS2_PIN, ms2);
 #endif
-          break;
+      break;
 #endif
 #if HAS_SOME_Z_MICROSTEPS
-        case 2:
+    case 2:
 #if HAS_Z_MICROSTEPS
-          WRITE(Z_MS2_PIN, ms2);
+      WRITE(Z_MS2_PIN, ms2);
 #endif
 #if HAS_Z2_MICROSTEPS
-          WRITE(Z2_MS2_PIN, ms2);
+      WRITE(Z2_MS2_PIN, ms2);
 #endif
 #if HAS_Z3_MICROSTEPS
-          WRITE(Z3_MS2_PIN, ms2);
+      WRITE(Z3_MS2_PIN, ms2);
 #endif
 #if HAS_Z4_MICROSTEPS
-          WRITE(Z4_MS2_PIN, ms2);
+      WRITE(Z4_MS2_PIN, ms2);
 #endif
-          break;
+      break;
 #endif
 #if HAS_E0_MICROSTEPS
-        case 3:
-          WRITE(E0_MS2_PIN, ms2);
-          break;
+    case 3:
+      WRITE(E0_MS2_PIN, ms2);
+      break;
 #endif
 #if HAS_E1_MICROSTEPS
-        case 4:
-          WRITE(E1_MS2_PIN, ms2);
-          break;
+    case 4:
+      WRITE(E1_MS2_PIN, ms2);
+      break;
 #endif
 #if HAS_E2_MICROSTEPS
-        case 5:
-          WRITE(E2_MS2_PIN, ms2);
-          break;
+    case 5:
+      WRITE(E2_MS2_PIN, ms2);
+      break;
 #endif
 #if HAS_E3_MICROSTEPS
-        case 6:
-          WRITE(E3_MS2_PIN, ms2);
-          break;
+    case 6:
+      WRITE(E3_MS2_PIN, ms2);
+      break;
 #endif
 #if HAS_E4_MICROSTEPS
-        case 7:
-          WRITE(E4_MS2_PIN, ms2);
-          break;
+    case 7:
+      WRITE(E4_MS2_PIN, ms2);
+      break;
 #endif
 #if HAS_E5_MICROSTEPS
-        case 8:
-          WRITE(E5_MS2_PIN, ms2);
-          break;
+    case 8:
+      WRITE(E5_MS2_PIN, ms2);
+      break;
 #endif
 #if HAS_E6_MICROSTEPS
-        case 9:
-          WRITE(E6_MS2_PIN, ms2);
-          break;
+    case 9:
+      WRITE(E6_MS2_PIN, ms2);
+      break;
 #endif
 #if HAS_E7_MICROSTEPS
-        case 10:
-          WRITE(E7_MS2_PIN, ms2);
-          break;
+    case 10:
+      WRITE(E7_MS2_PIN, ms2);
+      break;
 #endif
-        }
-      if (ms3 >= 0)
-        switch (driver)
-        {
+    }
+  if (ms3 >= 0)
+    switch (driver)
+    {
 #if HAS_X_MICROSTEPS || HAS_X2_MICROSTEPS
-        case 0:
+    case 0:
 #if HAS_X_MICROSTEPS && PIN_EXISTS(X_MS3)
-          WRITE(X_MS3_PIN, ms3);
+      WRITE(X_MS3_PIN, ms3);
 #endif
 #if HAS_X2_MICROSTEPS && PIN_EXISTS(X2_MS3)
-          WRITE(X2_MS3_PIN, ms3);
+      WRITE(X2_MS3_PIN, ms3);
 #endif
-          break;
+      break;
 #endif
 #if HAS_Y_MICROSTEPS || HAS_Y2_MICROSTEPS
-        case 1:
+    case 1:
 #if HAS_Y_MICROSTEPS && PIN_EXISTS(Y_MS3)
-          WRITE(Y_MS3_PIN, ms3);
+      WRITE(Y_MS3_PIN, ms3);
 #endif
 #if HAS_Y2_MICROSTEPS && PIN_EXISTS(Y2_MS3)
-          WRITE(Y2_MS3_PIN, ms3);
+      WRITE(Y2_MS3_PIN, ms3);
 #endif
-          break;
+      break;
 #endif
 #if HAS_SOME_Z_MICROSTEPS
-        case 2:
+    case 2:
 #if HAS_Z_MICROSTEPS && PIN_EXISTS(Z_MS3)
-          WRITE(Z_MS3_PIN, ms3);
+      WRITE(Z_MS3_PIN, ms3);
 #endif
 #if HAS_Z2_MICROSTEPS && PIN_EXISTS(Z2_MS3)
-          WRITE(Z2_MS3_PIN, ms3);
+      WRITE(Z2_MS3_PIN, ms3);
 #endif
 #if HAS_Z3_MICROSTEPS && PIN_EXISTS(Z3_MS3)
-          WRITE(Z3_MS3_PIN, ms3);
+      WRITE(Z3_MS3_PIN, ms3);
 #endif
 #if HAS_Z4_MICROSTEPS && PIN_EXISTS(Z4_MS3)
-          WRITE(Z4_MS3_PIN, ms3);
+      WRITE(Z4_MS3_PIN, ms3);
 #endif
-          break;
+      break;
 #endif
 #if HAS_E0_MICROSTEPS && PIN_EXISTS(E0_MS3)
-        case 3:
-          WRITE(E0_MS3_PIN, ms3);
-          break;
+    case 3:
+      WRITE(E0_MS3_PIN, ms3);
+      break;
 #endif
 #if HAS_E1_MICROSTEPS && PIN_EXISTS(E1_MS3)
-        case 4:
-          WRITE(E1_MS3_PIN, ms3);
-          break;
+    case 4:
+      WRITE(E1_MS3_PIN, ms3);
+      break;
 #endif
 #if HAS_E2_MICROSTEPS && PIN_EXISTS(E2_MS3)
-        case 5:
-          WRITE(E2_MS3_PIN, ms3);
-          break;
+    case 5:
+      WRITE(E2_MS3_PIN, ms3);
+      break;
 #endif
 #if HAS_E3_MICROSTEPS && PIN_EXISTS(E3_MS3)
-        case 6:
-          WRITE(E3_MS3_PIN, ms3);
-          break;
+    case 6:
+      WRITE(E3_MS3_PIN, ms3);
+      break;
 #endif
 #if HAS_E4_MICROSTEPS && PIN_EXISTS(E4_MS3)
-        case 7:
-          WRITE(E4_MS3_PIN, ms3);
-          break;
+    case 7:
+      WRITE(E4_MS3_PIN, ms3);
+      break;
 #endif
 #if HAS_E5_MICROSTEPS && PIN_EXISTS(E5_MS3)
-        case 8:
-          WRITE(E5_MS3_PIN, ms3);
-          break;
+    case 8:
+      WRITE(E5_MS3_PIN, ms3);
+      break;
 #endif
 #if HAS_E6_MICROSTEPS && PIN_EXISTS(E6_MS3)
-        case 9:
-          WRITE(E6_MS3_PIN, ms3);
-          break;
+    case 9:
+      WRITE(E6_MS3_PIN, ms3);
+      break;
 #endif
 #if HAS_E7_MICROSTEPS && PIN_EXISTS(E7_MS3)
-        case 10:
-          WRITE(E7_MS3_PIN, ms3);
-          break;
+    case 10:
+      WRITE(E7_MS3_PIN, ms3);
+      break;
 #endif
-        }
     }
+}
 
-    void Stepper::microstep_mode(const uint8_t driver, const uint8_t stepping_mode)
-    {
-      switch (stepping_mode)
-      {
+void Stepper::microstep_mode(const uint8_t driver, const uint8_t stepping_mode)
+{
+  switch (stepping_mode)
+  {
 #if HAS_MICROSTEP1
-      case 1:
-        microstep_ms(driver, MICROSTEP1);
-        break;
+  case 1:
+    microstep_ms(driver, MICROSTEP1);
+    break;
 #endif
 #if HAS_MICROSTEP2
-      case 2:
-        microstep_ms(driver, MICROSTEP2);
-        break;
+  case 2:
+    microstep_ms(driver, MICROSTEP2);
+    break;
 #endif
 #if HAS_MICROSTEP4
-      case 4:
-        microstep_ms(driver, MICROSTEP4);
-        break;
+  case 4:
+    microstep_ms(driver, MICROSTEP4);
+    break;
 #endif
 #if HAS_MICROSTEP8
-      case 8:
-        microstep_ms(driver, MICROSTEP8);
-        break;
+  case 8:
+    microstep_ms(driver, MICROSTEP8);
+    break;
 #endif
 #if HAS_MICROSTEP16
-      case 16:
-        microstep_ms(driver, MICROSTEP16);
-        break;
+  case 16:
+    microstep_ms(driver, MICROSTEP16);
+    break;
 #endif
 #if HAS_MICROSTEP32
-      case 32:
-        microstep_ms(driver, MICROSTEP32);
-        break;
+  case 32:
+    microstep_ms(driver, MICROSTEP32);
+    break;
 #endif
 #if HAS_MICROSTEP64
-      case 64:
-        microstep_ms(driver, MICROSTEP64);
-        break;
+  case 64:
+    microstep_ms(driver, MICROSTEP64);
+    break;
 #endif
 #if HAS_MICROSTEP128
-      case 128:
-        microstep_ms(driver, MICROSTEP128);
-        break;
+  case 128:
+    microstep_ms(driver, MICROSTEP128);
+    break;
 #endif
 
-      default:
-        SERIAL_ERROR_MSG("Microsteps unavailable");
-        break;
-      }
-    }
+  default:
+    SERIAL_ERROR_MSG("Microsteps unavailable");
+    break;
+  }
+}
 
-    void Stepper::microstep_readings()
-    {
-      SERIAL_ECHOLNPGM("MS1|MS2|MS3 Pins");
+void Stepper::microstep_readings()
+{
+  SERIAL_ECHOLNPGM("MS1|MS2|MS3 Pins");
 #if HAS_X_MICROSTEPS
-      SERIAL_ECHOPGM("X: ");
-      SERIAL_CHAR('0' + READ(X_MS1_PIN), '0' + READ(X_MS2_PIN)
+  SERIAL_ECHOPGM("X: ");
+  SERIAL_CHAR('0' + READ(X_MS1_PIN), '0' + READ(X_MS2_PIN)
 #if PIN_EXISTS(X_MS3)
-                                             ,
-                  '0' + READ(X_MS3_PIN)
+                                         ,
+              '0' + READ(X_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_Y_MICROSTEPS
-      SERIAL_ECHOPGM("Y: ");
-      SERIAL_CHAR('0' + READ(Y_MS1_PIN), '0' + READ(Y_MS2_PIN)
+  SERIAL_ECHOPGM("Y: ");
+  SERIAL_CHAR('0' + READ(Y_MS1_PIN), '0' + READ(Y_MS2_PIN)
 #if PIN_EXISTS(Y_MS3)
-                                             ,
-                  '0' + READ(Y_MS3_PIN)
+                                         ,
+              '0' + READ(Y_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_Z_MICROSTEPS
-      SERIAL_ECHOPGM("Z: ");
-      SERIAL_CHAR('0' + READ(Z_MS1_PIN), '0' + READ(Z_MS2_PIN)
+  SERIAL_ECHOPGM("Z: ");
+  SERIAL_CHAR('0' + READ(Z_MS1_PIN), '0' + READ(Z_MS2_PIN)
 #if PIN_EXISTS(Z_MS3)
-                                             ,
-                  '0' + READ(Z_MS3_PIN)
+                                         ,
+              '0' + READ(Z_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_E0_MICROSTEPS
-      SERIAL_ECHOPGM("E0: ");
-      SERIAL_CHAR('0' + READ(E0_MS1_PIN), '0' + READ(E0_MS2_PIN)
+  SERIAL_ECHOPGM("E0: ");
+  SERIAL_CHAR('0' + READ(E0_MS1_PIN), '0' + READ(E0_MS2_PIN)
 #if PIN_EXISTS(E0_MS3)
-                                              ,
-                  '0' + READ(E0_MS3_PIN)
+                                          ,
+              '0' + READ(E0_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_E1_MICROSTEPS
-      SERIAL_ECHOPGM("E1: ");
-      SERIAL_CHAR('0' + READ(E1_MS1_PIN), '0' + READ(E1_MS2_PIN)
+  SERIAL_ECHOPGM("E1: ");
+  SERIAL_CHAR('0' + READ(E1_MS1_PIN), '0' + READ(E1_MS2_PIN)
 #if PIN_EXISTS(E1_MS3)
-                                              ,
-                  '0' + READ(E1_MS3_PIN)
+                                          ,
+              '0' + READ(E1_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_E2_MICROSTEPS
-      SERIAL_ECHOPGM("E2: ");
-      SERIAL_CHAR('0' + READ(E2_MS1_PIN), '0' + READ(E2_MS2_PIN)
+  SERIAL_ECHOPGM("E2: ");
+  SERIAL_CHAR('0' + READ(E2_MS1_PIN), '0' + READ(E2_MS2_PIN)
 #if PIN_EXISTS(E2_MS3)
-                                              ,
-                  '0' + READ(E2_MS3_PIN)
+                                          ,
+              '0' + READ(E2_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_E3_MICROSTEPS
-      SERIAL_ECHOPGM("E3: ");
-      SERIAL_CHAR('0' + READ(E3_MS1_PIN), '0' + READ(E3_MS2_PIN)
+  SERIAL_ECHOPGM("E3: ");
+  SERIAL_CHAR('0' + READ(E3_MS1_PIN), '0' + READ(E3_MS2_PIN)
 #if PIN_EXISTS(E3_MS3)
-                                              ,
-                  '0' + READ(E3_MS3_PIN)
+                                          ,
+              '0' + READ(E3_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_E4_MICROSTEPS
-      SERIAL_ECHOPGM("E4: ");
-      SERIAL_CHAR('0' + READ(E4_MS1_PIN), '0' + READ(E4_MS2_PIN)
+  SERIAL_ECHOPGM("E4: ");
+  SERIAL_CHAR('0' + READ(E4_MS1_PIN), '0' + READ(E4_MS2_PIN)
 #if PIN_EXISTS(E4_MS3)
-                                              ,
-                  '0' + READ(E4_MS3_PIN)
+                                          ,
+              '0' + READ(E4_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_E5_MICROSTEPS
-      SERIAL_ECHOPGM("E5: ");
-      SERIAL_CHAR('0' + READ(E5_MS1_PIN), '0' + READ(E5_MS2_PIN)
+  SERIAL_ECHOPGM("E5: ");
+  SERIAL_CHAR('0' + READ(E5_MS1_PIN), '0' + READ(E5_MS2_PIN)
 #if PIN_EXISTS(E5_MS3)
-                                              ,
-                  '0' + READ(E5_MS3_PIN)
+                                          ,
+              '0' + READ(E5_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_E6_MICROSTEPS
-      SERIAL_ECHOPGM("E6: ");
-      SERIAL_CHAR('0' + READ(E6_MS1_PIN), '0' + READ(E6_MS2_PIN)
+  SERIAL_ECHOPGM("E6: ");
+  SERIAL_CHAR('0' + READ(E6_MS1_PIN), '0' + READ(E6_MS2_PIN)
 #if PIN_EXISTS(E6_MS3)
-                                              ,
-                  '0' + READ(E6_MS3_PIN)
+                                          ,
+              '0' + READ(E6_MS3_PIN)
 #endif
-      );
+  );
 #endif
 #if HAS_E7_MICROSTEPS
-      SERIAL_ECHOPGM("E7: ");
-      SERIAL_CHAR('0' + READ(E7_MS1_PIN), '0' + READ(E7_MS2_PIN)
+  SERIAL_ECHOPGM("E7: ");
+  SERIAL_CHAR('0' + READ(E7_MS1_PIN), '0' + READ(E7_MS2_PIN)
 #if PIN_EXISTS(E7_MS3)
-                                              ,
-                  '0' + READ(E7_MS3_PIN)
+                                          ,
+              '0' + READ(E7_MS3_PIN)
 #endif
-      );
+  );
 #endif
-    }
+}
 
 #endif // HAS_MICROSTEPS
