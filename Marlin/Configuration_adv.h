@@ -2997,11 +2997,11 @@
    *   #define WIFI_SSID "WiFi SSID"
    *   #define WIFI_PWD  "WiFi Password"
    */
-//#include "Configuration_Secure.h" // External file with WiFi SSID / Password
+#include "Configuration_Secure.h" // External file with WiFi SSID / Password
 // Create this file in Marlin root, add following lines:
-#include "./wifi-secrets.h"
-#define WIFI_SSID SSID
-#define WIFI_PWD PASS
+// #include "./wifi-secrets.h"
+// #define WIFI_SSID SSID
+// #define WIFI_PWD PASS
 #endif
 
 /** 
