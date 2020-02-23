@@ -2204,10 +2204,9 @@ uint32_t Stepper::advance_isr()
   // with potentially multiple steps. Set all.
   if (LA_steps >= 0)
     MIXER_STEPPER_LOOP(j)
-    NORM_E_DIR(j);
-  else
-    MIXER_STEPPER_LOOP(j)
-    REV_E_DIR(j);
+  NORM_E_DIR(j);
+  else MIXER_STEPPER_LOOP(j)
+      REV_E_DIR(j);
 #else
   if (LA_steps >= 0)
     NORM_E_DIR(stepper_extruder);
