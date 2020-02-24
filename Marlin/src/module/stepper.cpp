@@ -81,6 +81,8 @@
 
 Stepper stepper; // Singleton
 
+#define BABYSTEPPING_EXTRA_DIR_WAIT
+
 #if HAS_MOTOR_CURRENT_PWM
 bool Stepper::initialized; // = false
 #endif
@@ -1506,20 +1508,19 @@ void Stepper::isr()
       nextAdvanceISR = advance_isr(); // 0 = Do Linear Advance E Stepper pulses
 #endif
 
-#if ENABLED(INTEGRATED_BABYSTEPPING)
-    const bool do_babystep = (nextBabystepISR == 0); // 0 = Do Babystepping (XY)Z pulses
-    if (do_babystep)
-      nextBabystepISR = babystepping_isr();
-#endif
+    #if ENABLED(INTEGRATED_BABYSTEPPING)
+      const bool is_babystep = (nextBabystepISR == 0);              // 0 = Do Babystepping (XY)Z pulses
+      if (is_babystep) nextBabystepISR = babystepping_isr();
+    #endif
 
     // ^== Time critical. NOTHING besides pulse generation should be above here!!!
 
     if (!nextMainISR)
       nextMainISR = block_phase_isr(); // Manage acc/deceleration, get next block
 
-#if ENABLED(INTEGRATED_BABYSTEPPING)
-    if (do_babystep)                             // Avoid ANY stepping too soon after baby-stepping
-      NOLESS(nextMainISR, (BABYSTEP_TICKS) / 8); // FULL STOP for 125µs after a baby-step
+    #if ENABLED(INTEGRATED_BABYSTEPPING)
+      if (is_babystep)                                  // Avoid ANY stepping too soon after baby-stepping
+        NOLESS(nextMainISR, (BABYSTEP_TICKS) / 8);      // FULL STOP for 125µs after a baby-step
 
     if (nextBabystepISR != BABYSTEP_NEVER)      // Avoid baby-stepping too close to axis Stepping
       NOLESS(nextBabystepISR, nextMainISR / 2); // TODO: Only look at axes enabled for baby-stepping
@@ -2707,10 +2708,147 @@ void Stepper::report_positions()
 
 #if ENABLED(BABYSTEPPING)
 
-#define _ENABLE_AXIS(AXIS) ENABLE_AXIS_##AXIS()
-#define _READ_DIR(AXIS) AXIS##_DIR_READ()
-#define _INVERT_DIR(AXIS) INVERT_##AXIS##_DIR
-#define _APPLY_DIR(AXIS, INVERT) AXIS##_APPLY_DIR(INVERT, true)
+  #define _ENABLE_AXIS(AXIS) ENABLE_AXIS_## AXIS()
+  #define _READ_DIR(AXIS) AXIS ##_DIR_READ()
+  #define _INVERT_DIR(AXIS) INVERT_## AXIS ##_DIR
+  #define _APPLY_DIR(AXIS, INVERT) AXIS ##_APPLY_DIR(INVERT, true)
+
+  #if MINIMUM_STEPPER_PULSE
+    #define STEP_PULSE_CYCLES ((MINIMUM_STEPPER_PULSE) * CYCLES_PER_MICROSECOND)
+  #else
+    #define STEP_PULSE_CYCLES 0
+  #endif
+
+  #if ENABLED(DELTA)
+    #define CYCLES_EATEN_BABYSTEP (2 * 15)
+  #else
+    #define CYCLES_EATEN_BABYSTEP 0
+  #endif
+  #define EXTRA_CYCLES_BABYSTEP (STEP_PULSE_CYCLES - (CYCLES_EATEN_BABYSTEP))
+
+  #if EXTRA_CYCLES_BABYSTEP > 20
+    #define _SAVE_START() const hal_timer_t pulse_start = HAL_timer_get_count(PULSE_TIMER_NUM)
+    #define _PULSE_WAIT() while (EXTRA_CYCLES_BABYSTEP > (uint32_t)(HAL_timer_get_count(PULSE_TIMER_NUM) - pulse_start) * (PULSE_TIMER_PRESCALE)) { /* nada */ }
+  #else
+    #define _SAVE_START() NOOP
+    #if EXTRA_CYCLES_BABYSTEP > 0
+      #define _PULSE_WAIT() DELAY_NS(EXTRA_CYCLES_BABYSTEP * NANOSECONDS_PER_CYCLE)
+    #elif ENABLED(DELTA)
+      #define _PULSE_WAIT() DELAY_US(2);
+    #elif STEP_PULSE_CYCLES > 0
+      #define _PULSE_WAIT() NOOP
+    #else
+      #define _PULSE_WAIT() DELAY_US(4);
+    #endif
+  #endif
+
+  #if ENABLED(BABYSTEPPING_EXTRA_DIR_WAIT)
+    #define EXTRA_DIR_WAIT_BEFORE DIR_WAIT_BEFORE
+    #define EXTRA_DIR_WAIT_AFTER  DIR_WAIT_AFTER
+  #else
+    #define EXTRA_DIR_WAIT_BEFORE()
+    #define EXTRA_DIR_WAIT_AFTER()
+  #endif
+
+  #if DISABLED(DELTA)
+
+    #define BABYSTEP_AXIS(AXIS, INV, DIR) do{           \
+      const uint8_t old_dir = _READ_DIR(AXIS);          \
+      _ENABLE_AXIS(AXIS);                               \
+      DIR_WAIT_BEFORE();                                \
+      _APPLY_DIR(AXIS, _INVERT_DIR(AXIS)^DIR^INV);      \
+      DIR_WAIT_AFTER();                                 \
+      _SAVE_START();                                    \
+      _APPLY_STEP(AXIS, !_INVERT_STEP_PIN(AXIS), true); \
+      _PULSE_WAIT();                                    \
+      _APPLY_STEP(AXIS, _INVERT_STEP_PIN(AXIS), true);  \
+      EXTRA_DIR_WAIT_BEFORE();                          \
+      _APPLY_DIR(AXIS, old_dir);                        \
+      EXTRA_DIR_WAIT_AFTER();                           \
+    }while(0)
+
+  #elif IS_CORE
+
+    #define BABYSTEP_CORE(A, B, INV, DIR, ALT) do{              \
+      const xy_byte_t old_dir = { _READ_DIR(A), _READ_DIR(B) }; \
+      _ENABLE_AXIS(A); _ENABLE_AXIS(B);                         \
+      DIR_WAIT_BEFORE();                                        \
+      _APPLY_DIR(A, _INVERT_DIR(A)^DIR^INV);                    \
+      _APPLY_DIR(B, _INVERT_DIR(B)^DIR^INV^ALT);                \
+      DIR_WAIT_AFTER();                                         \
+      _SAVE_START();                                            \
+      _APPLY_STEP(A, !_INVERT_STEP_PIN(A), true);               \
+      _APPLY_STEP(B, !_INVERT_STEP_PIN(B), true);               \
+      _PULSE_WAIT();                                            \
+      _APPLY_STEP(A, _INVERT_STEP_PIN(A), true);                \
+      _APPLY_STEP(B, _INVERT_STEP_PIN(B), true);                \
+      EXTRA_DIR_WAIT_BEFORE();                                  \
+      _APPLY_DIR(A, old_dir.a); _APPLY_DIR(B, old_dir.b);       \
+      EXTRA_DIR_WAIT_AFTER();                                   \
+    }while(0)
+
+  #endif
+
+  // MUST ONLY BE CALLED BY AN ISR,
+  // No other ISR should ever interrupt this!
+  void Stepper::do_babystep(const AxisEnum axis, const bool direction) {
+
+    #if DISABLED(INTEGRATED_BABYSTEPPING)
+      cli();
+    #endif
+
+    switch (axis) {
+
+      #if ENABLED(BABYSTEP_XY)
+
+        case X_AXIS:
+          #if CORE_IS_XY
+            BABYSTEP_CORE(X, Y, 0, direction, 0);
+          #elif CORE_IS_XZ
+            BABYSTEP_CORE(X, Z, 0, direction, 0);
+          #else
+            BABYSTEP_AXIS(X, 0, direction);
+          #endif
+          break;
+
+        case Y_AXIS:
+          #if CORE_IS_XY
+            BABYSTEP_CORE(X, Y, 0, direction, (CORESIGN(1)<0));
+          #elif CORE_IS_YZ
+            BABYSTEP_CORE(Y, Z, 0, direction, (CORESIGN(1)<0));
+          #else
+            BABYSTEP_AXIS(Y, 0, direction);
+          #endif
+          break;
+
+      #endif
+
+      case Z_AXIS: {
+
+        #if CORE_IS_XZ
+          BABYSTEP_CORE(X, Z, BABYSTEP_INVERT_Z, direction, (CORESIGN(1)<0));
+        #elif CORE_IS_YZ
+          BABYSTEP_CORE(Y, Z, BABYSTEP_INVERT_Z, direction, (CORESIGN(1)<0));
+        #elif DISABLED(DELTA)
+          BABYSTEP_AXIS(Z, BABYSTEP_INVERT_Z, direction);
+
+        #else // DELTA
+
+          const bool z_direction = direction ^ BABYSTEP_INVERT_Z;
+
+          ENABLE_AXIS_X();
+          ENABLE_AXIS_Y();
+          ENABLE_AXIS_Z();
+
+          DIR_WAIT_BEFORE();
+
+          const xyz_byte_t old_dir = { X_DIR_READ(), Y_DIR_READ(), Z_DIR_READ() };
+
+          X_DIR_WRITE(INVERT_X_DIR ^ z_direction);
+          Y_DIR_WRITE(INVERT_Y_DIR ^ z_direction);
+          Z_DIR_WRITE(INVERT_Z_DIR ^ z_direction);
+
+          DIR_WAIT_AFTER();
 
 #if MINIMUM_STEPPER_PULSE
 #define STEP_PULSE_CYCLES ((MINIMUM_STEPPER_PULSE)*CYCLES_PER_MICROSECOND)
@@ -2725,24 +2863,8 @@ void Stepper::report_positions()
 #endif
 #define EXTRA_CYCLES_BABYSTEP (STEP_PULSE_CYCLES - (CYCLES_EATEN_BABYSTEP))
 
-#if EXTRA_CYCLES_BABYSTEP > 20
-#define _SAVE_START() const hal_timer_t pulse_start = HAL_timer_get_count(PULSE_TIMER_NUM)
-#define _PULSE_WAIT()                                                                                                     \
-  while (EXTRA_CYCLES_BABYSTEP > (uint32_t)(HAL_timer_get_count(PULSE_TIMER_NUM) - pulse_start) * (PULSE_TIMER_PRESCALE)) \
-  { /* nada */                                                                                                            \
-  }
-#else
-#define _SAVE_START() NOOP
-#if EXTRA_CYCLES_BABYSTEP > 0
-#define _PULSE_WAIT() DELAY_NS(EXTRA_CYCLES_BABYSTEP *NANOSECONDS_PER_CYCLE)
-#elif ENABLED(DELTA)
-#define _PULSE_WAIT() DELAY_US(2);
-#elif STEP_PULSE_CYCLES > 0
-#define _PULSE_WAIT() NOOP
-#else
-#define _PULSE_WAIT() DELAY_US(4);
-#endif
-#endif
+          // Restore direction bits
+          EXTRA_DIR_WAIT_BEFORE();
 
 #if DISABLED(DELTA)
 
@@ -2787,7 +2909,7 @@ void Stepper::report_positions()
     DIR_WAIT_AFTER();                                       \
   } while (0)
 
-#endif
+          EXTRA_DIR_WAIT_AFTER();
 
 // MUST ONLY BE CALLED BY AN ISR,
 // No other ISR should ever interrupt this!
