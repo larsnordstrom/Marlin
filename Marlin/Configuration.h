@@ -781,20 +781,19 @@
  */
 //#define CLASSIC_JERK
 #if ENABLED(CLASSIC_JERK)
-#define DEFAULT_XJERK 8.0
-#define DEFAULT_YJERK 8.0
-#define DEFAULT_ZJERK 0.4
+  #define DEFAULT_XJERK 10.0
+  #define DEFAULT_YJERK 10.0
+  #define DEFAULT_ZJERK  0.3
 
-//#define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
-#if ENABLED(LIMITED_JERK_EDITING)
-#define MAX_JERK_EDIT_VALUES \
-  {                          \
-    20, 20, 0.6, 10          \
-  } // ...or, set your own edit limits
-#endif
+  //#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
+
+  //#define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
+  #if ENABLED(LIMITED_JERK_EDITING)
+    #define MAX_JERK_EDIT_VALUES { 20, 20, 0.6, 10 } // ...or, set your own edit limits
+  #endif
 #endif
 
-#define DEFAULT_EJERK 1.5 // May be used by Linear Advance
+#define DEFAULT_EJERK 3.5 // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
