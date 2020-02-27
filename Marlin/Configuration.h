@@ -490,8 +490,8 @@
 #define PID_MAX BANG_MAX // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 #if ENABLED(PIDTEMP)
-//#define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
-//#define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
+#define PID_EDIT_MENU     // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
+#define PID_AUTOTUNE_MENU // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
 //#define PID_DEBUG             // Sends debug data to the serial port.
 //#define PID_OPENLOOP 1        // Puts PID in open loop. M104/M140 sets the output power from 0 to PID_MAX
 //#define SLOW_PWM_HEATERS      // PWM with very low frequency (roughly 0.125Hz=8s) and minimum state time of approximately 1s useful for heaters driven by a relay
@@ -959,7 +959,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, 0                   \
+    23, 5, -0.7975             \
   }
 
 // Most probes should stay away from the edges of the bed, but
@@ -970,7 +970,7 @@
 #define XY_PROBE_SPEED 8000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z * 2)
+#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z)
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 4)
@@ -1289,7 +1289,7 @@
 
 #define MESH_INSET 1         // Set Mesh bounds as an inset region of the bed
 #define GRID_MAX_POINTS_X 10 // Don't use more than 15 points per axis, implementation limited.
-#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+#define GRID_MAX_POINTS_Y 10
 
 #define UBL_MESH_EDIT_MOVES_Z   // Sophisticated users prefer no movement of nozzle
 #define UBL_SAVE_ACTIVE_ON_M500 // Save the currently active mesh in the current slot on M500
@@ -1371,7 +1371,7 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (2700)
-#define HOMING_FEEDRATE_Z (480)
+#define HOMING_FEEDRATE_Z (720)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -1714,7 +1714,7 @@
 // Use this option to override the number of step signals required to
 // move between next/prev menu items.
 //
-//#define ENCODER_STEPS_PER_MENU_ITEM 1
+#define ENCODER_STEPS_PER_MENU_ITEM 1
 
 /**
  * Encoder Direction Options
