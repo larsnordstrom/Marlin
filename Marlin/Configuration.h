@@ -770,9 +770,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION 2000         // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION 2000 // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION 2000  // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION 1250         // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION 1250 // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION 1250  // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -966,7 +966,7 @@
 #define XY_PROBE_SPEED 8000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z * 4
+#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z * 2
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 4)
@@ -1696,7 +1696,7 @@
  * just remove some extraneous menu items to recover space.
  */
 //#define NO_LCD_MENUS
-#define SLIM_LCD_MENUS
+//#define SLIM_LCD_MENUS
 
 //
 // ENCODER SETTINGS
