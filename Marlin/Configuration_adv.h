@@ -1070,22 +1070,22 @@
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
    */
-//#define POWER_LOSS_RECOVERY
-#if ENABLED(POWER_LOSS_RECOVERY)
-//#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
-//#define POWER_LOSS_ZRAISE       2 // (mm) Z axis raise on resume (on power loss with UPS)
-//#define POWER_LOSS_PIN         44 // Pin to detect power loss
-//#define POWER_LOSS_STATE     HIGH // State of pin indicating power loss
-//#define POWER_LOSS_PULL           // Set pullup / pulldown as appropriate
-//#define POWER_LOSS_PURGE_LEN   20 // (mm) Length of filament to purge on resume
-//#define POWER_LOSS_RETRACT_LEN 10 // (mm) Length of filament to retract on fail. Requires backup power.
+  //#define POWER_LOSS_RECOVERY
+  #if ENABLED(POWER_LOSS_RECOVERY)
+    //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
+    //#define POWER_LOSS_ZRAISE       2 // (mm) Z axis raise on resume (on power loss with UPS)
+    //#define POWER_LOSS_PIN         44 // Pin to detect power loss. Set to -1 to disable default pin on boards without module.
+    //#define POWER_LOSS_STATE     HIGH // State of pin indicating power loss
+    //#define POWER_LOSS_PULL           // Set pullup / pulldown as appropriate
+    //#define POWER_LOSS_PURGE_LEN   20 // (mm) Length of filament to purge on resume
+    //#define POWER_LOSS_RETRACT_LEN 10 // (mm) Length of filament to retract on fail. Requires backup power.
 
-// Without a POWER_LOSS_PIN the following option helps reduce wear on the SD card,
-// especially with "vase mode" printing. Set too high and vases cannot be continued.
-#define POWER_LOSS_MIN_Z_CHANGE 0.05 // (mm) Minimum Z change before saving power-loss data
-#endif
+    // Without a POWER_LOSS_PIN the following option helps reduce wear on the SD card,
+    // especially with "vase mode" printing. Set too high and vases cannot be continued.
+    #define POWER_LOSS_MIN_Z_CHANGE 0.05 // (mm) Minimum Z change before saving power-loss data
+  #endif
 
-/**
+  /**
    * Sort SD file listings in alphabetical order.
    *
    * With this option enabled, items on SD cards will be sorted
@@ -1192,28 +1192,26 @@
    * Tested with this bootloader:
    *   https://github.com/FleetProbe/MicroBridge-Arduino-ATMega2560
    */
-//#define SD_FIRMWARE_UPDATE
-#if ENABLED(SD_FIRMWARE_UPDATE)
-#define SD_FIRMWARE_UPDATE_EEPROM_ADDR 0x1FF
-#define SD_FIRMWARE_UPDATE_ACTIVE_VALUE 0xF0
-#define SD_FIRMWARE_UPDATE_INACTIVE_VALUE 0xFF
-#endif
+  //#define SD_FIRMWARE_UPDATE
+  #if ENABLED(SD_FIRMWARE_UPDATE)
+    #define SD_FIRMWARE_UPDATE_EEPROM_ADDR    0x1FF
+    #define SD_FIRMWARE_UPDATE_ACTIVE_VALUE   0xF0
+    #define SD_FIRMWARE_UPDATE_INACTIVE_VALUE 0xFF
+  #endif
 
-// Add an optimized binary file transfer mode, initiated with 'M28 B1'
-//#define BINARY_FILE_TRANSFER
+  // Add an optimized binary file transfer mode, initiated with 'M28 B1'
+  //#define BINARY_FILE_TRANSFER
 
-#if HAS_SDCARD_CONNECTION
-/**
-     * Set this option to one of the following (or the board's defaults apply):
-     *
-     *           LCD - Use the SD drive in the external LCD controller.
-     *       ONBOARD - Use the SD drive on the control board. (No SD_DETECT_PIN. M21 to init.)
-     *  CUSTOM_CABLE - Use a custom cable to access the SD (as defined in a pins file).
-     *
-     * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
-     */
-#define SDCARD_CONNECTION LCD
-#endif
+  /**
+   * Set this option to one of the following (or the board's defaults apply):
+   *
+   *           LCD - Use the SD drive in the external LCD controller.
+   *       ONBOARD - Use the SD drive on the control board. (No SD_DETECT_PIN. M21 to init.)
+   *  CUSTOM_CABLE - Use a custom cable to access the SD (as defined in a pins file).
+   *
+   * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
+   */
+  //#define SDCARD_CONNECTION LCD
 
 #endif // SDSUPPORT
 
@@ -1284,24 +1282,25 @@
    * These options may affect code size and screen render time.
    * Custom status screens can forcibly override these settings.
    */
-//#define STATUS_COMBINE_HEATERS    // Use combined heater images instead of separate ones
-//#define STATUS_HOTEND_NUMBERLESS  // Use plain hotend icons instead of numbered ones (with 2+ hotends)
-#define STATUS_HOTEND_INVERTED // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM)
-#define STATUS_HOTEND_ANIM     // Use a second bitmap to indicate hotend heating
-#define STATUS_BED_ANIM        // Use a second bitmap to indicate bed heating
-#define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating
-//#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
-//#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
-//#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
-//#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
-#define BOOT_MARLIN_LOGO_SMALL // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
-//#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
+  //#define STATUS_COMBINE_HEATERS    // Use combined heater images instead of separate ones
+  //#define STATUS_HOTEND_NUMBERLESS  // Use plain hotend icons instead of numbered ones (with 2+ hotends)
+  #define STATUS_HOTEND_INVERTED      // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM)
+  #define STATUS_HOTEND_ANIM          // Use a second bitmap to indicate hotend heating
+  #define STATUS_BED_ANIM             // Use a second bitmap to indicate bed heating
+  #define STATUS_CHAMBER_ANIM         // Use a second bitmap to indicate chamber heating
+  //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active
+  //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
+  //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
+  //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
+  //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
+  //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
+  //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
 
-// Frivolous Game Options
-//#define MARLIN_BRICKOUT
-//#define MARLIN_INVADERS
-//#define MARLIN_SNAKE
-//#define GAMES_EASTER_EGG          // Add extra blank lines above the "Games" sub-menu
+  // Frivolous Game Options
+  //#define MARLIN_BRICKOUT
+  //#define MARLIN_INVADERS
+  //#define MARLIN_SNAKE
+  //#define GAMES_EASTER_EGG          // Add extra blank lines above the "Games" sub-menu
 
 #endif // HAS_GRAPHICAL_LCD
 
@@ -2724,6 +2723,8 @@
 #if ENABLED(FASTER_GCODE_PARSER)
 //#define GCODE_QUOTED_STRINGS  // Support for quoted string parameters
 #endif
+
+//#define GCODE_CASE_INSENSITIVE  // Accept G-code sent to the firmware in lowercase
 
 /**
  * CNC G-code options

@@ -784,17 +784,16 @@
  */
 //#define CLASSIC_JERK
 #if ENABLED(CLASSIC_JERK)
-#define DEFAULT_XJERK 8.0
-#define DEFAULT_YJERK 8.0
-#define DEFAULT_ZJERK 0.4
+  #define DEFAULT_XJERK 10.0
+  #define DEFAULT_YJERK 10.0
+  #define DEFAULT_ZJERK  0.3
 
-#define LIMITED_JERK_EDITING // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
-#if ENABLED(LIMITED_JERK_EDITING)
-#define MAX_JERK_EDIT_VALUES \
-  {                          \
-    20, 20, 0.6, 10          \
-  } // ...or, set your own edit limits
-#endif
+  //#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
+
+  //#define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
+  #if ENABLED(LIMITED_JERK_EDITING)
+    #define MAX_JERK_EDIT_VALUES { 20, 20, 0.6, 10 } // ...or, set your own edit limits
+  #endif
 #endif
 
 #define DEFAULT_EJERK 3.5 // May be used by Linear Advance
@@ -967,7 +966,7 @@
 #define XY_PROBE_SPEED 7200
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z * 2)
+#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z)
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 4)
@@ -1367,7 +1366,7 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (2700)
-#define HOMING_FEEDRATE_Z (480)
+#define HOMING_FEEDRATE_Z (720)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
