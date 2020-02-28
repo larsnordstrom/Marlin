@@ -450,9 +450,9 @@
 //#define CASE_LIGHT_USE_NEOPIXEL           // Use Neopixel LED as case light, requires NEOPIXEL_LED.
 #if ENABLED(CASE_LIGHT_USE_NEOPIXEL)
 #define CASE_LIGHT_NEOPIXEL_COLOR \
-  {                               \
-    255, 255, 255, 255            \
-  } // { Red, Green, Blue, White }
+   {                              \
+      255, 255, 255, 255          \
+   } // { Red, Green, Blue, White }
 #endif
 #endif
 
@@ -589,9 +589,9 @@
 #define Y_HOME_BUMP_MM 0
 #define Z_HOME_BUMP_MM 1
 #define HOMING_BUMP_DIVISOR \
-  {                         \
-    2, 2, 4                 \
-  } // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+   {                        \
+      2, 2, 4               \
+   } // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 //#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 //#define HOMING_BACKOFF_MM { 2, 2, 2 }  // (mm) Move away from the endstops after homing
 
@@ -710,10 +710,10 @@
 // Define Stepper XY positions for Z1, Z2, Z3 corresponding to
 // the Z screw positions in the bed carriage.
 // Define one position per Z stepper in stepper driver order.
-#define Z_STEPPER_ALIGN_STEPPER_XY                  \
-  {                                                 \
-    {210.7, 102.5}, {152.6, 220.0}, { 94.5, 102.5 } \
-  }
+#define Z_STEPPER_ALIGN_STEPPER_XY                    \
+   {                                                  \
+      {210.7, 102.5}, {152.6, 220.0}, { 94.5, 102.5 } \
+   }
 #else
 // Amplification factor. Used to scale the correction step up or down in case
 // the stepper (spindle) position is farther out than the test point.
@@ -729,10 +729,10 @@
 
 // @section motion
 
-#define AXIS_RELATIVE_MODES    \
-  {                            \
-    false, false, false, false \
-  }
+#define AXIS_RELATIVE_MODES      \
+   {                             \
+      false, false, false, false \
+   }
 
 // Add a Duplicate option for well-separated conjoined nozzles
 //#define MULTI_NOZZLE_DUPLICATION
@@ -782,9 +782,9 @@
 // Define values for backlash distance and correction.
 // If BACKLASH_GCODE is enabled these values are the defaults.
 #define BACKLASH_DISTANCE_MM \
-  {                          \
-    0, 0, 0                  \
-  }                             // (mm)
+   {                         \
+      0, 0, 0                \
+   }                            // (mm)
 #define BACKLASH_CORRECTION 0.0 // 0.0 = no correction; 1.0 = full correction
 
 // Set BACKLASH_SMOOTHING_MM to spread backlash correction over multiple segments
@@ -840,13 +840,13 @@
 
 // The true location and dimension the cube/bolt/washer on the bed.
 #define CALIBRATION_OBJECT_CENTER \
-  {                               \
-    264.0, -22.0, -2.0            \
-  } // mm
+   {                              \
+      264.0, -22.0, -2.0          \
+   } // mm
 #define CALIBRATION_OBJECT_DIMENSIONS \
-  {                                   \
-    10.0, 10.0, 10.0                  \
-  } // mm
+   {                                  \
+      10.0, 10.0, 10.0                \
+   } // mm
 
 // Comment out any sides which are unreachable by the probe. For best
 // auto-calibration results, all sides must be reachable.
@@ -888,10 +888,10 @@
 //#define MICROSTEP32 HIGH,LOW,HIGH
 
 // Microstep setting (Only functional when stepper driver microstep pins are connected to MCU.
-#define MICROSTEP_MODES    \
-  {                        \
-    16, 16, 16, 16, 16, 16 \
-  } // [1,2,4,8,16]
+#define MICROSTEP_MODES      \
+   {                         \
+      16, 16, 16, 16, 16, 16 \
+   } // [1,2,4,8,16]
 
 /**
  *  @section  stepper motor current
@@ -938,10 +938,10 @@
 #define DIGIPOT_I2C_NUM_CHANNELS 8 // 5DPRINT: 4     AZTEEG_X3_PRO: 8     MKS SBASE: 5
 // Actual motor currents in Amps. The number of entries must match DIGIPOT_I2C_NUM_CHANNELS.
 // These correspond to the physical drivers, so be mindful if the order is changed.
-#define DIGIPOT_I2C_MOTOR_CURRENTS         \
-  {                                        \
-    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 \
-  } //  AZTEEG_X3_PRO
+#define DIGIPOT_I2C_MOTOR_CURRENTS           \
+   {                                         \
+      1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 \
+   } //  AZTEEG_X3_PRO
 
 //===========================================================================
 //=============================Additional Features===========================
@@ -950,10 +950,10 @@
 // @section lcd
 
 #if EITHER(ULTIPANEL, EXTENSIBLE_UI)
-#define MANUAL_FEEDRATE          \
-  {                              \
-    50 * 60, 50 * 60, 4 * 60, 60 \
-  }                               // Feedrates for manual moves along X, Y, Z, E from panel
+#define MANUAL_FEEDRATE            \
+   {                               \
+      50 * 60, 50 * 60, 4 * 60, 60 \
+   }                              // Feedrates for manual moves along X, Y, Z, E from panel
 #define SHORT_MANUAL_Z_MOVE 0.025 // (mm) Smallest manual Z move (< 0.1mm)
 #if ENABLED(ULTIPANEL)
 #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -1070,22 +1070,22 @@
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
    */
-  //#define POWER_LOSS_RECOVERY
-  #if ENABLED(POWER_LOSS_RECOVERY)
-    //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
-    //#define POWER_LOSS_ZRAISE       2 // (mm) Z axis raise on resume (on power loss with UPS)
-    //#define POWER_LOSS_PIN         44 // Pin to detect power loss. Set to -1 to disable default pin on boards without module.
-    //#define POWER_LOSS_STATE     HIGH // State of pin indicating power loss
-    //#define POWER_LOSS_PULL           // Set pullup / pulldown as appropriate
-    //#define POWER_LOSS_PURGE_LEN   20 // (mm) Length of filament to purge on resume
-    //#define POWER_LOSS_RETRACT_LEN 10 // (mm) Length of filament to retract on fail. Requires backup power.
+//#define POWER_LOSS_RECOVERY
+#if ENABLED(POWER_LOSS_RECOVERY)
+//#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
+//#define POWER_LOSS_ZRAISE       2 // (mm) Z axis raise on resume (on power loss with UPS)
+//#define POWER_LOSS_PIN         44 // Pin to detect power loss. Set to -1 to disable default pin on boards without module.
+//#define POWER_LOSS_STATE     HIGH // State of pin indicating power loss
+//#define POWER_LOSS_PULL           // Set pullup / pulldown as appropriate
+//#define POWER_LOSS_PURGE_LEN   20 // (mm) Length of filament to purge on resume
+//#define POWER_LOSS_RETRACT_LEN 10 // (mm) Length of filament to retract on fail. Requires backup power.
 
-    // Without a POWER_LOSS_PIN the following option helps reduce wear on the SD card,
-    // especially with "vase mode" printing. Set too high and vases cannot be continued.
-    #define POWER_LOSS_MIN_Z_CHANGE 0.05 // (mm) Minimum Z change before saving power-loss data
-  #endif
+// Without a POWER_LOSS_PIN the following option helps reduce wear on the SD card,
+// especially with "vase mode" printing. Set too high and vases cannot be continued.
+#define POWER_LOSS_MIN_Z_CHANGE 0.05 // (mm) Minimum Z change before saving power-loss data
+#endif
 
-  /**
+/**
    * Sort SD file listings in alphabetical order.
    *
    * With this option enabled, items on SD cards will be sorted
@@ -1192,17 +1192,17 @@
    * Tested with this bootloader:
    *   https://github.com/FleetProbe/MicroBridge-Arduino-ATMega2560
    */
-  //#define SD_FIRMWARE_UPDATE
-  #if ENABLED(SD_FIRMWARE_UPDATE)
-    #define SD_FIRMWARE_UPDATE_EEPROM_ADDR    0x1FF
-    #define SD_FIRMWARE_UPDATE_ACTIVE_VALUE   0xF0
-    #define SD_FIRMWARE_UPDATE_INACTIVE_VALUE 0xFF
-  #endif
+//#define SD_FIRMWARE_UPDATE
+#if ENABLED(SD_FIRMWARE_UPDATE)
+#define SD_FIRMWARE_UPDATE_EEPROM_ADDR 0x1FF
+#define SD_FIRMWARE_UPDATE_ACTIVE_VALUE 0xF0
+#define SD_FIRMWARE_UPDATE_INACTIVE_VALUE 0xFF
+#endif
 
-  // Add an optimized binary file transfer mode, initiated with 'M28 B1'
-  //#define BINARY_FILE_TRANSFER
+// Add an optimized binary file transfer mode, initiated with 'M28 B1'
+//#define BINARY_FILE_TRANSFER
 
-  /**
+/**
    * Set this option to one of the following (or the board's defaults apply):
    *
    *           LCD - Use the SD drive in the external LCD controller.
@@ -1211,7 +1211,7 @@
    *
    * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
    */
-  //#define SDCARD_CONNECTION LCD
+//#define SDCARD_CONNECTION ONBOARD
 
 #endif // SDSUPPORT
 
@@ -1245,7 +1245,7 @@
 
 // A bigger font is available for edit items. Costs 3120 bytes of PROGMEM.
 // Western only. Not available for Cyrillic, Kana, Turkish, Greek, or Chinese.
-//#define USE_BIG_EDIT_FONT
+#define USE_BIG_EDIT_FONT
 
 // A smaller font may be used on the Info Screen. Costs 2300 bytes of PROGMEM.
 // Western only. Not available for Cyrillic, Kana, Turkish, Greek, or Chinese.
@@ -1256,7 +1256,7 @@
 //#define DOGM_SPI_DELAY_US 5
 
 // Swap the CW/CCW indicators in the graphics overlay
-//#define OVERLAY_GFX_REVERSE
+#define OVERLAY_GFX_REVERSE
 
 /**
    * ST7920-based LCDs can emulate a 16 x 4 character display using
@@ -1282,25 +1282,25 @@
    * These options may affect code size and screen render time.
    * Custom status screens can forcibly override these settings.
    */
-  //#define STATUS_COMBINE_HEATERS    // Use combined heater images instead of separate ones
-  //#define STATUS_HOTEND_NUMBERLESS  // Use plain hotend icons instead of numbered ones (with 2+ hotends)
-  #define STATUS_HOTEND_INVERTED      // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM)
-  #define STATUS_HOTEND_ANIM          // Use a second bitmap to indicate hotend heating
-  #define STATUS_BED_ANIM             // Use a second bitmap to indicate bed heating
-  #define STATUS_CHAMBER_ANIM         // Use a second bitmap to indicate chamber heating
-  //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active
-  //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
-  //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
-  //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
-  //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
-  //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
-  //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
+//#define STATUS_COMBINE_HEATERS    // Use combined heater images instead of separate ones
+//#define STATUS_HOTEND_NUMBERLESS  // Use plain hotend icons instead of numbered ones (with 2+ hotends)
+#define STATUS_HOTEND_INVERTED // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM)
+#define STATUS_HOTEND_ANIM     // Use a second bitmap to indicate hotend heating
+#define STATUS_BED_ANIM        // Use a second bitmap to indicate bed heating
+#define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating                                                               \
+                               //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active                    \
+                               //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap                                            \
+                               //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap                                            \
+                               //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames                               \
+                               //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar                                            \
+                               //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash) \
+                               //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
 
-  // Frivolous Game Options
-  //#define MARLIN_BRICKOUT
-  //#define MARLIN_INVADERS
-  //#define MARLIN_SNAKE
-  //#define GAMES_EASTER_EGG          // Add extra blank lines above the "Games" sub-menu
+// Frivolous Game Options
+//#define MARLIN_BRICKOUT
+//#define MARLIN_INVADERS
+//#define MARLIN_SNAKE
+//#define GAMES_EASTER_EGG          // Add extra blank lines above the "Games" sub-menu
 
 #endif // HAS_GRAPHICAL_LCD
 
@@ -1859,10 +1859,10 @@
    */
 //#define TOOLCHANGE_PARK
 #if ENABLED(TOOLCHANGE_PARK)
-#define TOOLCHANGE_PARK_XY         \
-  {                                \
-    X_MIN_POS + 10, Y_MIN_POS + 10 \
-  }
+#define TOOLCHANGE_PARK_XY           \
+   {                                 \
+      X_MIN_POS + 10, Y_MIN_POS + 10 \
+   }
 #define TOOLCHANGE_PARK_XY_FEEDRATE 6000 // (mm/m)
 #endif
 #endif
@@ -2207,7 +2207,7 @@
 #define X_HYBRID_THRESHOLD 120 // [mm/s]
 #define Y_HYBRID_THRESHOLD 120
 #define Z_HYBRID_THRESHOLD 3
-#define E0_HYBRID_THRESHOLD 30
+#define E0_HYBRID_THRESHOLD 35
 
 /**
    * Use StallGuard2 to home / probe X, Y, Z.
@@ -2276,8 +2276,8 @@
    * }
    */
 #define TMC_ADV() \
-  {               \
-  }
+   {              \
+   }
 
 #endif // HAS_TRINAMIC
 
@@ -2907,18 +2907,18 @@
 //#define INVERT_JOY_Z  // Enable if Z direction is reversed
 
 // Use M119 with JOYSTICK_DEBUG to find reasonable values after connecting:
-#define JOY_X_LIMITS                    \
-  {                                     \
-    5600, 8190 - 100, 8190 + 100, 10800 \
-  } // min, deadzone start, deadzone end, max
-#define JOY_Y_LIMITS                    \
-  {                                     \
-    5600, 8250 - 100, 8250 + 100, 11000 \
-  }
-#define JOY_Z_LIMITS                    \
-  {                                     \
-    4800, 8080 - 100, 8080 + 100, 11550 \
-  }
+#define JOY_X_LIMITS                      \
+   {                                      \
+      5600, 8190 - 100, 8190 + 100, 10800 \
+   } // min, deadzone start, deadzone end, max
+#define JOY_Y_LIMITS                      \
+   {                                      \
+      5600, 8250 - 100, 8250 + 100, 11000 \
+   }
+#define JOY_Z_LIMITS                      \
+   {                                      \
+      4800, 8080 - 100, 8080 + 100, 11550 \
+   }
 #endif
 
 /**
@@ -3017,28 +3017,28 @@
 // This is for Prusa MK3-style extruders. Customize for your hardware.
 #define MMU2_FILAMENTCHANGE_EJECT_FEED 80.0
 #define MMU2_LOAD_TO_NOZZLE_SEQUENCE \
-  {7.2, 562},                        \
-      {14.4, 871},                   \
-      {36.0, 1393},                  \
-      {14.4, 871},                   \
-  {                                  \
-    50.0, 198                        \
-  }
+   {7.2, 562},                       \
+       {14.4, 871},                  \
+       {36.0, 1393},                 \
+       {14.4, 871},                  \
+   {                                 \
+      50.0, 198                      \
+   }
 
 #define MMU2_RAMMING_SEQUENCE \
-  {1.0, 1000},                \
-      {1.0, 1500},            \
-      {2.0, 2000},            \
-      {1.5, 3000},            \
-      {2.5, 4000},            \
-      {-15.0, 5000},          \
-      {-14.0, 1200},          \
-      {-6.0, 600},            \
-      {10.0, 700},            \
-      {-10.0, 400},           \
-  {                           \
-    -50.0, 2000               \
-  }
+   {1.0, 1000},               \
+       {1.0, 1500},           \
+       {2.0, 2000},           \
+       {1.5, 3000},           \
+       {2.5, 4000},           \
+       {-15.0, 5000},         \
+       {-14.0, 1200},         \
+       {-6.0, 600},           \
+       {10.0, 700},           \
+       {-10.0, 400},          \
+   {                          \
+      -50.0, 2000             \
+   }
 
 #endif
 
