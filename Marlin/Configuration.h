@@ -112,7 +112,10 @@
  *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-//#define SERIAL_PORT_2 -1
+// For connecting RaspberryPi like Prusa does.
+// 1 = J19 RX1 TX1 PIN 19/18
+// 2 = P3 RX2 TX2 PIN 17/16
+#define SERIAL_PORT_2 1 // -1
 
 /**
  * This setting determines the communication speed of the printer.
@@ -958,7 +961,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, -0.7985             \
+    23, 5, -0.799              \
   }
 
 // Most probes should stay away from the edges of the bed, but
