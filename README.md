@@ -11,6 +11,9 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 * L_Advanced.
 * Adaptive Stepsmoothing.
 * Junction Deviation.
+* P.I.N.D.A temp compensation.
+* Controller fan for case.
+* Internal wire for Octoprint.
 
 
 ### Hardware
@@ -20,10 +23,13 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 * Bondtech BMG extruder. 
 * 24V PSU.
 * Stock display.
+* E3d All metal, copper block, NozzleX.
+* 40W Heater.
+* Pi4 4Gb Ram, Octoprint, C270.
 
 ### Features Not enabled (Yet..):
 * Filamentsensor (I don't personally use it).
-* P.I.N.D.A temp compensation.
+
 
 Compile with VSCode and platformio.
 
