@@ -4,13 +4,17 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 
 
 ### Features enable (Some of them...)
-* UBL.
+* UBL 7x7.
 * Spreadcycle/stealthchop.
 * Sensorless Homing.
 * S-curve.
 * L_Advanced.
 * Adaptive Stepsmoothing.
 * Junction Deviation.
+* Babystepping.
+* P.I.N.D.A temp compensation.
+* Controller fan for case.
+* Internal wire for Octoprint, Prusa Style.
 
 
 ### Hardware
@@ -20,10 +24,14 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 * Bondtech BMG extruder. 
 * 24V PSU.
 * Stock display.
+* E3d All metal, copper block, NozzleX.
+* 40W Heater.
+* Pi4 4Gb Ram, Octoprint, C270.
+* 5v regulator for Pi4.
 
 ### Features Not enabled (Yet..):
 * Filamentsensor (I don't personally use it).
-* P.I.N.D.A temp compensation.
+
 
 Compile with VSCode and platformio.
 

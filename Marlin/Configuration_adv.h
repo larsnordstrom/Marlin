@@ -339,7 +339,8 @@
  * The fan will turn on automatically whenever any stepper is enabled
  * and turn off after a set period after all steppers are turned off.
  */
-// Connect Fan ground to pins, Power to VCC
+// Connect Noctua/other 5v Fan ground to ground, fan 5v to pin62.
+// Fan will kick in when stepper drivers are active and stop 60sec after disabled.
 #define USE_CONTROLLER_FAN
 #if ENABLED(USE_CONTROLLER_FAN)
 #define CONTROLLER_FAN_PIN 62   //62 EXT PK0   //76 EXT3 PJ5  // Set a custom pin for the controller fan
