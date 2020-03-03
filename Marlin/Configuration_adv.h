@@ -1637,7 +1637,7 @@
 //
 // G2/G3 Arc Support
 //
-#define ARC_SUPPORT // Disable this feature to save ~3226 bytes
+//#define ARC_SUPPORT // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
 #define MM_PER_ARC_SEGMENT 1 // (mm) Length (or minimum length) of each arc segment
 //#define ARC_SEGMENTS_PER_R    1 // Max segment length, MM_PER = Min
@@ -1879,7 +1879,7 @@
  * Requires NOZZLE_PARK_FEATURE.
  * This feature is required for the default FILAMENT_RUNOUT_SCRIPT.
  */
-#define ADVANCED_PAUSE_FEATURE
+//#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
 #define PAUSE_PARK_RETRACT_FEEDRATE 60        // (mm/s) Initial retract feedrate.
 #define PAUSE_PARK_RETRACT_LENGTH 2           // (mm) Initial retract. \
@@ -2204,7 +2204,7 @@
    * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
    * M913 X/Y/Z/E to live tune the setting
    */
-#define HYBRID_THRESHOLD
+//#define HYBRID_THRESHOLD
 
 #define X_HYBRID_THRESHOLD 120 // [mm/s]
 #define Y_HYBRID_THRESHOLD 120
@@ -2246,9 +2246,9 @@
 
 #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
 // TMC2209: 0...255. TMC2130: -64...63
-#define X_STALL_SENSITIVITY 3
+#define X_STALL_SENSITIVITY 4
 #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-#define Y_STALL_SENSITIVITY 3
+#define Y_STALL_SENSITIVITY 4
 #define Z_STALL_SENSITIVITY 4
 //#define SPI_ENDSTOPS              // TMC2130 only
 #define IMPROVE_HOMING_RELIABILITY
