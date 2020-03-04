@@ -505,11 +505,12 @@
 
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
-// E3d full 24v // M303 E0 C10 S230
-#define DEFAULT_Kp 28.60
-#define DEFAULT_Ki 3.46
-#define DEFAULT_Kd 59.16
+// E3d full 24v // M303 E0 C10 S240 U
+#define DEFAULT_Kp 30.22
+#define DEFAULT_Ki 3.92
+#define DEFAULT_Kd 58.19
 
+// M301 P30.22 I3.92 D58.19
 #endif // PIDTEMP
 
 //===========================================================================
@@ -545,12 +546,13 @@
 //#define MIN_BED_POWER 0
 //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
-// M303 E-1 C5 S75
-// MK52 24v heated to 75degrees 5times.
-#define DEFAULT_bedKp 140.65
-#define DEFAULT_bedKi 7.84
-#define DEFAULT_bedKd 630.53
+// M303 E-1 C5 S85 U
+// MK52 24v heated to 85degrees 5times.
+#define DEFAULT_bedKp 38.79
+#define DEFAULT_bedKi 2.52
+#define DEFAULT_bedKd 398.30
 
+//M304 P38.79 I2.52 D398.30
 #endif // PIDTEMPBED
 
 // @section extruder
@@ -961,7 +963,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, -0.8              \
+    23, 5, -0.8                \
   }
 
 // Most probes should stay away from the edges of the bed, but
@@ -1288,7 +1290,7 @@
 
 //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-#define MESH_INSET 1         // Set Mesh bounds as an inset region of the bed
+#define MESH_INSET 1        // Set Mesh bounds as an inset region of the bed
 #define GRID_MAX_POINTS_X 7 // Don't use more than 15 points per axis, implementation limited.
 #define GRID_MAX_POINTS_Y 7
 
