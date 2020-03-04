@@ -152,7 +152,7 @@
 #define THERMAL_PROTECTION_PERIOD 40    // Seconds
 #define THERMAL_PROTECTION_HYSTERESIS 4 // Degrees Celsius
 
-//#define ADAPTIVE_FAN_SLOWING              // Slow part cooling fan if temperature drops
+#define ADAPTIVE_FAN_SLOWING // Slow part cooling fan if temperature drops
 #if BOTH(ADAPTIVE_FAN_SLOWING, PIDTEMP)
 //#define NO_FAN_SLOWING_IN_PID_TUNING    // Don't slow fan speed during M303
 #endif
@@ -177,14 +177,14 @@
  * Thermal Protection parameters for the bed are just as above for hotends.
  */
 #if ENABLED(THERMAL_PROTECTION_BED)
-#define THERMAL_PROTECTION_BED_PERIOD 20    // Seconds
-#define THERMAL_PROTECTION_BED_HYSTERESIS 2 // Degrees Celsius
+#define THERMAL_PROTECTION_BED_PERIOD 120   // Seconds
+#define THERMAL_PROTECTION_BED_HYSTERESIS 3 // Degrees Celsius
 
 /**
    * As described above, except for the bed (M140/M190/M303).
    */
 #define WATCH_BED_TEMP_PERIOD 120 // Seconds
-#define WATCH_BED_TEMP_INCREASE 2 // Degrees Celsius
+#define WATCH_BED_TEMP_INCREASE 3 // Degrees Celsius
 #endif
 
 /**
@@ -1500,8 +1500,8 @@
 
 #define BABYSTEP_ZPROBE_OFFSET // Combine M851 Z and Babystepping
 #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-//#define BABYSTEP_HOTEND_Z_OFFSET      // For multiple hotends, babystep relative Z offsets
-//#define BABYSTEP_ZPROBE_GFX_OVERLAY // Enable graphical overlay on Z-offset editor
+//#define BABYSTEP_HOTEND_Z_OFFSET        // For multiple hotends, babystep relative Z offsets
+//#define BABYSTEP_ZPROBE_GFX_OVERLAY     // Enable graphical overlay on Z-offset editor
 #endif
 #endif
 
@@ -1610,7 +1610,7 @@
 #if ENABLED(PROBE_TEMP_COMPENSATION)
 // Max temperature that can be reached by heated bed.
 // This is required only for the calibration process.
-#define PTC_MAX_BED_TEMP 110
+#define PTC_MAX_BED_TEMP BED_MAXTEMP
 
 // Park position to wait for probe cooldown
 #define PTC_PARK_POS_X 0.0F
@@ -1742,7 +1742,7 @@
 // For debug-echo: 128 bytes for the optimal speed.
 // Other output doesn't need to be that speedy.
 // :[0, 2, 4, 8, 16, 32, 64, 128, 256]
-#define TX_BUFFER_SIZE 0
+#define TX_BUFFER_SIZE 16
 
 // Host Receive Buffer Size
 // Without XON/XOFF flow control (see SERIAL_XON_XOFF below) 32 bytes should be enough.
@@ -2057,15 +2057,15 @@
 
 #if AXIS_IS_TMC(X)
 #define X_CURRENT 400                  // (mA) RMS current. Multiply by 1.414 for peak current.
-#define X_CURRENT_HOME (X_CURRENT/2)   // (mA) RMS current for sensorless homing
+#define X_CURRENT_HOME (X_CURRENT / 2) // (mA) RMS current for sensorless homing
 #define X_MICROSTEPS 16                // 0..256
 #define X_RSENSE 0.22
-#define X_CHAIN_POS -1                 // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
+#define X_CHAIN_POS -1 // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
 #endif
 
 #if AXIS_IS_TMC(Y)
 #define Y_CURRENT 500
-#define Y_CURRENT_HOME (Y_CURRENT/2)
+#define Y_CURRENT_HOME (Y_CURRENT / 2)
 #define Y_MICROSTEPS 16
 #define Y_RSENSE 0.22
 #define Y_CHAIN_POS -1
