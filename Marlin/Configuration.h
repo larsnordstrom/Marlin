@@ -963,7 +963,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, -0.8                \
+    23, 5, 0               \
   }
 
 // Most probes should stay away from the edges of the bed, but
@@ -971,7 +971,7 @@
 #define MIN_PROBE_EDGE 0
 
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 7200
+#define XY_PROBE_SPEED 10000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z)
@@ -1373,8 +1373,8 @@
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (2700)
-#define HOMING_FEEDRATE_Z (720)
+#define HOMING_FEEDRATE_XY (3000)
+#define HOMING_FEEDRATE_Z (960)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
