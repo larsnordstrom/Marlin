@@ -952,14 +952,14 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, -0.79               \
+    23, 5, 0              \
   }
 
 // Certain types of probes need to stay away from edges
 #define MIN_PROBE_EDGE 0
 
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 7200
+#define XY_PROBE_SPEED 10000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
@@ -1094,7 +1094,7 @@
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
 #define Y_MIN_POS -4
-#define Z_MIN_POS 0.15
+#define Z_MIN_POS 0
 #define X_MAX_POS 255
 #define Y_MAX_POS 212.5
 #define Z_MAX_POS 210
