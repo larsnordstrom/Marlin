@@ -152,9 +152,9 @@
 #define THERMAL_PROTECTION_PERIOD 40    // Seconds
 #define THERMAL_PROTECTION_HYSTERESIS 4 // Degrees Celsius
 
-//#define ADAPTIVE_FAN_SLOWING              // Slow part cooling fan if temperature drops
+#define ADAPTIVE_FAN_SLOWING              // Slow part cooling fan if temperature drops
 #if BOTH(ADAPTIVE_FAN_SLOWING, PIDTEMP)
-//#define NO_FAN_SLOWING_IN_PID_TUNING    // Don't slow fan speed during M303
+#define NO_FAN_SLOWING_IN_PID_TUNING    // Don't slow fan speed during M303
 #endif
 
 /**
@@ -1014,7 +1014,7 @@
 #define LCD_DECIMAL_SMALL_XY
 
 // The timeout (in ms) to return to the status screen from sub-menus
-#define LCD_TIMEOUT_TO_STATUS 30000
+#define LCD_TIMEOUT_TO_STATUS 15000
 
 // Add an 'M73' G-code to set the current percentage
 //#define LCD_SET_PROGRESS_MANUALLY
@@ -1024,7 +1024,7 @@
 
 #if HAS_GRAPHICAL_LCD && HAS_PRINT_PROGRESS
 //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
-//#define SHOW_REMAINING_TIME          // Display estimated time to completion
+#define SHOW_REMAINING_TIME          // Display estimated time to completion
 #if ENABLED(SHOW_REMAINING_TIME)
 //#define USE_M73_REMAINING_TIME     // Use remaining time from M73 command instead of estimation
 //#define ROTATE_PROGRESS_DISPLAY    // Display (P)rogress, (E)lapsed, and (R)emaining time
@@ -1567,7 +1567,7 @@
  * the probe to be unable to reach any points.
  */
 #if PROBE_SELECTED && !IS_KINEMATIC
-#define MIN_PROBE_EDGE_LEFT 26
+#define MIN_PROBE_EDGE_LEFT 25
 #define MIN_PROBE_EDGE_RIGHT 22
 #define MIN_PROBE_EDGE_FRONT 6
 #define MIN_PROBE_EDGE_BACK 0
@@ -1575,7 +1575,7 @@
 
 #if EITHER(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL)
 // Override the mesh area if the automatic (max) area is too large
-#define MESH_MIN_X 26
+#define MESH_MIN_X 25
 #define MESH_MIN_Y 6
 #define MESH_MAX_X 228
 #define MESH_MAX_Y 210
@@ -2063,7 +2063,7 @@
 
 #if AXIS_IS_TMC(X)
 #define X_CURRENT 430 // (mA) RMS current. Multiply by 1.414 for peak current.
-#define X_CURRENT_HOME 150
+#define X_CURRENT_HOME (X_CURRENT/2)
 #define X_MICROSTEPS 16 // 0..256
 #define X_RSENSE 0.22
 #define X_CHAIN_POS -1 // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
@@ -2071,7 +2071,7 @@
 
 #if AXIS_IS_TMC(Y)
 #define Y_CURRENT 480
-#define Y_CURRENT_HOME 180
+#define Y_CURRENT_HOME (Y_CURRENT/2)
 #define Y_MICROSTEPS 16
 #define Y_RSENSE 0.22
 #define Y_CHAIN_POS -1
@@ -2264,9 +2264,9 @@
 
 #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
 // TMC2209: 0...255. TMC2130: -64...63
-#define X_STALL_SENSITIVITY 3
+#define X_STALL_SENSITIVITY 4
 #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-#define Y_STALL_SENSITIVITY 3
+#define Y_STALL_SENSITIVITY 4
 #define Z_STALL_SENSITIVITY 4
 //#define SPI_ENDSTOPS              // TMC2130 only
 #define IMPROVE_HOMING_RELIABILITY
