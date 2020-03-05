@@ -276,8 +276,10 @@
 #define AUTOTEMP_OLDWEIGHT 0.98
 #endif
 
-// Show extra position information with 'M114 D'
-//#define M114_DETAIL
+// Extra options for the M114 "Current Position" report
+//#define M114_DETAIL         // Use 'M114` for details to check planner calculations
+//#define M114_REALTIME       // Real current position based on forward kinematics
+//#define M114_LEGACY         // M114 used to synchronize on every call. Enable if needed.
 
 // Show Temperature ADC value
 // Enable for M105 to include ADC values read from temperature sensors.
@@ -1069,9 +1071,13 @@
    * during SD printing. If the recovery file is found at boot time, present
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
+   *
+   * If the machine reboots when resuming a print you may need to replace or
+   * reformat the SD card. (Bad sectors delay startup triggering the watchdog.)
    */
   //#define POWER_LOSS_RECOVERY
   #if ENABLED(POWER_LOSS_RECOVERY)
+    //#define PLR_ENABLED_DEFAULT  true // Power Loss Recovery enabled by default. (Set with 'M413 Sn' & M500)
     //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
     //#define POWER_LOSS_ZRAISE       2 // (mm) Z axis raise on resume (on power loss with UPS)
     //#define POWER_LOSS_PIN         44 // Pin to detect power loss. Set to -1 to disable default pin on boards without module.
@@ -1602,29 +1608,29 @@
 //#define TEMP_PROBE_PIN TEMP_1_PIN
 
 #if HAS_BED_PROBE && TEMP_SENSOR_PROBE && TEMP_SENSOR_BED
-// Enable thermal first layer compensation using bed and probe temperatures
-#define PROBE_TEMP_COMPENSATION
+  // Enable thermal first layer compensation using bed and probe temperatures
+  #define PROBE_TEMP_COMPENSATION
 
-// Add additional compensation depending on hotend temperature
-// Note: this values cannot be calibrated and have to be set manually
-#if ENABLED(PROBE_TEMP_COMPENSATION)
-// Max temperature that can be reached by heated bed.
-// This is required only for the calibration process.
-#define PTC_MAX_BED_TEMP 110
+  // Add additional compensation depending on hotend temperature
+  // Note: this values cannot be calibrated and have to be set manually
+  #if ENABLED(PROBE_TEMP_COMPENSATION)
+    // Max temperature that can be reached by heated bed.
+    // This is required only for the calibration process.
+    #define PTC_MAX_BED_TEMP BED_MAXTEMP
 
-// Park position to wait for probe cooldown
-#define PTC_PARK_POS_X 0.0F
-#define PTC_PARK_POS_Y 0.0F
-#define PTC_PARK_POS_Z 100.0F
+    // Park position to wait for probe cooldown
+    #define PTC_PARK_POS_X 0.0F
+    #define PTC_PARK_POS_Y 0.0F
+    #define PTC_PARK_POS_Z 100.0F
 
-// Probe position to probe and wait for probe to reach target temperature
-#define PTC_PROBE_POS_X 90.0F
-#define PTC_PROBE_POS_Y 100.0F
+    // Probe position to probe and wait for probe to reach target temperature
+    #define PTC_PROBE_POS_X  90.0F
+    #define PTC_PROBE_POS_Y 100.0F
 
-// Enable additional compensation using hotend temperature
-// Note: this values cannot be calibrated automatically but have to be set manually
-//#define USE_TEMP_EXT_COMPENSATION
-#endif
+    // Enable additional compensation using hotend temperature
+    // Note: this values cannot be calibrated automatically but have to be set manually
+    //#define USE_TEMP_EXT_COMPENSATION
+  #endif
 #endif
 
 // @section extras
@@ -2050,7 +2056,7 @@
  * TMCStepper library is required to use TMC stepper drivers.
  * https://github.com/teemuatlut/TMCStepper
  */
-#if HAS_TRINAMIC
+#if HAS_TRINAMIC_CONFIG
 
 #define HOLD_MULTIPLIER 1.0 // Scales down the holding current from run current
 #define INTERPOLATE true    // Interpolate X/Y/Z_MICROSTEPS to 256
@@ -2293,7 +2299,7 @@
    {              \
    }
 
-#endif // HAS_TRINAMIC
+#endif // HAS_TRINAMIC_CONFIG
 
 // @section L64XX
 
