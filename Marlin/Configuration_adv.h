@@ -204,9 +204,9 @@
 #if ENABLED(PIDTEMP)
 // Add an experimental additional term to the heater power, proportional to the extrusion speed.
 // A well-chosen Kc value should add just enough power to melt the increased material volume.
-#define PID_EXTRUSION_SCALING
+//#define PID_EXTRUSION_SCALING
 #if ENABLED(PID_EXTRUSION_SCALING)
-#define DEFAULT_Kc (1) //heating power=Kc*(e_speed)
+#define DEFAULT_Kc (100)
 #define LPQ_MAX_LEN 50
 #endif
 
@@ -1637,7 +1637,7 @@
 //
 // G2/G3 Arc Support
 //
-#define ARC_SUPPORT // Disable this feature to save ~3226 bytes
+//#define ARC_SUPPORT // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
 #define MM_PER_ARC_SEGMENT 1 // (mm) Length (or minimum length) of each arc segment
 //#define ARC_SEGMENTS_PER_R    1 // Max segment length, MM_PER = Min
@@ -1733,7 +1733,7 @@
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
-#define BUFSIZE 4
+#define BUFSIZE 16
 
 // Transmission to Host Buffer Size
 // To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
