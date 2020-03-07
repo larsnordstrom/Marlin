@@ -81,7 +81,7 @@
 
 Stepper stepper; // Singleton
 
-//#define BABYSTEPPING_EXTRA_DIR_WAIT
+#define BABYSTEPPING_EXTRA_DIR_WAIT
 
 #if HAS_MOTOR_CURRENT_PWM
   bool Stepper::initialized; // = false
