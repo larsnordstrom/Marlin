@@ -350,7 +350,7 @@
 // When first starting the main fan, run it at full speed for the
 // given number of milliseconds.  This gets the fan spinning reliably
 // before setting a PWM value. (Does not work with software PWM for fan on Sanguinololu)
-//#define FAN_KICKSTART_TIME 100
+#define FAN_KICKSTART_TIME 800
 
 // Some coolers may require a non-zero "off" state.
 //#define FAN_OFF_PWM  1
@@ -1127,7 +1127,7 @@
 #endif
 
 // This allows hosts to request long names for files and folders with M33
-//#define LONG_FILENAME_HOST_SUPPORT
+#define LONG_FILENAME_HOST_SUPPORT
 
 // Enable this option to scroll long filenames in the SD card menu
 #define SCROLL_LONG_FILENAMES
@@ -1259,7 +1259,7 @@
 //#define DOGM_SPI_DELAY_US 5
 
 // Swap the CW/CCW indicators in the graphics overlay
-//#define OVERLAY_GFX_REVERSE
+#define OVERLAY_GFX_REVERSE
 
 /**
    * ST7920-based LCDs can emulate a 16 x 4 character display using
@@ -1638,7 +1638,7 @@
 //
 // G2/G3 Arc Support
 //
-#define ARC_SUPPORT // Disable this feature to save ~3226 bytes
+//#define ARC_SUPPORT // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
 #define MM_PER_ARC_SEGMENT 1 // (mm) Length (or minimum length) of each arc segment
 //#define ARC_SEGMENTS_PER_R    1 // Max segment length, MM_PER = Min
@@ -1725,7 +1725,7 @@
 // The number of linear motions that can be in the plan at any give time.
 // THE BLOCK_BUFFER_SIZE NEEDS TO BE A POWER OF 2 (e.g. 8, 16, 32) because shifts and ors are used to do the ring-buffering.
 #if ENABLED(SDSUPPORT)
-#define BLOCK_BUFFER_SIZE 32 // SD,LCD,Buttons take more memory, block buffer needs to be smaller
+#define BLOCK_BUFFER_SIZE 64 // SD,LCD,Buttons take more memory, block buffer needs to be smaller
 #else
 #define BLOCK_BUFFER_SIZE 32 // maximize block buffer
 #endif
@@ -1880,9 +1880,9 @@
  * Requires NOZZLE_PARK_FEATURE.
  * This feature is required for the default FILAMENT_RUNOUT_SCRIPT.
  */
-//#define ADVANCED_PAUSE_FEATURE
+#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
-#define PAUSE_PARK_RETRACT_FEEDRA 60         // (mm/s) Initial retract feedrate.
+#define PAUSE_PARK_RETRACT_FEEDRATE 60         // (mm/s) Initial retract feedrate.
 #define PAUSE_PARK_RETRACT_LENGTH 2          // (mm) Initial retract. \
                                              // This short retract is done immediately, before parking the nozzle.
 #define FILAMENT_CHANGE_UNLOAD_FEEDRATE 100  // (mm/s) Unload filament feedrate. This can be pretty fast.
@@ -2081,15 +2081,15 @@
 #endif
 
 #if AXIS_IS_TMC(Z2)
-#define Z2_CURRENT 550
-#define Z2_CURRENT_HOME Z2_CURRENT
+#define Z2_CURRENT Z_CURRENT
+#define Z2_CURRENT_HOME _CURRENT_HOME
 #define Z2_MICROSTEPS 16
 #define Z2_RSENSE 0.11
 #define Z2_CHAIN_POS -1
 #endif
 
 #if AXIS_IS_TMC(E0)
-#define E0_CURRENT 500
+#define E0_CURRENT 520
 #define E0_MICROSTEPS 16
 #define E0_RSENSE 0.11
 #define E0_CHAIN_POS -1
@@ -2213,7 +2213,7 @@
    * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
    * M913 X/Y/Z/E to live tune the setting
    */
-#define HYBRID_THRESHOLD
+//#define HYBRID_THRESHOLD
 
 #define X_HYBRID_THRESHOLD 100 // [mm/s]
 #define Y_HYBRID_THRESHOLD 100

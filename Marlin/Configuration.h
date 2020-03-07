@@ -86,7 +86,7 @@
  */
 
 // Show the Marlin bootscreen on startup. ** ENABLE FOR PRODUCTION **
-#define SHOW_BOOTSCREEN
+//#define SHOW_BOOTSCREEN
 
 // Show the bitmap in Marlin/_Bootscreen.h on startup.
 //#define SHOW_CUSTOM_BOOTSCREEN
@@ -502,7 +502,7 @@
 
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
-// SKR V1.4 MK3s
+// E3d 24v, copper block.
 #define DEFAULT_Kp 16.13
 #define DEFAULT_Ki 1.16
 #define DEFAULT_Kd 56.23
@@ -542,7 +542,7 @@
 //#define MIN_BED_POWER 0
 //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
-//SKR MK3s V1.4
+//Mk52 24V
 #define DEFAULT_bedKp 126.13
 #define DEFAULT_bedKi 4.30
 #define DEFAULT_bedKd 924.76
@@ -959,7 +959,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, -0.7985             \
+    23, 5, 0            \
   }
 
 // Most probes should stay away from the edges of the bed, but
@@ -967,7 +967,7 @@
 #define MIN_PROBE_EDGE 20
 
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 8000
+#define XY_PROBE_SPEED 10000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z)
@@ -1370,7 +1370,7 @@
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (2700)
+#define HOMING_FEEDRATE_XY (3000)
 #define HOMING_FEEDRATE_Z (720)
 
 // Validate that endstops are triggered on homing moves
@@ -1499,7 +1499,7 @@
  *    P1  Raise the nozzle always to Z-park height.
  *    P2  Raise the nozzle by Z-park amount, limited to Z_MAX_POS.
  */
-//#define NOZZLE_PARK_FEATURE
+#define NOZZLE_PARK_FEATURE
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
 // Specify a park position as { X, Y, Z_raise }
