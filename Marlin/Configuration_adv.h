@@ -1727,7 +1727,7 @@
 #if ENABLED(SDSUPPORT)
 #define BLOCK_BUFFER_SIZE 64 // SD,LCD,Buttons take more memory, block buffer needs to be smaller
 #else
-#define BLOCK_BUFFER_SIZE 32 // maximize block buffer
+#define BLOCK_BUFFER_SIZE 64 // maximize block buffer
 #endif
 
 // @section serial
@@ -1882,7 +1882,7 @@
  */
 #define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
-#define PAUSE_PARK_RETRACT_FEEDRATE 60         // (mm/s) Initial retract feedrate.
+#define PAUSE_PARK_RETRACT_FEEDRATE 60       // (mm/s) Initial retract feedrate.
 #define PAUSE_PARK_RETRACT_LENGTH 2          // (mm) Initial retract. \
                                              // This short retract is done immediately, before parking the nozzle.
 #define FILAMENT_CHANGE_UNLOAD_FEEDRATE 100  // (mm/s) Unload filament feedrate. This can be pretty fast.
