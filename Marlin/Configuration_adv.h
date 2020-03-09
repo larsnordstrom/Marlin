@@ -276,8 +276,10 @@
 #define AUTOTEMP_OLDWEIGHT 0.98
 #endif
 
-// Show extra position information with 'M114 D'
-//#define M114_DETAIL
+// Extra options for the M114 "Current Position" report
+//#define M114_DETAIL         // Use 'M114` for details to check planner calculations
+//#define M114_REALTIME       // Real current position based on forward kinematics
+//#define M114_LEGACY         // M114 used to synchronize on every call. Enable if needed.
 
 // Show Temperature ADC value
 // Enable for M105 to include ADC values read from temperature sensors.
@@ -1069,12 +1071,16 @@
    * during SD printing. If the recovery file is found at boot time, present
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
+   *
+   * If the machine reboots when resuming a print you may need to replace or
+   * reformat the SD card. (Bad sectors delay startup triggering the watchdog.)
    */
 //#define POWER_LOSS_RECOVERY
 #if ENABLED(POWER_LOSS_RECOVERY)
+#define PLR_ENABLED_DEFAULT false // Power Loss Recovery enabled by default. (Set with 'M413 Sn' & M500)
 //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
 //#define POWER_LOSS_ZRAISE       2 // (mm) Z axis raise on resume (on power loss with UPS)
-//#define POWER_LOSS_PIN         44 // Pin to detect power loss
+//#define POWER_LOSS_PIN         44 // Pin to detect power loss. Set to -1 to disable default pin on boards without module.
 //#define POWER_LOSS_STATE     HIGH // State of pin indicating power loss
 //#define POWER_LOSS_PULL           // Set pullup / pulldown as appropriate
 //#define POWER_LOSS_PURGE_LEN   20 // (mm) Length of filament to purge on resume
@@ -1202,18 +1208,16 @@
 // Add an optimized binary file transfer mode, initiated with 'M28 B1'
 //#define BINARY_FILE_TRANSFER
 
-#if HAS_SDCARD_CONNECTION
 /**
-     * Set this option to one of the following (or the board's defaults apply):
-     *
-     *           LCD - Use the SD drive in the external LCD controller.
-     *       ONBOARD - Use the SD drive on the control board. (No SD_DETECT_PIN. M21 to init.)
-     *  CUSTOM_CABLE - Use a custom cable to access the SD (as defined in a pins file).
-     *
-     * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
-     */
+   * Set this option to one of the following (or the board's defaults apply):
+   *
+   *           LCD - Use the SD drive in the external LCD controller.
+   *       ONBOARD - Use the SD drive on the control board. (No SD_DETECT_PIN. M21 to init.)
+   *  CUSTOM_CABLE - Use a custom cable to access the SD (as defined in a pins file).
+   *
+   * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
+   */
 //#define SDCARD_CONNECTION LCD
-#endif
 
 #endif // SDSUPPORT
 
@@ -1290,12 +1294,13 @@
 #define STATUS_HOTEND_ANIM     // Use a second bitmap to indicate hotend heating
 #define STATUS_BED_ANIM        // Use a second bitmap to indicate bed heating
 #define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating
-//#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
-//#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
-//#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
-//#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
-#define BOOT_MARLIN_LOGO_SMALL // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
-//#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
+                               //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active
+                               //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
+                               //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
+                               //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
+                               //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
+                               //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
+                               //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
 
 // Frivolous Game Options
 //#define MARLIN_BRICKOUT
@@ -1477,15 +1482,16 @@
  */
 #define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
+//#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
 //#define BABYSTEP_WITHOUT_HOMING
 //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
 #define BABYSTEP_INVERT_Z false    // Change if Z babysteps should go the other way
-#define BABYSTEP_MULTIPLICATOR_Z 2 // Babysteps are very small. Increase for faster motion.
+#define BABYSTEP_MULTIPLICATOR_Z 1 // Babysteps are very small. Increase for faster motion.
 #define BABYSTEP_MULTIPLICATOR_XY 1
 
-#define DOUBLECLICK_FOR_Z_BABYSTEPPING // Double-click on the Status Screen for Z Babystepping.
+//#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
 #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
-#define DOUBLECLICK_MAX_INTERVAL 2000 // Maximum interval between clicks, in milliseconds. \
+#define DOUBLECLICK_MAX_INTERVAL 1250 // Maximum interval between clicks, in milliseconds. \
                                       // Note: Extra time may be added to mitigate controller latency.
 //#define BABYSTEP_ALWAYS_AVAILABLE     // Allow babystepping at all times (not just during movement).
 //#define MOVE_Z_WHEN_IDLE              // Jump to the move Z menu on doubleclick when printer is idle.
@@ -1496,7 +1502,7 @@
 
 //#define BABYSTEP_DISPLAY_TOTAL          // Display total babysteps since last G28
 
-#define BABYSTEP_ZPROBE_OFFSET // Combine M851 Z and Babystepping
+//#define BABYSTEP_ZPROBE_OFFSET          // Combine M851 Z and Babystepping
 #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
 //#define BABYSTEP_HOTEND_Z_OFFSET      // For multiple hotends, babystep relative Z offsets
 //#define BABYSTEP_ZPROBE_GFX_OVERLAY   // Enable graphical overlay on Z-offset editor
@@ -1608,7 +1614,7 @@
 #if ENABLED(PROBE_TEMP_COMPENSATION)
 // Max temperature that can be reached by heated bed.
 // This is required only for the calibration process.
-#define PTC_MAX_BED_TEMP 110
+#define PTC_MAX_BED_TEMP BED_MAXTEMP
 
 // Park position to wait for probe cooldown
 #define PTC_PARK_POS_X 0.0F
@@ -2048,7 +2054,7 @@
  * TMCStepper library is required to use TMC stepper drivers.
  * https://github.com/teemuatlut/TMCStepper
  */
-#if HAS_TRINAMIC
+#if HAS_TRINAMIC_CONFIG
 
 #define HOLD_MULTIPLIER 1.0 // Scales down the holding current from run current
 #define INTERPOLATE true    // Interpolate X/Y/Z_MICROSTEPS to 256
@@ -2254,22 +2260,14 @@
    */
 #define SENSORLESS_HOMING // StallGuard capable drivers only
 
-/**
-   * Use StallGuard2 to probe the bed with the nozzle.
-   *
-   * CAUTION: This could cause damage to machines that use a lead screw or threaded rod
-   *          to move the Z axis. Take extreme care when attempting to enable this feature.
-   */
-//#define SENSORLESS_PROBING // StallGuard capable drivers only
-
 #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
 // TMC2209: 0...255. TMC2130: -64...63
-#define X_STALL_SENSITIVITY 60
+#define X_STALL_SENSITIVITY 8
 #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-#define Y_STALL_SENSITIVITY 60
-#define Z_STALL_SENSITIVITY 60
+#define Y_STALL_SENSITIVITY 8
+//#define Z_STALL_SENSITIVITY  8
 //#define SPI_ENDSTOPS              // TMC2130 only
-#define IMPROVE_HOMING_RELIABILITY
+//#define IMPROVE_HOMING_RELIABILITY
 #endif
 
 /**
@@ -2299,7 +2297,7 @@
    {              \
    }
 
-#endif // HAS_TRINAMIC
+#endif // HAS_TRINAMIC_CONFIG
 
 // @section L64XX
 
@@ -2744,6 +2742,8 @@
 //#define GCODE_QUOTED_STRINGS  // Support for quoted string parameters
 #endif
 
+//#define GCODE_CASE_INSENSITIVE  // Accept G-code sent to the firmware in lowercase
+
 /**
  * CNC G-code options
  * Support CNC-style G-code dialects used by laser cutters, drawing machine cams, etc.
@@ -2952,12 +2952,12 @@
 #define MAX7219_LOAD_PIN 44
 
 //#define MAX7219_GCODE          // Add the M7219 G-code to control the LED matrix
-#define MAX7219_INIT_TEST 2    // Do a test pattern at initialization (Set to 2 for spiral)
+#define MAX7219_INIT_TEST 2    // Test pattern at startup: 0=none, 1=sweep, 2=spiral
 #define MAX7219_NUMBER_UNITS 1 // Number of Max7219 units in chain.
 #define MAX7219_ROTATE 0       // Rotate the display clockwise (in multiples of +/- 90°) \
                                // connector at:  right=0   bottom=-90  top=90  left=180
-//#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order
-//#define MAX7219_SIDE_BY_SIDE   // Big chip+matrix boards can be chained side-by-side
+                               //#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order
+                               //#define MAX7219_SIDE_BY_SIDE   // Big chip+matrix boards can be chained side-by-side
 
 /**
    * Sample debug features
