@@ -12,9 +12,8 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 * Adaptive Stepsmoothing.
 * Junction Deviation.
 * Babystepping.
-* P.I.N.D.A temp compensation.
-* Controller fan for case.
-* Internal wire for Octoprint, Prusa Style.
+* Controller fan for case. (Filament sensor pin 62)
+
 
 
 ### Hardware
@@ -31,8 +30,9 @@ This branch is for Einsy Rambo and should be PNP for the most part. It's configu
 
 ### Features Not enabled (Yet..):
 * Filamentsensor (I don't personally use it).
-
-
+* Internal wire for Octoprint, Prusa Style.
+* P.I.N.D.A temp compensation.
+* 
 Compile with VSCode and platformio.
 
 
