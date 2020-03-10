@@ -1022,6 +1022,10 @@
 // Show the E position (filament used) during printing
 #define LCD_SHOW_E_TOTAL
 
+#if ENABLED(SHOW_BOOTSCREEN)
+  #define BOOTSCREEN_TIMEOUT 4000        // (ms) Total Duration to display the boot screen(s)
+#endif
+
 #if HAS_GRAPHICAL_LCD && HAS_PRINT_PROGRESS
 //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
 #define SHOW_REMAINING_TIME          // Display estimated time to completion
@@ -1257,12 +1261,8 @@
 // Western only. Not available for Cyrillic, Kana, Turkish, Greek, or Chinese.
 #define USE_SMALL_INFOFONT
 
-// Enable this option and reduce the value to optimize screen updates.
-// The normal delay is 10µs. Use the lowest value that still gives a reliable display.
-//#define DOGM_SPI_DELAY_US 5
-
-// Swap the CW/CCW indicators in the graphics overlay
-//#define OVERLAY_GFX_REVERSE
+  // Swap the CW/CCW indicators in the graphics overlay
+  //#define OVERLAY_GFX_REVERSE
 
 /**
    * ST7920-based LCDs can emulate a 16 x 4 character display using
@@ -1276,12 +1276,16 @@
    * Set STATUS_EXPIRE_SECONDS to zero to never clear the status.
    * This will prevent position updates from being displayed.
    */
-#if ENABLED(U8GLIB_ST7920)
-//#define LIGHTWEIGHT_UI
-#if ENABLED(LIGHTWEIGHT_UI)
-#define STATUS_EXPIRE_SECONDS 20
-#endif
-#endif
+  #if ENABLED(U8GLIB_ST7920)
+    // Enable this option and reduce the value to optimize screen updates.
+    // The normal delay is 10µs. Use the lowest value that still gives a reliable display.
+    //#define DOGM_SPI_DELAY_US 5
+
+    //#define LIGHTWEIGHT_UI
+    #if ENABLED(LIGHTWEIGHT_UI)
+      #define STATUS_EXPIRE_SECONDS 20
+    #endif
+  #endif
 
 /**
    * Status (Info) Screen customizations
@@ -1321,8 +1325,7 @@
 #define DGUS_TX_BUFFER_SIZE 48
 //#define DGUS_SERIAL_STATS_RX_BUFFER_OVERRUNS  // Fix Rx overrun situation (Currently only for AVR)
 
-#define DGUS_UPDATE_INTERVAL_MS 500 // (ms) Interval between automatic screen updates
-#define BOOTSCREEN_TIMEOUT 3000     // (ms) Duration to display the boot screen
+  #define DGUS_UPDATE_INTERVAL_MS  500    // (ms) Interval between automatic screen updates
 
 #if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
 #define DGUS_PRINT_FILENAME // Display the filename during printing
