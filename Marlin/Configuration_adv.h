@@ -722,11 +722,14 @@
 #define Z_STEPPER_ALIGN_AMP 1.0 // Use a value > 1.0 NOTE: This may cause instability!
 #endif
 
-// On a 300mm bed a 5% grade would give a misalignment of ~1.5cm
-#define G34_MAX_GRADE 5              // (%) Maximum incline that G34 will handle
-#define Z_STEPPER_ALIGN_ITERATIONS 5 // Number of iterations to apply during alignment
-#define Z_STEPPER_ALIGN_ACC 0.02     // Stop iterating early if the accuracy is better than this
-#define RESTORE_LEVELING_AFTER_G34   // Restore leveling after G34 is done?
+  // On a 300mm bed a 5% grade would give a misalignment of ~1.5cm
+  #define G34_MAX_GRADE              5    // (%) Maximum incline that G34 will handle
+  #define Z_STEPPER_ALIGN_ITERATIONS 5    // Number of iterations to apply during alignment
+  #define Z_STEPPER_ALIGN_ACC        0.02 // Stop iterating early if the accuracy is better than this
+  #define RESTORE_LEVELING_AFTER_G34      // Restore leveling after G34 is done?
+  // After G34, re-home Z (G28 Z) or just calculate it from the last probe heights?
+  // Re-homing might be more precise in reproducing the actual 'G28 Z' homing height, especially on an uneven bed.
+  #define HOME_AFTER_G34
 #endif
 
 // @section motion
@@ -1048,12 +1051,9 @@
 
 #if ENABLED(SDSUPPORT)
 
-// Some RAMPS and other boards don't detect when an SD card is inserted. You can work
-// around this by connecting a push button or single throw switch to the pin defined
-// as SD_DETECT_PIN in your board's pins definitions.
-// This setting should be disabled unless you are using a push button, pulling the pin to ground.
-// Note: This is always disabled for ULTIPANEL (except ELB_FULL_GRAPHIC_CONTROLLER).
-#define SD_DETECT_INVERTED
+  // The standard SD detect circuit reads LOW when media is inserted and HIGH when empty.
+  // Enable this option and set to HIGH if your SD cards are incorrectly detected.
+  //#define SD_DETECT_STATE HIGH
 
 #define SD_FINISHED_STEPPERRELEASE true          // Disable steppers when SD Print is finished
 #define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E" // You might want to keep the Z enabled so your bed stays in place.
@@ -1318,8 +1318,8 @@
 // Additional options for DGUS / DWIN displays
 //
 #if HAS_DGUS_LCD
-#define DGUS_SERIAL_PORT 2
-#define DGUS_BAUDRATE 115200
+  #define DGUS_SERIAL_PORT 3
+  #define DGUS_BAUDRATE 115200
 
 #define DGUS_RX_BUFFER_SIZE 128
 #define DGUS_TX_BUFFER_SIZE 48
