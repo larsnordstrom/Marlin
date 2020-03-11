@@ -1297,13 +1297,13 @@
 #define STATUS_HOTEND_INVERTED // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM)
 #define STATUS_HOTEND_ANIM     // Use a second bitmap to indicate hotend heating
 #define STATUS_BED_ANIM        // Use a second bitmap to indicate bed heating
-#define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating
-                               //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active
-                               //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
-                               //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
-                               //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
-                               //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
-                               //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
+#define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating                                                               \
+                               //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active                    \
+                               //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap                                            \
+                               //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap                                            \
+                               //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames                               \
+                               //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar                                            \
+                               //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash) \
                                //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
 
 // Frivolous Game Options
@@ -1742,7 +1742,7 @@
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
-#define BUFSIZE 4
+#define BUFSIZE 16
 
 // Transmission to Host Buffer Size
 // To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
@@ -2089,7 +2089,7 @@
 #endif
 
 #if AXIS_IS_TMC(E0)
-#define E0_CURRENT 514
+#define E0_CURRENT 520
 #define E0_MICROSTEPS 16
 #define E0_RSENSE 0.22
 #define E0_CHAIN_POS -1
@@ -2952,8 +2952,8 @@
 #define MAX7219_INIT_TEST 2    // Test pattern at startup: 0=none, 1=sweep, 2=spiral
 #define MAX7219_NUMBER_UNITS 1 // Number of Max7219 units in chain.
 #define MAX7219_ROTATE 0       // Rotate the display clockwise (in multiples of +/- 90°) \
-                               // connector at:  right=0   bottom=-90  top=90  left=180
-                               //#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order
+                               // connector at:  right=0   bottom=-90  top=90  left=180                                 \
+                               //#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order \
                                //#define MAX7219_SIDE_BY_SIDE   // Big chip+matrix boards can be chained side-by-side
 
 //#define MAX7219_GCODE          // Add the M7219 G-code to control the LED matrix
