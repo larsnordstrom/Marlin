@@ -413,8 +413,8 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define FAN1_PIN P1_27
-#define E0_AUTO_FAN_PIN P1_28 //P2_04
+//#define FAN1_PIN P1_27 // X-Stop
+#define E0_AUTO_FAN_PIN P2_04 // P1_28 // Y-Stop
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -590,7 +590,7 @@
 // Homing hits each endstop, retracts by these distances, then does a slower bump.
 #define X_HOME_BUMP_MM 0
 #define Y_HOME_BUMP_MM 0
-#define Z_HOME_BUMP_MM 2
+#define Z_HOME_BUMP_MM 1
 #define HOMING_BUMP_DIVISOR \
    {                        \
       2, 2, 4               \
