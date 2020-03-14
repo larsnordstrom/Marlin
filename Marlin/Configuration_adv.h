@@ -684,7 +684,10 @@
 // If not defined, probe limits will be used.
 // Override with 'M422 S<index> X<pos> Y<pos>'
 //#define Z_STEPPER_ALIGN_XY { {  10, 190 }, { 100,  10 }, { 190, 190 } }
-
+#define Z_STEPPER_ALIGN_XY    \
+   {                          \
+      {35, 105}, { 235, 105 } \
+   }
 /**
    * Orientation for the automatically-calculated probe positions.
    * Override Z stepper align points with 'M422 S<index> X<pos> Y<pos>'
