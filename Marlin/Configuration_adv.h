@@ -686,7 +686,7 @@
 //#define Z_STEPPER_ALIGN_XY { {  10, 190 }, { 100,  10 }, { 190, 190 } }
 #define Z_STEPPER_ALIGN_XY    \
    {                          \
-      {35, 105}, { 235, 105 } \
+      {35, 105}, { 215, 105 } \
    }
 /**
    * Orientation for the automatically-calculated probe positions.
