@@ -31,7 +31,7 @@
  * Basic settings can be found in Configuration.h
  *
  */
-#define CONFIGURATION_ADV_H_VERSION 020004
+#define CONFIGURATION_ADV_H_VERSION 020005
 
 // @section temperature
 
@@ -276,8 +276,10 @@
 #define AUTOTEMP_OLDWEIGHT 0.98
 #endif
 
-// Show extra position information with 'M114 D'
-//#define M114_DETAIL
+// Extra options for the M114 "Current Position" report
+//#define M114_DETAIL         // Use 'M114` for details to check planner calculations
+//#define M114_REALTIME       // Real current position based on forward kinematics
+//#define M114_LEGACY         // M114 used to synchronize on every call. Enable if needed.
 
 // Show Temperature ADC value
 // Enable for M105 to include ADC values read from temperature sensors.
@@ -450,9 +452,9 @@
 //#define CASE_LIGHT_USE_NEOPIXEL           // Use Neopixel LED as case light, requires NEOPIXEL_LED.
 #if ENABLED(CASE_LIGHT_USE_NEOPIXEL)
 #define CASE_LIGHT_NEOPIXEL_COLOR \
-  {                               \
-    255, 255, 255, 255            \
-  } // { Red, Green, Blue, White }
+   {                              \
+      255, 255, 255, 255          \
+   } // { Red, Green, Blue, White }
 #endif
 #endif
 
@@ -589,9 +591,9 @@
 #define Y_HOME_BUMP_MM 2
 #define Z_HOME_BUMP_MM 2
 #define HOMING_BUMP_DIVISOR \
-  {                         \
-    2, 2, 4                 \
-  } // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+   {                        \
+      2, 2, 4               \
+   } // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 //#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 //#define HOMING_BACKOFF_MM { 2, 2, 2 }  // (mm) Move away from the endstops after homing
 
@@ -710,10 +712,10 @@
 // Define Stepper XY positions for Z1, Z2, Z3 corresponding to
 // the Z screw positions in the bed carriage.
 // Define one position per Z stepper in stepper driver order.
-#define Z_STEPPER_ALIGN_STEPPER_XY                  \
-  {                                                 \
-    {210.7, 102.5}, {152.6, 220.0}, { 94.5, 102.5 } \
-  }
+#define Z_STEPPER_ALIGN_STEPPER_XY                    \
+   {                                                  \
+      {210.7, 102.5}, {152.6, 220.0}, { 94.5, 102.5 } \
+   }
 #else
 // Amplification factor. Used to scale the correction step up or down in case
 // the stepper (spindle) position is farther out than the test point.
@@ -725,14 +727,17 @@
 #define Z_STEPPER_ALIGN_ITERATIONS 5 // Number of iterations to apply during alignment
 #define Z_STEPPER_ALIGN_ACC 0.02     // Stop iterating early if the accuracy is better than this
 #define RESTORE_LEVELING_AFTER_G34   // Restore leveling after G34 is done?
+// After G34, re-home Z (G28 Z) or just calculate it from the last probe heights?
+// Re-homing might be more precise in reproducing the actual 'G28 Z' homing height, especially on an uneven bed.
+#define HOME_AFTER_G34
 #endif
 
 // @section motion
 
-#define AXIS_RELATIVE_MODES    \
-  {                            \
-    false, false, false, false \
-  }
+#define AXIS_RELATIVE_MODES      \
+   {                             \
+      false, false, false, false \
+   }
 
 // Add a Duplicate option for well-separated conjoined nozzles
 //#define MULTI_NOZZLE_DUPLICATION
@@ -782,9 +787,9 @@
 // Define values for backlash distance and correction.
 // If BACKLASH_GCODE is enabled these values are the defaults.
 #define BACKLASH_DISTANCE_MM \
-  {                          \
-    0, 0, 0                  \
-  }                             // (mm)
+   {                         \
+      0, 0, 0                \
+   }                            // (mm)
 #define BACKLASH_CORRECTION 0.0 // 0.0 = no correction; 1.0 = full correction
 
 // Set BACKLASH_SMOOTHING_MM to spread backlash correction over multiple segments
@@ -840,13 +845,13 @@
 
 // The true location and dimension the cube/bolt/washer on the bed.
 #define CALIBRATION_OBJECT_CENTER \
-  {                               \
-    264.0, -22.0, -2.0            \
-  } // mm
+   {                              \
+      264.0, -22.0, -2.0          \
+   } // mm
 #define CALIBRATION_OBJECT_DIMENSIONS \
-  {                                   \
-    10.0, 10.0, 10.0                  \
-  } // mm
+   {                                  \
+      10.0, 10.0, 10.0                \
+   } // mm
 
 // Comment out any sides which are unreachable by the probe. For best
 // auto-calibration results, all sides must be reachable.
@@ -888,10 +893,10 @@
 //#define MICROSTEP32 HIGH,LOW,HIGH
 
 // Microstep setting (Only functional when stepper driver microstep pins are connected to MCU.
-#define MICROSTEP_MODES    \
-  {                        \
-    16, 16, 16, 16, 16, 16 \
-  } // [1,2,4,8,16]
+#define MICROSTEP_MODES      \
+   {                         \
+      16, 16, 16, 16, 16, 16 \
+   } // [1,2,4,8,16]
 
 /**
  *  @section  stepper motor current
@@ -938,10 +943,10 @@
 #define DIGIPOT_I2C_NUM_CHANNELS 8 // 5DPRINT: 4     AZTEEG_X3_PRO: 8     MKS SBASE: 5
 // Actual motor currents in Amps. The number of entries must match DIGIPOT_I2C_NUM_CHANNELS.
 // These correspond to the physical drivers, so be mindful if the order is changed.
-#define DIGIPOT_I2C_MOTOR_CURRENTS         \
-  {                                        \
-    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 \
-  } //  AZTEEG_X3_PRO
+#define DIGIPOT_I2C_MOTOR_CURRENTS           \
+   {                                         \
+      1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 \
+   } //  AZTEEG_X3_PRO
 
 //===========================================================================
 //=============================Additional Features===========================
@@ -950,10 +955,10 @@
 // @section lcd
 
 #if EITHER(ULTIPANEL, EXTENSIBLE_UI)
-#define MANUAL_FEEDRATE          \
-  {                              \
-    50 * 60, 50 * 60, 4 * 60, 60 \
-  }                               // Feedrates for manual moves along X, Y, Z, E from panel
+#define MANUAL_FEEDRATE            \
+   {                               \
+      50 * 60, 50 * 60, 4 * 60, 60 \
+   }                              // Feedrates for manual moves along X, Y, Z, E from panel
 #define SHORT_MANUAL_Z_MOVE 0.025 // (mm) Smallest manual Z move (< 0.1mm)
 #if ENABLED(ULTIPANEL)
 #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -1020,6 +1025,10 @@
 // Show the E position (filament used) during printing
 #define LCD_SHOW_E_TOTAL
 
+#if ENABLED(SHOW_BOOTSCREEN)
+#define BOOTSCREEN_TIMEOUT 4000 // (ms) Total Duration to display the boot screen(s)
+#endif
+
 #if HAS_GRAPHICAL_LCD && HAS_PRINT_PROGRESS
 //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
 #define SHOW_REMAINING_TIME // Display estimated time to completion
@@ -1042,12 +1051,9 @@
 
 #if ENABLED(SDSUPPORT)
 
-// Some RAMPS and other boards don't detect when an SD card is inserted. You can work
-// around this by connecting a push button or single throw switch to the pin defined
-// as SD_DETECT_PIN in your board's pins definitions.
-// This setting should be disabled unless you are using a push button, pulling the pin to ground.
-// Note: This is always disabled for ULTIPANEL (except ELB_FULL_GRAPHIC_CONTROLLER).
-#define SD_DETECT_INVERTED
+// The standard SD detect circuit reads LOW when media is inserted and HIGH when empty.
+// Enable this option and set to HIGH if your SD cards are incorrectly detected.
+//#define SD_DETECT_STATE HIGH
 
 #define SD_FINISHED_STEPPERRELEASE true          // Disable steppers when SD Print is finished
 #define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E" // You might want to keep the Z enabled so your bed stays in place.
@@ -1069,9 +1075,13 @@
    * during SD printing. If the recovery file is found at boot time, present
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
+   *
+   * If the machine reboots when resuming a print you may need to replace or
+   * reformat the SD card. (Bad sectors delay startup triggering the watchdog.)
    */
 //#define POWER_LOSS_RECOVERY
 #if ENABLED(POWER_LOSS_RECOVERY)
+#define PLR_ENABLED_DEFAULT false // Power Loss Recovery enabled by default. (Set with 'M413 Sn' & M500)
 //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
 //#define POWER_LOSS_ZRAISE       2 // (mm) Z axis raise on resume (on power loss with UPS)
 //#define POWER_LOSS_PIN         44 // Pin to detect power loss. Set to -1 to disable default pin on boards without module.
@@ -1251,10 +1261,6 @@
 // Western only. Not available for Cyrillic, Kana, Turkish, Greek, or Chinese.
 //#define USE_SMALL_INFOFONT
 
-// Enable this option and reduce the value to optimize screen updates.
-// The normal delay is 10µs. Use the lowest value that still gives a reliable display.
-//#define DOGM_SPI_DELAY_US 5
-
 // Swap the CW/CCW indicators in the graphics overlay
 #define OVERLAY_GFX_REVERSE
 
@@ -1271,6 +1277,10 @@
    * This will prevent position updates from being displayed.
    */
 #if ENABLED(U8GLIB_ST7920)
+// Enable this option and reduce the value to optimize screen updates.
+// The normal delay is 10µs. Use the lowest value that still gives a reliable display.
+//#define DOGM_SPI_DELAY_US 5
+
 //#define LIGHTWEIGHT_UI
 #if ENABLED(LIGHTWEIGHT_UI)
 #define STATUS_EXPIRE_SECONDS 20
@@ -1308,7 +1318,7 @@
 // Additional options for DGUS / DWIN displays
 //
 #if HAS_DGUS_LCD
-#define DGUS_SERIAL_PORT 2
+#define DGUS_SERIAL_PORT 3
 #define DGUS_BAUDRATE 115200
 
 #define DGUS_RX_BUFFER_SIZE 128
@@ -1316,16 +1326,15 @@
 //#define DGUS_SERIAL_STATS_RX_BUFFER_OVERRUNS  // Fix Rx overrun situation (Currently only for AVR)
 
 #define DGUS_UPDATE_INTERVAL_MS 500 // (ms) Interval between automatic screen updates
-#define BOOTSCREEN_TIMEOUT 3000     // (ms) Duration to display the boot screen
 
 #if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
 #define DGUS_PRINT_FILENAME // Display the filename during printing
 #define DGUS_PREHEAT_UI     // Display a preheat screen during heatup
 
 #if ENABLED(DGUS_LCD_UI_FYSETC)
-//#define DUGS_UI_MOVE_DIS_OPTION   // Disabled by default for UI_FYSETC
+//#define DGUS_UI_MOVE_DIS_OPTION   // Disabled by default for UI_FYSETC
 #else
-#define DUGS_UI_MOVE_DIS_OPTION // Enabled by default for UI_HIPRECY
+#define DGUS_UI_MOVE_DIS_OPTION // Enabled by default for UI_HIPRECY
 #endif
 
 #define DGUS_FILAMENT_LOADUNLOAD
@@ -1608,7 +1617,7 @@
 #if ENABLED(PROBE_TEMP_COMPENSATION)
 // Max temperature that can be reached by heated bed.
 // This is required only for the calibration process.
-#define PTC_MAX_BED_TEMP 110
+#define PTC_MAX_BED_TEMP BED_MAXTEMP
 
 // Park position to wait for probe cooldown
 #define PTC_PARK_POS_X 0.0F
@@ -1859,10 +1868,10 @@
    */
 //#define TOOLCHANGE_PARK
 #if ENABLED(TOOLCHANGE_PARK)
-#define TOOLCHANGE_PARK_XY         \
-  {                                \
-    X_MIN_POS + 10, Y_MIN_POS + 10 \
-  }
+#define TOOLCHANGE_PARK_XY           \
+   {                                 \
+      X_MIN_POS + 10, Y_MIN_POS + 10 \
+   }
 #define TOOLCHANGE_PARK_XY_FEEDRATE 6000 // (mm/m)
 #endif
 #endif
@@ -2048,7 +2057,7 @@
  * TMCStepper library is required to use TMC stepper drivers.
  * https://github.com/teemuatlut/TMCStepper
  */
-#if HAS_TRINAMIC
+#if HAS_TRINAMIC_CONFIG
 
 #define HOLD_MULTIPLIER 1.0 // Scales down the holding current from run current
 #define INTERPOLATE true    // Interpolate X/Y/Z_MICROSTEPS to 256
@@ -2234,14 +2243,6 @@
    */
 //#define SENSORLESS_HOMING // StallGuard capable drivers only
 
-/**
-   * Use StallGuard2 to probe the bed with the nozzle.
-   *
-   * CAUTION: This could cause damage to machines that use a lead screw or threaded rod
-   *          to move the Z axis. Take extreme care when attempting to enable this feature.
-   */
-//#define SENSORLESS_PROBING // StallGuard capable drivers only
-
 #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
 // TMC2209: 0...255. TMC2130: -64...63
 #define X_STALL_SENSITIVITY 100
@@ -2276,10 +2277,10 @@
    * }
    */
 #define TMC_ADV() \
-  {               \
-  }
+   {              \
+   }
 
-#endif // HAS_TRINAMIC
+#endif // HAS_TRINAMIC_CONFIG
 
 // @section L64XX
 
@@ -2907,18 +2908,18 @@
 //#define INVERT_JOY_Z  // Enable if Z direction is reversed
 
 // Use M119 with JOYSTICK_DEBUG to find reasonable values after connecting:
-#define JOY_X_LIMITS                    \
-  {                                     \
-    5600, 8190 - 100, 8190 + 100, 10800 \
-  } // min, deadzone start, deadzone end, max
-#define JOY_Y_LIMITS                    \
-  {                                     \
-    5600, 8250 - 100, 8250 + 100, 11000 \
-  }
-#define JOY_Z_LIMITS                    \
-  {                                     \
-    4800, 8080 - 100, 8080 + 100, 11550 \
-  }
+#define JOY_X_LIMITS                      \
+   {                                      \
+      5600, 8190 - 100, 8190 + 100, 10800 \
+   } // min, deadzone start, deadzone end, max
+#define JOY_Y_LIMITS                      \
+   {                                      \
+      5600, 8250 - 100, 8250 + 100, 11000 \
+   }
+#define JOY_Z_LIMITS                      \
+   {                                      \
+      4800, 8080 - 100, 8080 + 100, 11550 \
+   }
 #endif
 
 /**
@@ -2934,12 +2935,12 @@
 #define MAX7219_LOAD_PIN 44
 
 //#define MAX7219_GCODE          // Add the M7219 G-code to control the LED matrix
-#define MAX7219_INIT_TEST 2    // Do a test pattern at initialization (Set to 2 for spiral)
+#define MAX7219_INIT_TEST 2    // Test pattern at startup: 0=none, 1=sweep, 2=spiral
 #define MAX7219_NUMBER_UNITS 1 // Number of Max7219 units in chain.
 #define MAX7219_ROTATE 0       // Rotate the display clockwise (in multiples of +/- 90°) \
-                               // connector at:  right=0   bottom=-90  top=90  left=180
-//#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order
-//#define MAX7219_SIDE_BY_SIDE   // Big chip+matrix boards can be chained side-by-side
+                               // connector at:  right=0   bottom=-90  top=90  left=180                                 \
+                               //#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order \
+                               //#define MAX7219_SIDE_BY_SIDE   // Big chip+matrix boards can be chained side-by-side
 
 /**
    * Sample debug features
@@ -3017,28 +3018,28 @@
 // This is for Prusa MK3-style extruders. Customize for your hardware.
 #define MMU2_FILAMENTCHANGE_EJECT_FEED 80.0
 #define MMU2_LOAD_TO_NOZZLE_SEQUENCE \
-  {7.2, 562},                        \
-      {14.4, 871},                   \
-      {36.0, 1393},                  \
-      {14.4, 871},                   \
-  {                                  \
-    50.0, 198                        \
-  }
+   {7.2, 562},                       \
+       {14.4, 871},                  \
+       {36.0, 1393},                 \
+       {14.4, 871},                  \
+   {                                 \
+      50.0, 198                      \
+   }
 
 #define MMU2_RAMMING_SEQUENCE \
-  {1.0, 1000},                \
-      {1.0, 1500},            \
-      {2.0, 2000},            \
-      {1.5, 3000},            \
-      {2.5, 4000},            \
-      {-15.0, 5000},          \
-      {-14.0, 1200},          \
-      {-6.0, 600},            \
-      {10.0, 700},            \
-      {-10.0, 400},           \
-  {                           \
-    -50.0, 2000               \
-  }
+   {1.0, 1000},               \
+       {1.0, 1500},           \
+       {2.0, 2000},           \
+       {1.5, 3000},           \
+       {2.5, 4000},           \
+       {-15.0, 5000},         \
+       {-14.0, 1200},         \
+       {-6.0, 600},           \
+       {10.0, 700},           \
+       {-10.0, 400},          \
+   {                          \
+      -50.0, 2000             \
+   }
 
 #endif
 
