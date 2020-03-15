@@ -31,7 +31,7 @@
  * Basic settings can be found in Configuration.h
  *
  */
-#define CONFIGURATION_ADV_H_VERSION 020004
+#define CONFIGURATION_ADV_H_VERSION 020005
 
 // @section temperature
 
@@ -1029,24 +1029,24 @@
 #define BOOTSCREEN_TIMEOUT 4000 // (ms) Total Duration to display the boot screen(s)
 #endif
 
-#if HAS_GRAPHICAL_LCD && HAS_PRINT_PROGRESS
-//#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
-#define SHOW_REMAINING_TIME // Display estimated time to completion
-#if ENABLED(SHOW_REMAINING_TIME)
-//#define USE_M73_REMAINING_TIME     // Use remaining time from M73 command instead of estimation
-//#define ROTATE_PROGRESS_DISPLAY    // Display (P)rogress, (E)lapsed, and (R)emaining time
-#endif
+#if HAS_GRAPHICAL_LCD && EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY)
+  //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
+  #define SHOW_REMAINING_TIME          // Display estimated time to completion
+  #if ENABLED(SHOW_REMAINING_TIME)
+    //#define USE_M73_REMAINING_TIME     // Use remaining time from M73 command instead of estimation
+    #define ROTATE_PROGRESS_DISPLAY    // Display (P)rogress, (E)lapsed, and (R)emaining time
+  #endif
 #endif
 
-#if HAS_CHARACTER_LCD && HAS_PRINT_PROGRESS
-//#define LCD_PROGRESS_BAR              // Show a progress bar on HD44780 LCDs for SD printing
-#if ENABLED(LCD_PROGRESS_BAR)
-#define PROGRESS_BAR_BAR_TIME 2000 // (ms) Amount of time to show the bar
-#define PROGRESS_BAR_MSG_TIME 3000 // (ms) Amount of time to show the status message
-#define PROGRESS_MSG_EXPIRE 0      // (ms) Amount of time to retain the status message (0=forever)
-//#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it
-//#define LCD_PROGRESS_BAR_TEST       // Add a menu item to test the progress bar
-#endif
+#if HAS_CHARACTER_LCD && EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY)
+  //#define LCD_PROGRESS_BAR              // Show a progress bar on HD44780 LCDs for SD printing
+  #if ENABLED(LCD_PROGRESS_BAR)
+    #define PROGRESS_BAR_BAR_TIME 2000    // (ms) Amount of time to show the bar
+    #define PROGRESS_BAR_MSG_TIME 3000    // (ms) Amount of time to show the status message
+    #define PROGRESS_MSG_EXPIRE   0       // (ms) Amount of time to retain the status message (0=forever)
+    //#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it
+    //#define LCD_PROGRESS_BAR_TEST       // Add a menu item to test the progress bar
+  #endif
 #endif
 
 #if ENABLED(SDSUPPORT)
@@ -1318,37 +1318,37 @@
 // Additional options for DGUS / DWIN displays
 //
 #if HAS_DGUS_LCD
-#define DGUS_SERIAL_PORT 3
-#define DGUS_BAUDRATE 115200
+  #define DGUS_SERIAL_PORT 3
+  #define DGUS_BAUDRATE 115200
 
-#define DGUS_RX_BUFFER_SIZE 128
-#define DGUS_TX_BUFFER_SIZE 48
-//#define DGUS_SERIAL_STATS_RX_BUFFER_OVERRUNS  // Fix Rx overrun situation (Currently only for AVR)
+  #define DGUS_RX_BUFFER_SIZE 128
+  #define DGUS_TX_BUFFER_SIZE 48
+  //#define DGUS_SERIAL_STATS_RX_BUFFER_OVERRUNS  // Fix Rx overrun situation (Currently only for AVR)
 
-#define DGUS_UPDATE_INTERVAL_MS 500 // (ms) Interval between automatic screen updates
+  #define DGUS_UPDATE_INTERVAL_MS  500    // (ms) Interval between automatic screen updates
 
-#if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
-#define DGUS_PRINT_FILENAME // Display the filename during printing
-#define DGUS_PREHEAT_UI     // Display a preheat screen during heatup
+  #if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
+    #define DGUS_PRINT_FILENAME           // Display the filename during printing
+    #define DGUS_PREHEAT_UI               // Display a preheat screen during heatup
 
-#if ENABLED(DGUS_LCD_UI_FYSETC)
-//#define DUGS_UI_MOVE_DIS_OPTION   // Disabled by default for UI_FYSETC
-#else
-#define DUGS_UI_MOVE_DIS_OPTION // Enabled by default for UI_HIPRECY
-#endif
+    #if ENABLED(DGUS_LCD_UI_FYSETC)
+      //#define DGUS_UI_MOVE_DIS_OPTION   // Disabled by default for UI_FYSETC
+    #else
+      #define DGUS_UI_MOVE_DIS_OPTION     // Enabled by default for UI_HIPRECY
+    #endif
 
-#define DGUS_FILAMENT_LOADUNLOAD
-#if ENABLED(DGUS_FILAMENT_LOADUNLOAD)
-#define DGUS_FILAMENT_PURGE_LENGTH 10
-#define DGUS_FILAMENT_LOAD_LENGTH_PER_TIME 0.5 // (mm) Adjust in proportion to DGUS_UPDATE_INTERVAL_MS
-#endif
+    #define DGUS_FILAMENT_LOADUNLOAD
+    #if ENABLED(DGUS_FILAMENT_LOADUNLOAD)
+      #define DGUS_FILAMENT_PURGE_LENGTH 10
+      #define DGUS_FILAMENT_LOAD_LENGTH_PER_TIME 0.5 // (mm) Adjust in proportion to DGUS_UPDATE_INTERVAL_MS
+    #endif
 
-#define DGUS_UI_WAITING // Show a "waiting" screen between some screens
-#if ENABLED(DGUS_UI_WAITING)
-#define DGUS_UI_WAITING_STATUS 10
-#define DGUS_UI_WAITING_STATUS_PERIOD 8 // Increase to slower waiting status looping
-#endif
-#endif
+    #define DGUS_UI_WAITING               // Show a "waiting" screen between some screens
+    #if ENABLED(DGUS_UI_WAITING)
+      #define DGUS_UI_WAITING_STATUS 10
+      #define DGUS_UI_WAITING_STATUS_PERIOD 8 // Increase to slower waiting status looping
+    #endif
+  #endif
 #endif // HAS_DGUS_LCD
 
 //

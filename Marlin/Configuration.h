@@ -36,7 +36,7 @@
  * Advanced settings can be found in Configuration_adv.h
  *
  */
-#define CONFIGURATION_H_VERSION 020004
+#define CONFIGURATION_H_VERSION 020005
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -781,16 +781,19 @@
  */
 //#define CLASSIC_JERK
 #if ENABLED(CLASSIC_JERK)
-  #define DEFAULT_XJERK 10.0
-  #define DEFAULT_YJERK 10.0
-  #define DEFAULT_ZJERK  0.3
+#define DEFAULT_XJERK 10.0
+#define DEFAULT_YJERK 10.0
+#define DEFAULT_ZJERK 0.3
 
-  //#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
+//#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
 
-  //#define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
-  #if ENABLED(LIMITED_JERK_EDITING)
-    #define MAX_JERK_EDIT_VALUES { 20, 20, 0.6, 10 } // ...or, set your own edit limits
-  #endif
+//#define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
+#if ENABLED(LIMITED_JERK_EDITING)
+#define MAX_JERK_EDIT_VALUES \
+  {                          \
+    20, 20, 0.6, 10          \
+  } // ...or, set your own edit limits
+#endif
 #endif
 
 #define DEFAULT_EJERK 3.5 // May be used by Linear Advance
@@ -960,7 +963,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, 0              \
+    23, 5, 0                   \
   }
 
 // Certain types of probes need to stay away from edges
@@ -985,7 +988,7 @@
  * A total of 3 or more adds more slow probes, taking the average.
  */
 #define MULTIPLE_PROBING 2
-#define EXTRA_PROBING    1
+#define EXTRA_PROBING 1
 
 /**
  * Z probes require clearance when deploying, stowing, and moving between
@@ -1085,7 +1088,7 @@
 #define Z_HOMING_HEIGHT 5 // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ... \
                           // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
 
-#define Z_AFTER_HOMING  10      // (mm) Height to move to after homing Z
+#define Z_AFTER_HOMING 10 // (mm) Height to move to after homing Z
 
 // Direction of endstops when homing; 1=MAX, -1=MIN
 // :[-1,1]
@@ -1287,7 +1290,7 @@
 
 //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-#define MESH_INSET 0         // Set Mesh bounds as an inset region of the bed
+#define MESH_INSET 0        // Set Mesh bounds as an inset region of the bed
 #define GRID_MAX_POINTS_X 7 // Don't use more than 15 points per axis, implementation limited.
 #define GRID_MAX_POINTS_Y 7
 
@@ -1450,7 +1453,8 @@
  */
 #define EEPROM_SETTINGS // Persistent storage with M500 and M501
 //#define DISABLE_M503        // Saves ~2700 bytes of PROGMEM. Disable for release!
-#define EEPROM_CHITCHAT // Give feedback on EEPROM commands. Disable to save PROGMEM.
+#define EEPROM_CHITCHAT    // Give feedback on EEPROM commands. Disable to save PROGMEM.
+#define EEPROM_BOOT_SILENT // Keep M503 quiet and only give errors during first load
 #if ENABLED(EEPROM_SETTINGS)
 //#define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
 #endif
