@@ -1011,14 +1011,14 @@
  */
 #define Z_CLEARANCE_DEPLOY_PROBE 2   // Z Clearance for Deploy/Stow
 #define Z_CLEARANCE_BETWEEN_PROBES 2 // Z Clearance between probe points
-#define Z_CLEARANCE_MULTI_PROBE 2    // Z Clearance between multiple probes
+#define Z_CLEARANCE_MULTI_PROBE 1    // Z Clearance between multiple probes
 //#define Z_AFTER_PROBING           5 // Z position after probing is done
 
-#define Z_PROBE_LOW_POINT -2 // Farthest distance below the trigger-point to go before stopping
+#define Z_PROBE_LOW_POINT -1 // Farthest distance below the trigger-point to go before stopping
 
 // For M851 give a range for adjusting the Z probe offset
-#define Z_PROBE_OFFSET_RANGE_MIN -20
-#define Z_PROBE_OFFSET_RANGE_MAX 20
+#define Z_PROBE_OFFSET_RANGE_MIN -3
+#define Z_PROBE_OFFSET_RANGE_MAX 0
 
 // Enable the M48 repeatability test to test probe accuracy
 #define Z_MIN_PROBE_REPEATABILITY_TEST
@@ -1295,9 +1295,9 @@
 
 //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-#define MESH_INSET 1         // Set Mesh bounds as an inset region of the bed
-#define GRID_MAX_POINTS_X 12 // Don't use more than 15 points per axis, implementation limited.
-#define GRID_MAX_POINTS_Y 10
+#define MESH_INSET 1        // Set Mesh bounds as an inset region of the bed
+#define GRID_MAX_POINTS_X 7 // Don't use more than 15 points per axis, implementation limited.
+#define GRID_MAX_POINTS_Y 7
 
 #define UBL_MESH_EDIT_MOVES_Z   // Sophisticated users prefer no movement of nozzle
 #define UBL_SAVE_ACTIVE_ON_M500 // Save the currently active mesh in the current slot on M500
@@ -1414,7 +1414,7 @@
  *    +-------------->X     +-------------->X     +-------------->Y
  *     XY_SKEW_FACTOR        XZ_SKEW_FACTOR        YZ_SKEW_FACTOR
  */
-//#define SKEW_CORRECTION
+#define SKEW_CORRECTION
 
 #if ENABLED(SKEW_CORRECTION)
 // Input all length measurements here:
@@ -1426,7 +1426,7 @@
 // to override the above measurements:
 #define XY_SKEW_FACTOR 0.0
 
-//#define SKEW_CORRECTION_FOR_Z
+#define SKEW_CORRECTION_FOR_Z
 #if ENABLED(SKEW_CORRECTION_FOR_Z)
 #define XZ_DIAG_AC 282.8427124746
 #define XZ_DIAG_BD 282.8427124746
@@ -1438,7 +1438,7 @@
 #endif
 
 // Enable this option for M852 to set skew at runtime
-//#define SKEW_CORRECTION_GCODE
+#define SKEW_CORRECTION_GCODE
 #endif
 
 //=============================================================================
