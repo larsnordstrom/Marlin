@@ -971,7 +971,7 @@
  */
 #define NOZZLE_TO_PROBE_OFFSET \
   {                            \
-    23, 5, 0               \
+    23, 5, 0                   \
   }
 
 // Most probes should stay away from the edges of the bed, but
@@ -1417,7 +1417,7 @@
  *    +-------------->X     +-------------->X     +-------------->Y
  *     XY_SKEW_FACTOR        XZ_SKEW_FACTOR        YZ_SKEW_FACTOR
  */
-//#define SKEW_CORRECTION
+#define SKEW_CORRECTION
 
 #if ENABLED(SKEW_CORRECTION)
 // Input all length measurements here:

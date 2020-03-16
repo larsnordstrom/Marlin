@@ -1689,8 +1689,8 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_POST_DIR_DELAY 20
-//#define MINIMUM_STEPPER_PRE_DIR_DELAY 20
+#define MINIMUM_STEPPER_POST_DIR_DELAY 20
+#define MINIMUM_STEPPER_PRE_DIR_DELAY 20
 
 /**
  * Minimum stepper driver pulse width (in µs)
@@ -1703,7 +1703,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_PULSE 0
+#define MINIMUM_STEPPER_PULSE 0
 
 /**
  * Maximum stepping rate (in Hz) the stepper driver allows
@@ -1717,7 +1717,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MAXIMUM_STEPPER_RATE 5000000
+#define MAXIMUM_STEPPER_RATE 5000000
 
 // @section temperature
 
@@ -2259,7 +2259,7 @@
    * Beta feature!
    * Create a 50/50 square wave step pulse optimal for stepper drivers.
    */
-#define SQUARE_WAVE_STEPPING
+//#define SQUARE_WAVE_STEPPING
 
 /**
    * Enable M122 debugging command for TMC stepper drivers.
@@ -2940,8 +2940,8 @@
 #define MAX7219_INIT_TEST 2    // Test pattern at startup: 0=none, 1=sweep, 2=spiral
 #define MAX7219_NUMBER_UNITS 1 // Number of Max7219 units in chain.
 #define MAX7219_ROTATE 0       // Rotate the display clockwise (in multiples of +/- 90°) \
-                               // connector at:  right=0   bottom=-90  top=90  left=180
-                               //#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order
+                               // connector at:  right=0   bottom=-90  top=90  left=180                                 \
+                               //#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order \
                                //#define MAX7219_SIDE_BY_SIDE   // Big chip+matrix boards can be chained side-by-side
 
 /**
