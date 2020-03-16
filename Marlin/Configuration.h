@@ -36,7 +36,7 @@
  * Advanced settings can be found in Configuration_adv.h
  *
  */
-#define CONFIGURATION_H_VERSION 020004
+#define CONFIGURATION_H_VERSION 020005
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -779,20 +779,19 @@
  */
 //#define CLASSIC_JERK
 #if ENABLED(CLASSIC_JERK)
-#define DEFAULT_XJERK 10.0
-#define DEFAULT_YJERK 10.0
-#define DEFAULT_ZJERK 0.3
+  #define DEFAULT_XJERK 10.0
+  #define DEFAULT_YJERK 10.0
+  #define DEFAULT_ZJERK  0.4
 
-//#define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
-#if ENABLED(LIMITED_JERK_EDITING)
-#define MAX_JERK_EDIT_VALUES \
-  {                          \
-    20, 20, 0.6, 10          \
-  } // ...or, set your own edit limits
-#endif
+  //#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
+
+  //#define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
+  #if ENABLED(LIMITED_JERK_EDITING)
+    #define MAX_JERK_EDIT_VALUES { 20, 20, 0.6, 10 } // ...or, set your own edit limits
+  #endif
 #endif
 
-#define DEFAULT_EJERK 1.5 // May be used by Linear Advance
+#define DEFAULT_EJERK 3.5 // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
@@ -802,7 +801,7 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-#define JUNCTION_DEVIATION_MM 0.02 // (mm) Distance from real junction edge
+#define JUNCTION_DEVIATION_MM 0.017 // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -924,6 +923,14 @@
 #if ENABLED(DUET_SMART_EFFECTOR)
 #define SMART_EFFECTOR_MOD_PIN -1 // Connect a GPIO pin to the Smart Effector MOD pin
 #endif
+
+/**
+ * Use StallGuard2 to probe the bed with the nozzle.
+ * Requires stallGuard-capable Trinamic stepper drivers.
+ * CAUTION: This can damage machines with Z lead screws.
+ *          Take extreme care when setting up this feature.
+ */
+//#define SENSORLESS_PROBING
 
 //
 // For Z_PROBE_ALLEN_KEY see the Delta example configurations.
@@ -1442,7 +1449,8 @@
  */
 #define EEPROM_SETTINGS // Persistent storage with M500 and M501
 //#define DISABLE_M503        // Saves ~2700 bytes of PROGMEM. Disable for release!
-#define EEPROM_CHITCHAT // Give feedback on EEPROM commands. Disable to save PROGMEM.
+#define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save PROGMEM.
+#define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load
 #if ENABLED(EEPROM_SETTINGS)
 //#define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
 #endif
