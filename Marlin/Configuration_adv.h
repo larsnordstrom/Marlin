@@ -192,13 +192,13 @@
  */
 #if ENABLED(THERMAL_PROTECTION_CHAMBER)
 #define THERMAL_PROTECTION_CHAMBER_PERIOD 20    // Seconds
-#define THERMAL_PROTECTION_CHAMBER_HYSTERESIS 2 // Degrees Celsius
+#define THERMAL_PROTECTION_CHAMBER_HYSTERESIS 8 // Degrees Celsius
 
 /**
    * Heated chamber watch settings (M141/M191).
    */
 #define WATCH_CHAMBER_TEMP_PERIOD 60  // Seconds
-#define WATCH_CHAMBER_TEMP_INCREASE 2 // Degrees Celsius
+#define WATCH_CHAMBER_TEMP_INCREASE 8 // Degrees Celsius
 #endif
 
 #if ENABLED(PIDTEMP)
@@ -369,7 +369,7 @@
  *
  * Define one or both of these to override the default 0-255 range.
  */
-//#define FAN_MIN_PWM 50
+#define FAN_MIN_PWM 20
 //#define FAN_MAX_PWM 128
 
 /**
@@ -590,7 +590,7 @@
 // Homing hits each endstop, retracts by these distances, then does a slower bump.
 #define X_HOME_BUMP_MM 0
 #define Y_HOME_BUMP_MM 0
-#define Z_HOME_BUMP_MM 1
+#define Z_HOME_BUMP_MM 0
 #define HOMING_BUMP_DIVISOR \
    {                        \
       2, 2, 4               \
@@ -1269,7 +1269,7 @@
 //#define USE_SMALL_INFOFONT
 
 // Swap the CW/CCW indicators in the graphics overlay
-#define OVERLAY_GFX_REVERSE
+//#define OVERLAY_GFX_REVERSE
 
 /**
    * ST7920-based LCDs can emulate a 16 x 4 character display using
@@ -1515,7 +1515,7 @@
 #define BABYSTEP_ZPROBE_OFFSET // Combine M851 Z and Babystepping
 #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
 //#define BABYSTEP_HOTEND_Z_OFFSET      // For multiple hotends, babystep relative Z offsets
-#define BABYSTEP_ZPROBE_GFX_OVERLAY // Enable graphical overlay on Z-offset editor
+//#define BABYSTEP_ZPROBE_GFX_OVERLAY // Enable graphical overlay on Z-offset editor
 #endif
 #endif
 
@@ -1755,7 +1755,7 @@
 // For debug-echo: 128 bytes for the optimal speed.
 // Other output doesn't need to be that speedy.
 // :[0, 2, 4, 8, 16, 32, 64, 128, 256]
-#define TX_BUFFER_SIZE 32
+#define TX_BUFFER_SIZE 16
 
 // Host Receive Buffer Size
 // Without XON/XOFF flow control (see SERIAL_XON_XOFF below) 32 bytes should be enough.
@@ -2069,9 +2069,9 @@
 #define INTERPOLATE true    // Interpolate X/Y/Z_MICROSTEPS to 256
 
 #if AXIS_IS_TMC(X)
-#define X_CURRENT 500      // (mA) RMS current. Multiply by 1.414 for peak current.
-#define X_CURRENT_HOME 350 // (mA) RMS current for sensorless homing
-#define X_MICROSTEPS 16    // 0..256
+#define X_CURRENT 500                  // (mA) RMS current. Multiply by 1.414 for peak current.
+#define X_CURRENT_HOME (X_CURRENT / 2) // (mA) RMS current for sensorless homing
+#define X_MICROSTEPS 16                // 0..256
 #define X_RSENSE 0.11
 #define X_CHAIN_POS -1 // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
 #endif
@@ -2085,7 +2085,7 @@
 #endif
 
 #if AXIS_IS_TMC(Z)
-#define Z_CURRENT 550
+#define Z_CURRENT 450
 #define Z_CURRENT_HOME Z_CURRENT
 #define Z_MICROSTEPS 16
 #define Z_RSENSE 0.11
@@ -2101,7 +2101,7 @@
 #endif
 
 #if AXIS_IS_TMC(E0)
-#define E0_CURRENT 520
+#define E0_CURRENT 550
 #define E0_MICROSTEPS 16
 #define E0_RSENSE 0.11
 #define E0_CHAIN_POS -1
@@ -2197,7 +2197,7 @@
    * Define you own with
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-#define CHOPPER_TIMING CHOPPER_PRUSAMK3_24V
+#define CHOPPER_TIMING CHOPPER_DEFAULT_24V
 
 /**
    * Monitor Trinamic drivers for error conditions,
@@ -2270,7 +2270,7 @@
 // TMC2209: 0...255. TMC2130: -64...63
 #define X_STALL_SENSITIVITY 100
 #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-#define Y_STALL_SENSITIVITY 100
+#define Y_STALL_SENSITIVITY 90
 #define Z_STALL_SENSITIVITY 100
 //#define SPI_ENDSTOPS              // TMC2130 only
 #define IMPROVE_HOMING_RELIABILITY
