@@ -598,7 +598,7 @@
 #define QUICK_HOME // If homing includes X and Y, do a diagonal move initially
 #define HOMING_BACKOFF_MM \
    {                      \
-      2, 2, 0             \
+      2, 2, 2             \
    } // (mm) Move away from the endstops after homing
 
 // When G28 is called, this option will make Y home before X
@@ -1741,16 +1741,16 @@
 // The number of linear motions that can be in the plan at any give time.
 // THE BLOCK_BUFFER_SIZE NEEDS TO BE A POWER OF 2 (e.g. 8, 16, 32) because shifts and ors are used to do the ring-buffering.
 #if ENABLED(SDSUPPORT)
-#define BLOCK_BUFFER_SIZE 32 // SD,LCD,Buttons take more memory, block buffer needs to be smaller
+#define BLOCK_BUFFER_SIZE 16 // SD,LCD,Buttons take more memory, block buffer needs to be smaller
 #else
-#define BLOCK_BUFFER_SIZE 32 // maximize block buffer
+#define BLOCK_BUFFER_SIZE 16 // maximize block buffer
 #endif
 
 // @section serial
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
-#define BUFSIZE 32
+#define BUFSIZE 16
 
 // Transmission to Host Buffer Size
 // To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
@@ -2073,7 +2073,7 @@
 #define INTERPOLATE true    // Interpolate X/Y/Z_MICROSTEPS to 256
 
 #if AXIS_IS_TMC(X)
-#define X_CURRENT 500                  // (mA) RMS current. Multiply by 1.414 for peak current.
+#define X_CURRENT 430                  // (mA) RMS current. Multiply by 1.414 for peak current.
 #define X_CURRENT_HOME (X_CURRENT / 2) // (mA) RMS current for sensorless homing
 #define X_MICROSTEPS 16                // 0..256
 #define X_RSENSE 0.11
@@ -2081,8 +2081,8 @@
 #endif
 
 #if AXIS_IS_TMC(Y)
-#define Y_CURRENT 600
-#define Y_CURRENT_HOME 350
+#define Y_CURRENT 500
+#define Y_CURRENT_HOME (Y_CURRENT / 2)
 #define Y_MICROSTEPS 16
 #define Y_RSENSE 0.11
 #define Y_CHAIN_POS -1
@@ -2097,8 +2097,8 @@
 #endif
 
 #if AXIS_IS_TMC(Z2)
-#define Z2_CURRENT Z_CURRENT
-#define Z2_CURRENT_HOME Z_CURRENT_HOME
+#define Z2_CURRENT 450
+#define Z2_CURRENT_HOME Z2_CURRENT
 #define Z2_MICROSTEPS 16
 #define Z2_RSENSE 0.11
 #define Z2_CHAIN_POS -1
@@ -2201,7 +2201,7 @@
    * Define you own with
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-#define CHOPPER_TIMING CHOPPER_DEFAULT_24V
+#define CHOPPER_TIMING CHOPPER_PRUSAMK3_24V
 
 /**
    * Monitor Trinamic drivers for error conditions,
@@ -2791,7 +2791,7 @@
 /**
  * User-defined menu items that execute custom GCode
  */
-#define CUSTOM_USER_MENUS
+//#define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
 #define CUSTOM_USER_MENU_TITLE "Custom Commands"
 #define USER_SCRIPT_DONE "M117 User Script Done"
