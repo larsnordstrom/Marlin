@@ -31,7 +31,7 @@
  * Basic settings can be found in Configuration.h
  *
  */
-#define CONFIGURATION_ADV_H_VERSION 020004
+#define CONFIGURATION_ADV_H_VERSION 020005
 
 // @section temperature
 
@@ -338,15 +338,22 @@
  * Controller Fan
  * To cool down the stepper drivers and MOSFETs.
  *
- * The fan will turn on automatically whenever any stepper is enabled
- * and turn off after a set period after all steppers are turned off.
+ * The fan turns on automatically whenever any driver is enabled and turns
+ * off (or reduces to idle speed) shortly after drivers are turned off.
+ *
  */
 //#define USE_CONTROLLER_FAN
 #if ENABLED(USE_CONTROLLER_FAN)
-//#define CONTROLLER_FAN_PIN -1           // Set a custom pin for the controller fan
-#define CONTROLLERFAN_SECS 60   // Duration in seconds for the fan to run after all motors are disabled
-#define CONTROLLERFAN_SPEED 255 // 255 == full speed
-//#define CONTROLLERFAN_SPEED_Z_ONLY 127  // Reduce noise on machines that keep Z enabled
+//#define CONTROLLER_FAN_PIN -1        // Set a custom pin for the controller fan
+//#define CONTROLLER_FAN_USE_Z_ONLY    // With this option only the Z axis is considered
+#define CONTROLLERFAN_SPEED_MIN 0      // (0-255) Minimum speed. (If set below this value the fan is turned off.)
+#define CONTROLLERFAN_SPEED_ACTIVE 255 // (0-255) Active speed, used when any motor is enabled
+#define CONTROLLERFAN_SPEED_IDLE 0     // (0-255) Idle speed, used when motors are disabled
+#define CONTROLLERFAN_IDLE_TIME 60     // (seconds) Extra time to keep the fan running after disabling motors
+//#define CONTROLLER_FAN_EDITABLE      // Enable M710 configurable settings
+#if ENABLED(CONTROLLER_FAN_EDITABLE)
+#define CONTROLLER_FAN_MENU // Enable the Controller Fan submenu
+#endif
 #endif
 
 // When first starting the main fan, run it at full speed for the
@@ -701,32 +708,35 @@
    *               | 1   2 | 2   3 | 3   4 | 4   1 |
    *
    */
-  #ifndef Z_STEPPER_ALIGN_XY
-    //#define Z_STEPPERS_ORIENTATION 0
-  #endif
+#ifndef Z_STEPPER_ALIGN_XY
+//#define Z_STEPPERS_ORIENTATION 0
+#endif
 
-  // Provide Z stepper positions for more rapid convergence in bed alignment.
-  // Requires triple stepper drivers (i.e., set NUM_Z_STEPPER_DRIVERS to 3)
-  //#define Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS
-  #if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
-    // Define Stepper XY positions for Z1, Z2, Z3 corresponding to
-    // the Z screw positions in the bed carriage.
-    // Define one position per Z stepper in stepper driver order.
-    #define Z_STEPPER_ALIGN_STEPPER_XY { { 210.7, 102.5 }, { 152.6, 220.0 }, { 94.5, 102.5 } }
-  #else
-    // Amplification factor. Used to scale the correction step up or down in case
-    // the stepper (spindle) position is farther out than the test point.
-    #define Z_STEPPER_ALIGN_AMP 1.0       // Use a value > 1.0 NOTE: This may cause instability!
-  #endif
+// Provide Z stepper positions for more rapid convergence in bed alignment.
+// Requires triple stepper drivers (i.e., set NUM_Z_STEPPER_DRIVERS to 3)
+//#define Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS
+#if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
+// Define Stepper XY positions for Z1, Z2, Z3 corresponding to
+// the Z screw positions in the bed carriage.
+// Define one position per Z stepper in stepper driver order.
+#define Z_STEPPER_ALIGN_STEPPER_XY                    \
+   {                                                  \
+      {210.7, 102.5}, {152.6, 220.0}, { 94.5, 102.5 } \
+   }
+#else
+// Amplification factor. Used to scale the correction step up or down in case
+// the stepper (spindle) position is farther out than the test point.
+#define Z_STEPPER_ALIGN_AMP 1.0 // Use a value > 1.0 NOTE: This may cause instability!
+#endif
 
-  // On a 300mm bed a 5% grade would give a misalignment of ~1.5cm
-  #define G34_MAX_GRADE              5    // (%) Maximum incline that G34 will handle
-  #define Z_STEPPER_ALIGN_ITERATIONS 5    // Number of iterations to apply during alignment
-  #define Z_STEPPER_ALIGN_ACC        0.02 // Stop iterating early if the accuracy is better than this
-  #define RESTORE_LEVELING_AFTER_G34      // Restore leveling after G34 is done?
-  // After G34, re-home Z (G28 Z) or just calculate it from the last probe heights?
-  // Re-homing might be more precise in reproducing the actual 'G28 Z' homing height, especially on an uneven bed.
-  #define HOME_AFTER_G34
+// On a 300mm bed a 5% grade would give a misalignment of ~1.5cm
+#define G34_MAX_GRADE 5              // (%) Maximum incline that G34 will handle
+#define Z_STEPPER_ALIGN_ITERATIONS 5 // Number of iterations to apply during alignment
+#define Z_STEPPER_ALIGN_ACC 0.02     // Stop iterating early if the accuracy is better than this
+#define RESTORE_LEVELING_AFTER_G34   // Restore leveling after G34 is done?
+// After G34, re-home Z (G28 Z) or just calculate it from the last probe heights?
+// Re-homing might be more precise in reproducing the actual 'G28 Z' homing height, especially on an uneven bed.
+#define HOME_AFTER_G34
 #endif
 
 // @section motion
@@ -762,8 +772,12 @@
 // Minimum time that a segment needs to take if the buffer is emptied
 #define DEFAULT_MINSEGMENTTIME 20000 // (ms)
 
-// If defined the movements slow down when the look ahead buffer is only half full
+// Slow down the machine if the look ahead buffer is (by default) half full.
+// Increase the slowdown divisor for larger buffer sizes.
 #define SLOWDOWN
+#if ENABLED(SLOWDOWN)
+#define SLOWDOWN_DIVISOR 2
+#endif
 
 // Frequency limit
 // See nophead's blog for more info
@@ -1023,10 +1037,10 @@
 //#define LCD_SHOW_E_TOTAL
 
 #if ENABLED(SHOW_BOOTSCREEN)
-  #define BOOTSCREEN_TIMEOUT 4000        // (ms) Total Duration to display the boot screen(s)
+#define BOOTSCREEN_TIMEOUT 4000 // (ms) Total Duration to display the boot screen(s)
 #endif
 
-#if HAS_GRAPHICAL_LCD && HAS_PRINT_PROGRESS
+#if HAS_GRAPHICAL_LCD && EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY)
 //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
 //#define SHOW_REMAINING_TIME          // Display estimated time to completion
 #if ENABLED(SHOW_REMAINING_TIME)
@@ -1035,22 +1049,22 @@
 #endif
 #endif
 
-#if HAS_CHARACTER_LCD && HAS_PRINT_PROGRESS
+#if HAS_CHARACTER_LCD && EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY)
 //#define LCD_PROGRESS_BAR              // Show a progress bar on HD44780 LCDs for SD printing
 #if ENABLED(LCD_PROGRESS_BAR)
 #define PROGRESS_BAR_BAR_TIME 2000 // (ms) Amount of time to show the bar
 #define PROGRESS_BAR_MSG_TIME 3000 // (ms) Amount of time to show the status message
 #define PROGRESS_MSG_EXPIRE 0      // (ms) Amount of time to retain the status message (0=forever)
-//#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it
-//#define LCD_PROGRESS_BAR_TEST       // Add a menu item to test the progress bar
+                                   //#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it
+                                   //#define LCD_PROGRESS_BAR_TEST       // Add a menu item to test the progress bar
 #endif
 #endif
 
 #if ENABLED(SDSUPPORT)
 
-  // The standard SD detect circuit reads LOW when media is inserted and HIGH when empty.
-  // Enable this option and set to HIGH if your SD cards are incorrectly detected.
-  //#define SD_DETECT_STATE HIGH
+// The standard SD detect circuit reads LOW when media is inserted and HIGH when empty.
+// Enable this option and set to HIGH if your SD cards are incorrectly detected.
+//#define SD_DETECT_STATE HIGH
 
 #define SD_FINISHED_STEPPERRELEASE true          // Disable steppers when SD Print is finished
 #define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E" // You might want to keep the Z enabled so your bed stays in place.
@@ -1258,8 +1272,8 @@
 // Western only. Not available for Cyrillic, Kana, Turkish, Greek, or Chinese.
 //#define USE_SMALL_INFOFONT
 
-  // Swap the CW/CCW indicators in the graphics overlay
-  #define OVERLAY_GFX_REVERSE
+// Swap the CW/CCW indicators in the graphics overlay
+#define OVERLAY_GFX_REVERSE
 
 /**
    * ST7920-based LCDs can emulate a 16 x 4 character display using
@@ -1273,18 +1287,18 @@
    * Set STATUS_EXPIRE_SECONDS to zero to never clear the status.
    * This will prevent position updates from being displayed.
    */
-  #if ENABLED(U8GLIB_ST7920)
-    // Enable this option and reduce the value to optimize screen updates.
-    // The normal delay is 10µs. Use the lowest value that still gives a reliable display.
-    //#define DOGM_SPI_DELAY_US 5
+#if ENABLED(U8GLIB_ST7920)
+// Enable this option and reduce the value to optimize screen updates.
+// The normal delay is 10µs. Use the lowest value that still gives a reliable display.
+//#define DOGM_SPI_DELAY_US 5
 
-    //#define LIGHTWEIGHT_UI
-    #if ENABLED(LIGHTWEIGHT_UI)
-      #define STATUS_EXPIRE_SECONDS 20
-    #endif
-  #endif
+//#define LIGHTWEIGHT_UI
+#if ENABLED(LIGHTWEIGHT_UI)
+#define STATUS_EXPIRE_SECONDS 20
+#endif
+#endif
 
-  /**
+/**
    * Status (Info) Screen customizations
    * These options may affect code size and screen render time.
    * Custom status screens can forcibly override these settings.
@@ -1294,13 +1308,13 @@
 #define STATUS_HOTEND_INVERTED // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM)
 #define STATUS_HOTEND_ANIM     // Use a second bitmap to indicate hotend heating
 #define STATUS_BED_ANIM        // Use a second bitmap to indicate bed heating
-#define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating
-                               //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active
-                               //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
-                               //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
-                               //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
-                               //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
-                               //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
+#define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating                                                               \
+                               //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active                    \
+                               //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap                                            \
+                               //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap                                            \
+                               //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames                               \
+                               //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar                                            \
+                               //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash) \
                                //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
 
 // Frivolous Game Options
@@ -1315,37 +1329,37 @@
 // Additional options for DGUS / DWIN displays
 //
 #if HAS_DGUS_LCD
-  #define DGUS_SERIAL_PORT 3
-  #define DGUS_BAUDRATE 115200
+#define DGUS_SERIAL_PORT 3
+#define DGUS_BAUDRATE 115200
 
-  #define DGUS_RX_BUFFER_SIZE 128
-  #define DGUS_TX_BUFFER_SIZE 48
-  //#define DGUS_SERIAL_STATS_RX_BUFFER_OVERRUNS  // Fix Rx overrun situation (Currently only for AVR)
+#define DGUS_RX_BUFFER_SIZE 128
+#define DGUS_TX_BUFFER_SIZE 48
+//#define DGUS_SERIAL_STATS_RX_BUFFER_OVERRUNS  // Fix Rx overrun situation (Currently only for AVR)
 
-  #define DGUS_UPDATE_INTERVAL_MS  500    // (ms) Interval between automatic screen updates
+#define DGUS_UPDATE_INTERVAL_MS 500 // (ms) Interval between automatic screen updates
 
-  #if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
-    #define DGUS_PRINT_FILENAME           // Display the filename during printing
-    #define DGUS_PREHEAT_UI               // Display a preheat screen during heatup
+#if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
+#define DGUS_PRINT_FILENAME // Display the filename during printing
+#define DGUS_PREHEAT_UI     // Display a preheat screen during heatup
 
-    #if ENABLED(DGUS_LCD_UI_FYSETC)
-      //#define DUGS_UI_MOVE_DIS_OPTION   // Disabled by default for UI_FYSETC
-    #else
-      #define DUGS_UI_MOVE_DIS_OPTION     // Enabled by default for UI_HIPRECY
-    #endif
+#if ENABLED(DGUS_LCD_UI_FYSETC)
+//#define DGUS_UI_MOVE_DIS_OPTION   // Disabled by default for UI_FYSETC
+#else
+#define DGUS_UI_MOVE_DIS_OPTION // Enabled by default for UI_HIPRECY
+#endif
 
-    #define DGUS_FILAMENT_LOADUNLOAD
-    #if ENABLED(DGUS_FILAMENT_LOADUNLOAD)
-      #define DGUS_FILAMENT_PURGE_LENGTH 10
-      #define DGUS_FILAMENT_LOAD_LENGTH_PER_TIME 0.5 // (mm) Adjust in proportion to DGUS_UPDATE_INTERVAL_MS
-    #endif
+#define DGUS_FILAMENT_LOADUNLOAD
+#if ENABLED(DGUS_FILAMENT_LOADUNLOAD)
+#define DGUS_FILAMENT_PURGE_LENGTH 10
+#define DGUS_FILAMENT_LOAD_LENGTH_PER_TIME 0.5 // (mm) Adjust in proportion to DGUS_UPDATE_INTERVAL_MS
+#endif
 
-    #define DGUS_UI_WAITING               // Show a "waiting" screen between some screens
-    #if ENABLED(DGUS_UI_WAITING)
-      #define DGUS_UI_WAITING_STATUS 10
-      #define DGUS_UI_WAITING_STATUS_PERIOD 8 // Increase to slower waiting status looping
-    #endif
-  #endif
+#define DGUS_UI_WAITING // Show a "waiting" screen between some screens
+#if ENABLED(DGUS_UI_WAITING)
+#define DGUS_UI_WAITING_STATUS 10
+#define DGUS_UI_WAITING_STATUS_PERIOD 8 // Increase to slower waiting status looping
+#endif
+#endif
 #endif // HAS_DGUS_LCD
 
 //
@@ -2955,8 +2969,8 @@
 #define MAX7219_INIT_TEST 2    // Test pattern at startup: 0=none, 1=sweep, 2=spiral
 #define MAX7219_NUMBER_UNITS 1 // Number of Max7219 units in chain.
 #define MAX7219_ROTATE 0       // Rotate the display clockwise (in multiples of +/- 90°) \
-                               // connector at:  right=0   bottom=-90  top=90  left=180
-                               //#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order
+                               // connector at:  right=0   bottom=-90  top=90  left=180                                 \
+                               //#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order \
                                //#define MAX7219_SIDE_BY_SIDE   // Big chip+matrix boards can be chained side-by-side
 
 /**
