@@ -595,7 +595,7 @@
    {                        \
       2, 2, 4               \
    }               // Re-Bump Speed Divisor (Divides the Homing Feedrate)
-#define QUICK_HOME // If homing includes X and Y, do a diagonal move initially
+//#define QUICK_HOME // If homing includes X and Y, do a diagonal move initially
 #define HOMING_BACKOFF_MM \
    {                      \
       2, 2, 2             \
@@ -1741,7 +1741,7 @@
 // The number of linear motions that can be in the plan at any give time.
 // THE BLOCK_BUFFER_SIZE NEEDS TO BE A POWER OF 2 (e.g. 8, 16, 32) because shifts and ors are used to do the ring-buffering.
 #if ENABLED(SDSUPPORT)
-#define BLOCK_BUFFER_SIZE 16 // SD,LCD,Buttons take more memory, block buffer needs to be smaller
+#define BLOCK_BUFFER_SIZE 32 // SD,LCD,Buttons take more memory, block buffer needs to be smaller
 #else
 #define BLOCK_BUFFER_SIZE 16 // maximize block buffer
 #endif
@@ -1750,7 +1750,7 @@
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
-#define BUFSIZE 16
+#define BUFSIZE 32
 
 // Transmission to Host Buffer Size
 // To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
@@ -1759,7 +1759,7 @@
 // For debug-echo: 128 bytes for the optimal speed.
 // Other output doesn't need to be that speedy.
 // :[0, 2, 4, 8, 16, 32, 64, 128, 256]
-#define TX_BUFFER_SIZE 16
+#define TX_BUFFER_SIZE 32
 
 // Host Receive Buffer Size
 // Without XON/XOFF flow control (see SERIAL_XON_XOFF below) 32 bytes should be enough.
@@ -2073,16 +2073,16 @@
 #define INTERPOLATE true    // Interpolate X/Y/Z_MICROSTEPS to 256
 
 #if AXIS_IS_TMC(X)
-#define X_CURRENT 430                  // (mA) RMS current. Multiply by 1.414 for peak current.
-#define X_CURRENT_HOME (X_CURRENT / 2) // (mA) RMS current for sensorless homing
+#define X_CURRENT 500                  // (mA) RMS current. Multiply by 1.414 for peak current.
+#define X_CURRENT_HOME 200 // (mA) RMS current for sensorless homing
 #define X_MICROSTEPS 16                // 0..256
 #define X_RSENSE 0.11
 #define X_CHAIN_POS -1 // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
 #endif
 
 #if AXIS_IS_TMC(Y)
-#define Y_CURRENT 500
-#define Y_CURRENT_HOME (Y_CURRENT / 2)
+#define Y_CURRENT 600
+#define Y_CURRENT_HOME 240
 #define Y_MICROSTEPS 16
 #define Y_RSENSE 0.11
 #define Y_CHAIN_POS -1
@@ -2105,7 +2105,7 @@
 #endif
 
 #if AXIS_IS_TMC(E0)
-#define E0_CURRENT 550
+#define E0_CURRENT 520
 #define E0_MICROSTEPS 16
 #define E0_RSENSE 0.11
 #define E0_CHAIN_POS -1
