@@ -590,13 +590,13 @@
 // Homing hits each endstop, retracts by these distances, then does a slower bump.
 #define X_HOME_BUMP_MM 0
 #define Y_HOME_BUMP_MM 0
-#define Z_HOME_BUMP_MM 0
+#define Z_HOME_BUMP_MM 1
 #define HOMING_BUMP_DIVISOR \
    {                        \
       2, 2, 4               \
    }               // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 //#define QUICK_HOME // If homing includes X and Y, do a diagonal move initially
-#define HOMING_BACKOFF_MM \
+//#define HOMING_BACKOFF_MM \
    {                      \
       2, 2, 2             \
    } // (mm) Move away from the endstops after homing
@@ -686,7 +686,7 @@
 //#define Z_STEPPER_ALIGN_XY { {  10, 190 }, { 100,  10 }, { 190, 190 } }
 #define Z_STEPPER_ALIGN_XY    \
    {                          \
-      {35, 105}, { 215, 105 } \
+      {35, 105}, { 225, 105 } \
    }
 /**
    * Orientation for the automatically-calculated probe positions.
@@ -1697,8 +1697,8 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_POST_DIR_DELAY 20
-//#define MINIMUM_STEPPER_PRE_DIR_DELAY 20
+#define MINIMUM_STEPPER_POST_DIR_DELAY 20
+#define MINIMUM_STEPPER_PRE_DIR_DELAY 20
 
 /**
  * Minimum stepper driver pulse width (in µs)
@@ -1711,7 +1711,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_PULSE 0
+#define MINIMUM_STEPPER_PULSE 0
 
 /**
  * Maximum stepping rate (in Hz) the stepper driver allows
@@ -1725,7 +1725,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MAXIMUM_STEPPER_RATE 5000000
+#define MAXIMUM_STEPPER_RATE 5000000
 
 // @section temperature
 
@@ -2201,7 +2201,7 @@
    * Define you own with
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-#define CHOPPER_TIMING CHOPPER_PRUSAMK3_24V
+#define CHOPPER_TIMING CHOPPER_DEFAULT_24V
 
 /**
    * Monitor Trinamic drivers for error conditions,
