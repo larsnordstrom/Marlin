@@ -503,9 +503,9 @@
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
 // E3d 24v, copper block.
-#define DEFAULT_Kp 16.13
-#define DEFAULT_Ki 1.16
-#define DEFAULT_Kd 56.23
+#define DEFAULT_Kp 23.11
+#define DEFAULT_Ki 2.19
+#define DEFAULT_Kd 60.96
 
 #endif // PIDTEMP
 
@@ -1458,8 +1458,8 @@
  */
 #define EEPROM_SETTINGS // Persistent storage with M500 and M501
 //#define DISABLE_M503        // Saves ~2700 bytes of PROGMEM. Disable for release!
-#define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save PROGMEM.
-#define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load
+#define EEPROM_CHITCHAT    // Give feedback on EEPROM commands. Disable to save PROGMEM.
+#define EEPROM_BOOT_SILENT // Keep M503 quiet and only give errors during first load
 #if ENABLED(EEPROM_SETTINGS)
 #define EEPROM_AUTO_INIT // Init EEPROM automatically on any errors.
 #endif
