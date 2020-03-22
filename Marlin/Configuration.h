@@ -1296,8 +1296,8 @@
 //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
 #define MESH_INSET 1        // Set Mesh bounds as an inset region of the bed
-#define GRID_MAX_POINTS_X 7 // Don't use more than 15 points per axis, implementation limited.
-#define GRID_MAX_POINTS_Y 7
+#define GRID_MAX_POINTS_X 9 // Don't use more than 15 points per axis, implementation limited.
+#define GRID_MAX_POINTS_Y 9
 
 #define UBL_MESH_EDIT_MOVES_Z   // Sophisticated users prefer no movement of nozzle
 #define UBL_SAVE_ACTIVE_ON_M500 // Save the currently active mesh in the current slot on M500
@@ -1379,7 +1379,7 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (3000)
-#define HOMING_FEEDRATE_Z (720)
+#define HOMING_FEEDRATE_Z (480)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
