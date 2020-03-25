@@ -37,7 +37,7 @@
 // SD Connection
 //
 #ifndef SDCARD_CONNECTION
-  #define SDCARD_CONNECTION                  LCD
+#define SDCARD_CONNECTION LCD
 #endif
 //
 //
@@ -86,7 +86,7 @@
 #endif
 #else
 #ifndef Z_STOP_PIN
-#define Z_STOP_PIN P0_10 //P1_27 // Z-STOP
+#define Z_STOP_PIN P0_10 //P1_27 // Z-STOP Need to be P0_10 for pinda to work.
 #endif
 #endif
 
