@@ -344,16 +344,16 @@
  */
 //#define USE_CONTROLLER_FAN
 #if ENABLED(USE_CONTROLLER_FAN)
-  //#define CONTROLLER_FAN_PIN -1        // Set a custom pin for the controller fan
-  //#define CONTROLLER_FAN_USE_Z_ONLY    // With this option only the Z axis is considered
-  #define CONTROLLERFAN_SPEED_MIN      0 // (0-255) Minimum speed. (If set below this value the fan is turned off.)
-  #define CONTROLLERFAN_SPEED_ACTIVE 255 // (0-255) Active speed, used when any motor is enabled
-  #define CONTROLLERFAN_SPEED_IDLE     0 // (0-255) Idle speed, used when motors are disabled
-  #define CONTROLLERFAN_IDLE_TIME     60 // (seconds) Extra time to keep the fan running after disabling motors
-  //#define CONTROLLER_FAN_EDITABLE      // Enable M710 configurable settings
-  #if ENABLED(CONTROLLER_FAN_EDITABLE)
-    #define CONTROLLER_FAN_MENU          // Enable the Controller Fan submenu
-  #endif
+//#define CONTROLLER_FAN_PIN -1        // Set a custom pin for the controller fan
+//#define CONTROLLER_FAN_USE_Z_ONLY    // With this option only the Z axis is considered
+#define CONTROLLERFAN_SPEED_MIN 0      // (0-255) Minimum speed. (If set below this value the fan is turned off.)
+#define CONTROLLERFAN_SPEED_ACTIVE 255 // (0-255) Active speed, used when any motor is enabled
+#define CONTROLLERFAN_SPEED_IDLE 0     // (0-255) Idle speed, used when motors are disabled
+#define CONTROLLERFAN_IDLE_TIME 60     // (seconds) Extra time to keep the fan running after disabling motors
+//#define CONTROLLER_FAN_EDITABLE      // Enable M710 configurable settings
+#if ENABLED(CONTROLLER_FAN_EDITABLE)
+#define CONTROLLER_FAN_MENU // Enable the Controller Fan submenu
+#endif
 #endif
 
 // When first starting the main fan, run it at full speed for the
@@ -1061,8 +1061,8 @@
 #if ENABLED(LCD_PROGRESS_BAR)
 #define PROGRESS_BAR_BAR_TIME 2000 // (ms) Amount of time to show the bar
 #define PROGRESS_BAR_MSG_TIME 3000 // (ms) Amount of time to show the status message
-#define PROGRESS_MSG_EXPIRE 0      // (ms) Amount of time to retain the status message (0=forever)
-                                   //#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it
+#define PROGRESS_MSG_EXPIRE 0      // (ms) Amount of time to retain the status message (0=forever)                      \
+                                   //#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it \
                                    //#define LCD_PROGRESS_BAR_TEST       // Add a menu item to test the progress bar
 #endif
 #endif
@@ -2200,15 +2200,19 @@
    * Provided parameter sets are
    * CHOPPER_DEFAULT_12V
    * CHOPPER_DEFAULT_19V
-   * CHOPPER_DEFAULT_24V
+   * CHOPPER_DEFAULT_24V  // { 4,  2, 1 }
    * CHOPPER_DEFAULT_36V
-   * CHOPPER_PRUSAMK3_24V // Imported parameters from the official Prusa firmware for MK3 (24V)
+   * CHOPPER_PRUSAMK3_24V //  { 3, -2, 6 } Imported parameters from the official Prusa firmware for MK3 (24V)
    * CHOPPER_MARLIN_119   // Old defaults from Marlin v1.1.9
    *
    * Define you own with
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-#define CHOPPER_TIMING CHOPPER_PRUSAMK3_24V
+#define CHOPPER_TIMING \
+   {                   \
+      3, 0, 5          \
+   }
+//#define CHOPPER_TIMING CHOPPER_PRUSAMK3_24V  //  { 3, -2, 6 }
 
 /**
    * Monitor Trinamic drivers for error conditions,
@@ -2236,10 +2240,10 @@
    * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
    * M913 X/Y/Z/E to live tune the setting
    */
-//#define HYBRID_THRESHOLD
+#define HYBRID_THRESHOLD
 
-#define X_HYBRID_THRESHOLD 100 // [mm/s]
-#define Y_HYBRID_THRESHOLD 100
+#define X_HYBRID_THRESHOLD 70 // [mm/s]
+#define Y_HYBRID_THRESHOLD 70
 #define Z_HYBRID_THRESHOLD 3
 #define Z2_HYBRID_THRESHOLD 3
 #define E0_HYBRID_THRESHOLD 30
