@@ -33,7 +33,7 @@
 //#define BOGUS_TEMPERATURE_GRACE_PERIOD 2000
 
 #if DISABLED(SDCARD_EEPROM_EMULATION)
-  #define FLASH_EEPROM_EMULATION
+#define FLASH_EEPROM_EMULATION
 #endif
 
 //
@@ -63,7 +63,6 @@
 #define TEMP_BED_PIN P0_23_A0 // A0 (T0) - (67) - TEMP_BED_PIN
 #endif
 
-#if HOTENDS == 1 && TEMP_SENSOR_PROBE
 #define TEMP_PROBE_PIN TEMP_1_PIN
 #endif
 
@@ -99,10 +98,10 @@
 //
 // SD Support
 //
+
 #define ONBOARD_SD_CS_PIN P0_06 // Chip select for "System" SD card
 
 #if SD_CONNECTION_IS(LCD)
-#define SCK_PIN P0_15
 #define MISO_PIN P0_17
 #define MOSI_PIN P0_18
 #elif SD_CONNECTION_IS(ONBOARD)
