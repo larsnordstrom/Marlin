@@ -37,6 +37,8 @@
 // SD Connection
 //
 #ifndef SDCARD_CONNECTION
+  #define SDCARD_CONNECTION                  LCD
+#endif
 //
 //
 #define SERVO0_PIN P2_00

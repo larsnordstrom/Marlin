@@ -64,7 +64,7 @@
 #endif
 
 #define TEMP_PROBE_PIN TEMP_1_PIN
-#endif
+
 
 //
 // Heaters / Fans
