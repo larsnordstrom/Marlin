@@ -2208,11 +2208,11 @@
    * Define you own with
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-#define CHOPPER_TIMING \
+//#define CHOPPER_TIMING \
    {                   \
       3, 0, 5          \
    }
-//#define CHOPPER_TIMING CHOPPER_PRUSAMK3_24V  //  { 3, -2, 6 }
+#define CHOPPER_TIMING CHOPPER_PRUSAMK3_24V //  { 3, -2, 6 }
 
 /**
    * Monitor Trinamic drivers for error conditions,
@@ -2244,9 +2244,9 @@
 
 #define X_HYBRID_THRESHOLD 70 // [mm/s]
 #define Y_HYBRID_THRESHOLD 70
-#define Z_HYBRID_THRESHOLD 3
-#define Z2_HYBRID_THRESHOLD 3
-#define E0_HYBRID_THRESHOLD 30
+#define Z_HYBRID_THRESHOLD 12
+#define Z2_HYBRID_THRESHOLD 12
+#define E0_HYBRID_THRESHOLD 45
 
 /**
    * Use StallGuard2 to home / probe X, Y, Z.
