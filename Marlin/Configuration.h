@@ -502,9 +502,9 @@
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
 // E3d 24v, copper block.
-#define DEFAULT_Kp 23.11
-#define DEFAULT_Ki 2.19
-#define DEFAULT_Kd 60.96
+#define DEFAULT_Kp 22.29
+#define DEFAULT_Ki 2.08
+#define DEFAULT_Kd 59.68
 
 #endif // PIDTEMP
 
