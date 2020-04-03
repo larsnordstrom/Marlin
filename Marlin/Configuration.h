@@ -99,6 +99,7 @@
 /**
  * Select the serial port on the board to use for communication with the host.
  * This allows the connection of wireless adapters (for instance) to non-default port pins.
+ * Serial port -1 is the USB emulated serial port, if available.
  * Note: The first serial port (-1 or 0) will always be used by the Arduino bootloader.
  *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
@@ -107,8 +108,6 @@
 
 /**
  * Select a secondary serial port on the board to use for communication with the host.
- * This allows the connection of wireless adapters (for instance) to non-default port pins.
- * Serial port -1 is the USB emulated serial port, if available.
  *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
@@ -381,6 +380,7 @@
  *   331 : (3.3V scaled thermistor 1 table for MEGA)
  *   332 : (3.3V scaled thermistor 1 table for DUE)
  *     2 : 200k thermistor - ATC Semitec 204GT-2 (4.7k pullup)
+ *   202 : 200k thermistor - Copymaster 3D
  *     3 : Mendel-parts thermistor (4.7k pullup)
  *     4 : 10k thermistor !! do not use it for a hotend. It gives bad resolution at high temp. !!
  *     5 : 100K thermistor - ATC Semitec 104GT-2/104NT-4-R025H42G (Used in ParCan & J-Head) (4.7k pullup)
@@ -469,7 +469,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 275
+#define HEATER_0_MAXTEMP 250
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -506,6 +506,11 @@
 #define DEFAULT_Kp 25.39
 #define DEFAULT_Ki 2.31
 #define DEFAULT_Kd 69.67
+
+// Malyan M200
+#define DEFAULT_Kp 20.0
+#define DEFAULT_Ki 2.02
+#define DEFAULT_Kd 100.00
 
 #endif // PIDTEMP
 
@@ -1052,9 +1057,9 @@
 
 // Disables axis stepper immediately when it's not being used.
 // WARNING: When motors turn off there is a chance of losing position accuracy!
-#define DISABLE_X false
-#define DISABLE_Y false
-#define DISABLE_Z false
+#define DISABLE_X true
+#define DISABLE_Y true
+#define DISABLE_Z true
 
 // Warn on display about possibly reduced accuracy
 //#define DISABLE_REDUCED_ACCURACY_WARNING
@@ -2097,7 +2102,7 @@
 //
 // Touch-screen LCD for Malyan M200 printers
 //
-//#define MALYAN_LCD
+#define MALYAN_LCD
 
 //
 // Touch UI for FTDI EVE (FT800/FT810) displays

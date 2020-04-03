@@ -338,15 +338,21 @@
  * Controller Fan
  * To cool down the stepper drivers and MOSFETs.
  *
- * The fan will turn on automatically whenever any stepper is enabled
- * and turn off after a set period after all steppers are turned off.
+ * The fan turns on automatically whenever any driver is enabled and turns
+ * off (or reduces to idle speed) shortly after drivers are turned off.
  */
-//#define USE_CONTROLLER_FAN
+#define USE_CONTROLLER_FAN // Malyan M200: uncomment if you use FAN2 to cool the board (original)
 #if ENABLED(USE_CONTROLLER_FAN)
-//#define CONTROLLER_FAN_PIN -1           // Set a custom pin for the controller fan
-#define CONTROLLERFAN_SECS 60   // Duration in seconds for the fan to run after all motors are disabled
-#define CONTROLLERFAN_SPEED 255 // 255 == full speed
-//#define CONTROLLERFAN_SPEED_Z_ONLY 127  // Reduce noise on machines that keep Z enabled
+#define CONTROLLER_FAN_PIN -1 // Set a custom pin for the controller fan
+//#define CONTROLLER_FAN_USE_Z_ONLY    // With this option only the Z axis is considered
+#define CONTROLLERFAN_SPEED_MIN 0      // (0-255) Minimum speed. (If set below this value the fan is turned off.)
+#define CONTROLLERFAN_SPEED_ACTIVE 255 // (0-255) Active speed, used when any motor is enabled
+#define CONTROLLERFAN_SPEED_IDLE 0     // (0-255) Idle speed, used when motors are disabled
+#define CONTROLLERFAN_IDLE_TIME 60     // (seconds) Extra time to keep the fan running after disabling motors
+//#define CONTROLLER_FAN_EDITABLE      // Enable M710 configurable settings
+#if ENABLED(CONTROLLER_FAN_EDITABLE)
+#define CONTROLLER_FAN_MENU // Enable the Controller Fan submenu
+#endif
 #endif
 
 // When first starting the main fan, run it at full speed for the
@@ -413,7 +419,9 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN -1
+//#define FAN_PIN MALYAN_FAN1_PIN // Malyan M200: uncomment if you use FAN1 to cool the part and FAN2 to cool the extruder
+//#define E0_AUTO_FAN_PIN MALYAN_FAN2_PIN // Malyan M200: uncomment if you use FAN1 to cool the part and FAN2 to cool the extruder
+#define E0_AUTO_FAN_PIN MALYAN_FAN1_PIN // Malyan M200: uncomment if you use FAN1 to cool the extruder and the part (original)
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -466,7 +474,7 @@
 
 // @section extras
 
-//#define Z_LATE_ENABLE // Enable Z the last moment. Needed if your Z driver overheats.
+#define Z_LATE_ENABLE // Enable Z the last moment. Needed if your Z driver overheats.
 
 // Employ an external closed loop controller. Override pins here if needed.
 //#define EXTERNAL_CLOSED_LOOP_CONTROLLER
@@ -717,14 +725,14 @@
       {210.7, 102.5}, {152.6, 220.0}, { 94.5, 102.5 } \
    }
 #else
-// Amplification factor. Used to scale the correction step up or down in case
-// the stepper (spindle) position is farther out than the test point.
-#define Z_STEPPER_ALIGN_AMP 1.0 // Use a value > 1.0 NOTE: This may cause instability!
+// Amplification factor. Used to scale the correction step up or down.
+// In case the stepper (spindle) position is further out than the test point.
+// Use a value > 1. NOTE: This may cause instability
+#define Z_STEPPER_ALIGN_AMP 1.0
 #endif
 
-// On a 300mm bed a 5% grade would give a misalignment of ~1.5cm
 #define G34_MAX_GRADE 5              // (%) Maximum incline that G34 will handle
-#define Z_STEPPER_ALIGN_ITERATIONS 5 // Number of iterations to apply during alignment
+#define Z_STEPPER_ALIGN_ITERATIONS 3 // Number of iterations to apply during alignment
 #define Z_STEPPER_ALIGN_ACC 0.02     // Stop iterating early if the accuracy is better than this
 #define RESTORE_LEVELING_AFTER_G34   // Restore leveling after G34 is done?
 // After G34, re-home Z (G28 Z) or just calculate it from the last probe heights?
@@ -765,11 +773,12 @@
 // Minimum time that a segment needs to take if the buffer is emptied
 #define DEFAULT_MINSEGMENTTIME 20000 // (ms)
 
+// If defined the movements slow down when the look ahead buffer is only half full
 // Slow down the machine if the look ahead buffer is (by default) half full.
 // Increase the slowdown divisor for larger buffer sizes.
 #define SLOWDOWN
 #if ENABLED(SLOWDOWN)
-  #define SLOWDOWN_DIVISOR 2
+#define SLOWDOWN_DIVISOR 2
 #endif
 
 // Frequency limit
@@ -1034,23 +1043,23 @@
 #endif
 
 #if HAS_GRAPHICAL_LCD && EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY)
-  //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
-  #define SHOW_REMAINING_TIME          // Display estimated time to completion
-  #if ENABLED(SHOW_REMAINING_TIME)
-    #define USE_M73_REMAINING_TIME     // Use remaining time from M73 command instead of estimation
-    #define ROTATE_PROGRESS_DISPLAY    // Display (P)rogress, (E)lapsed, and (R)emaining time
-  #endif
+//#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
+#define SHOW_REMAINING_TIME // Display estimated time to completion
+#if ENABLED(SHOW_REMAINING_TIME)
+#define USE_M73_REMAINING_TIME  // Use remaining time from M73 command instead of estimation
+#define ROTATE_PROGRESS_DISPLAY // Display (P)rogress, (E)lapsed, and (R)emaining time
+#endif
 #endif
 
 #if HAS_CHARACTER_LCD && EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY)
-  //#define LCD_PROGRESS_BAR              // Show a progress bar on HD44780 LCDs for SD printing
-  #if ENABLED(LCD_PROGRESS_BAR)
-    #define PROGRESS_BAR_BAR_TIME 2000    // (ms) Amount of time to show the bar
-    #define PROGRESS_BAR_MSG_TIME 3000    // (ms) Amount of time to show the status message
-    #define PROGRESS_MSG_EXPIRE   0       // (ms) Amount of time to retain the status message (0=forever)
-    //#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it
-    //#define LCD_PROGRESS_BAR_TEST       // Add a menu item to test the progress bar
-  #endif
+//#define LCD_PROGRESS_BAR              // Show a progress bar on HD44780 LCDs for SD printing
+#if ENABLED(LCD_PROGRESS_BAR)
+#define PROGRESS_BAR_BAR_TIME 2000 // (ms) Amount of time to show the bar
+#define PROGRESS_BAR_MSG_TIME 3000 // (ms) Amount of time to show the status message
+#define PROGRESS_MSG_EXPIRE 0      // (ms) Amount of time to retain the status message (0=forever)
+                                   //#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it
+                                   //#define LCD_PROGRESS_BAR_TEST       // Add a menu item to test the progress bar
+#endif
 #endif
 
 #if ENABLED(SDSUPPORT)
@@ -1072,6 +1081,10 @@
 
 #define EVENT_GCODE_SD_STOP "G28XY" // G-code to run on Stop Print (e.g., "G28XY" or "G27")
 
+#if ENABLED(PRINTER_EVENT_LEDS)
+#define PE_LEDS_COMPLETED_TIME (30 * 60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
+#endif
+
 /**
    * Continue after Power-Loss (Creality3D)
    *
@@ -1079,9 +1092,6 @@
    * during SD printing. If the recovery file is found at boot time, present
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
-   *
-   * If the machine reboots when resuming a print you may need to replace or
-   * reformat the SD card. (Bad sectors delay startup triggering the watchdog.)
    */
 //#define POWER_LOSS_RECOVERY
 #if ENABLED(POWER_LOSS_RECOVERY)
@@ -1648,7 +1658,7 @@
 //
 // G2/G3 Arc Support
 //
-//#define ARC_SUPPORT // Disable this feature to save ~3226 bytes
+#define ARC_SUPPORT // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
 #define MM_PER_ARC_SEGMENT 1 // (mm) Length (or minimum length) of each arc segment
 //#define ARC_SEGMENTS_PER_R    1 // Max segment length, MM_PER = Min
