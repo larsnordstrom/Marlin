@@ -1,5 +1,45 @@
 # Marlin 3D Printer Firmware
 
+This branch is for SKR 1.4 Turbo with TMC2209 and should be PNP for the most part. It's configured to be used with Prusa MK3/s or DIY MK3 with self sourced parts. This is the exact config used on my personal main 3d printer when running stable firmware. 
+
+
+### Features enable (Some of them...)
+* UBL 9x9.
+* Spreadcycle/stealthchop.
+* Sensorless Homing.
+* S-curve.
+* L_Advanced.
+* Adaptive Stepsmoothing.
+* Junction Deviation.
+* Babystepping.
+*  P.I.N.D.A temp compensation.
+* Z-Stepper auto alignment.
+
+
+### Hardware
+* Stock Mk52 bed.
+* Prusa Bear frame.(Full upgrade)
+* LDO 0.9 extruder motor. 
+* Bondtech BMG extruder. 
+* 24V PSU.
+* Stock display.
+* E3d All metal, copper block, NozzleX/Copper Nozzle, Silicone sock.
+* 40W Heater.
+* Pi4 4Gb Ram, Octoprint, C270 webcam.
+* 5v regulator for Pi4.
+* 24v partcooling fan
+* 5v Hotend fan, using regulator.
+
+### Features Not enabled (Yet..):
+* Filamentsensor (I don't personally use it).
+* Internal wire for Octoprint, Prusa Style.
+* 
+
+Compile with VSCode and platformio.
+
+
+
+
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
 ![GitHub Release Date](https://img.shields.io/github/release-date/marlinfirmware/marlin.svg)
