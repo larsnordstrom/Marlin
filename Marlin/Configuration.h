@@ -507,11 +507,6 @@
 #define DEFAULT_Ki 2.31
 #define DEFAULT_Kd 69.67
 
-// Malyan M200
-#define DEFAULT_Kp 20.0
-#define DEFAULT_Ki 2.02
-#define DEFAULT_Kd 100.00
-
 #endif // PIDTEMP
 
 //===========================================================================
@@ -2102,7 +2097,7 @@
 //
 // Touch-screen LCD for Malyan M200 printers
 //
-#define MALYAN_LCD
+//#define MALYAN_LCD
 
 //
 // Touch UI for FTDI EVE (FT800/FT810) displays
