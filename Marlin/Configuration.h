@@ -542,10 +542,10 @@
 //#define MIN_BED_POWER 0
 //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
-// Ender 3 pro stock bed.
-#define DEFAULT_bedKp 98.44
-#define DEFAULT_bedKi 18.78
-#define DEFAULT_bedKd 344.10
+//Stock CR-10 Bed Tuned for 70C
+#define DEFAULT_bedKp 426.68
+#define DEFAULT_bedKi 78.92
+#define DEFAULT_bedKd 576.71
 
 // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -722,7 +722,7 @@
  */
 #define DEFAULT_AXIS_STEPS_PER_UNIT \
   {                                 \
-    80, 80, 400, 415                \
+    80, 80, 400, 95                 \
   }
 
 /**
@@ -991,7 +991,7 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
-//#define MULTIPLE_PROBING 2
+//#define MULTIPLE_PROBING 3
 //#define EXTRA_PROBING    1
 
 /**
@@ -1110,7 +1110,7 @@
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE
+#define X_MAX_POS (X_BED_SIZE + 20)
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 400
 
