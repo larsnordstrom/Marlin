@@ -541,12 +541,13 @@
 //#define MIN_BED_POWER 0
 //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
-//Mk52 24V
-#define DEFAULT_bedKp 126.13
-#define DEFAULT_bedKi 4.30
-#define DEFAULT_bedKd 924.76
+//Mk52 24V Pid tune 80c 8times
+// Pidtune: M303 E-1 C8 S80 U
+#define DEFAULT_bedKp 49.74
+#define DEFAULT_bedKi 2.62
+#define DEFAULT_bedKd 630.51
 
-// FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
+// Pidtune: M303 E-1 C8 S80 U
 #endif // PIDTEMPBED
 
 // @section extruder
