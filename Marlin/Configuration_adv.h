@@ -119,9 +119,9 @@
 #if TEMP_SENSOR_CHAMBER
 #define CHAMBER_MINTEMP 5
 #define CHAMBER_MAXTEMP 60
-#define TEMP_CHAMBER_HYSTERESIS 1 // (°C) Temperature proximity considered "close enough" to the target
-                                  //#define CHAMBER_LIMIT_SWITCHING
-                                  //#define HEATER_CHAMBER_PIN       44   // Chamber heater on/off pin
+#define TEMP_CHAMBER_HYSTERESIS 1 // (°C) Temperature proximity considered "close enough" to the target \
+                                  //#define CHAMBER_LIMIT_SWITCHING                                      \
+                                  //#define HEATER_CHAMBER_PIN       44   // Chamber heater on/off pin   \
                                   //#define HEATER_CHAMBER_INVERTING false
 #endif
 
@@ -573,10 +573,10 @@
 #define X2_MIN_POS 80          // Set a minimum to ensure the  second X-carriage can't hit the parked first X-carriage
 #define X2_MAX_POS 353         // Set this to the distance between toolheads when both heads are homed
 #define X2_HOME_DIR 1          // Set to 1. The second X-carriage always homes to the maximum endstop position
-#define X2_HOME_POS X2_MAX_POS // Default X2 home position. Set to X2_MAX_POS.
-                               // However: In this mode the HOTEND_OFFSET_X value for the second extruder provides a software
-                               // override for X2_HOME_POS. This also allow recalibration of the distance between the two endstops
-                               // without modifying the firmware (through the "M218 T1 X???" command).
+#define X2_HOME_POS X2_MAX_POS // Default X2 home position. Set to X2_MAX_POS.                                                     \
+                               // However: In this mode the HOTEND_OFFSET_X value for the second extruder provides a software      \
+                               // override for X2_HOME_POS. This also allow recalibration of the distance between the two endstops \
+                               // without modifying the firmware (through the "M218 T1 X???" command).                             \
                                // Remember: you should set the second extruder x-offset to 0 in your slicer.
 
 // This is the default power-up mode which can be later using M605.
@@ -1014,7 +1014,7 @@
 #define LED_USER_PRESET_GREEN 128      // User defined GREEN value
 #define LED_USER_PRESET_BLUE 0         // User defined BLUE value
 #define LED_USER_PRESET_WHITE 255      // User defined WHITE value
-#define LED_USER_PRESET_BRIGHTNESS 255 // User defined intensity
+#define LED_USER_PRESET_BRIGHTNESS 255 // User defined intensity \
                                        //#define LED_USER_PRESET_STARTUP       // Have the printer display the user preset color on startup
 #endif
 #endif
@@ -1054,8 +1054,8 @@
 #if ENABLED(LCD_PROGRESS_BAR)
 #define PROGRESS_BAR_BAR_TIME 2000 // (ms) Amount of time to show the bar
 #define PROGRESS_BAR_MSG_TIME 3000 // (ms) Amount of time to show the status message
-#define PROGRESS_MSG_EXPIRE 0      // (ms) Amount of time to retain the status message (0=forever)
-                                   //#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it
+#define PROGRESS_MSG_EXPIRE 0      // (ms) Amount of time to retain the status message (0=forever)                      \
+                                   //#define PROGRESS_MSG_ONCE           // Show the message for MSG_TIME then clear it \
                                    //#define LCD_PROGRESS_BAR_TEST       // Add a menu item to test the progress bar
 #endif
 #endif
@@ -1312,13 +1312,13 @@
 #define STATUS_HOTEND_INVERTED // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM)
 #define STATUS_HOTEND_ANIM     // Use a second bitmap to indicate hotend heating
 #define STATUS_BED_ANIM        // Use a second bitmap to indicate bed heating
-#define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating
-                               //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active
-                               //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
-                               //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
-                               //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
-                               //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
-                               //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
+#define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating                                                               \
+                               //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active                    \
+                               //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap                                            \
+                               //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap                                            \
+                               //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames                               \
+                               //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar                                            \
+                               //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash) \
                                //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
 
 // Frivolous Game Options
@@ -1548,7 +1548,7 @@
 #define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
 //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
-#define LIN_ADVANCE_K 0.0 // Unit: mm compression per 1mm/s extruder speed
+#define LIN_ADVANCE_K 0.0 // Unit: mm compression per 1mm/s extruder speed \
                           //#define LA_DEBUG            // If enabled, this will generate debug information output over USB.
 #endif
 
@@ -1630,18 +1630,17 @@
 // Add additional compensation depending on hotend temperature
 // Note: this values cannot be calibrated and have to be set manually
 #if ENABLED(PROBE_TEMP_COMPENSATION)
-// Max temperature that can be reached by heated bed.
-// This is required only for the calibration process.
-#define PTC_MAX_BED_TEMP BED_MAXTEMP
-
 // Park position to wait for probe cooldown
-#define PTC_PARK_POS_X 0.0F
-#define PTC_PARK_POS_Y 0.0F
-#define PTC_PARK_POS_Z 100.0F
+#define PTC_PARK_POS \
+   {                 \
+      0, 0, 100      \
+   }
 
 // Probe position to probe and wait for probe to reach target temperature
-#define PTC_PROBE_POS_X 90.0F
-#define PTC_PROBE_POS_Y 100.0F
+#define PTC_PROBE_POS \
+   {                  \
+      90, 100         \
+   }
 
 // Enable additional compensation using hotend temperature
 // Note: this values cannot be calibrated automatically but have to be set manually
@@ -1665,8 +1664,8 @@
 //#define ARC_SEGMENTS_PER_R    1 // Max segment length, MM_PER = Min
 #define MIN_ARC_SEGMENTS 24 // Minimum number of segments in a complete circle
 //#define ARC_SEGMENTS_PER_SEC 50 // Use feedrate to choose segment length (with MM_PER_ARC_SEGMENT as the minimum)
-#define N_ARC_CORRECTION 25 // Number of interpolated segments between corrections
-                            //#define ARC_P_CIRCLES           // Enable the 'P' parameter to specify complete circles
+#define N_ARC_CORRECTION 25 // Number of interpolated segments between corrections                                    \
+                            //#define ARC_P_CIRCLES           // Enable the 'P' parameter to specify complete circles \
                             //#define CNC_WORKSPACE_PLANES    // Allow G2/G3 to operate in XY, ZX, or YZ planes
 #endif
 
