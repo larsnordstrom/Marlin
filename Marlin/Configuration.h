@@ -786,7 +786,7 @@
 #if ENABLED(CLASSIC_JERK)
 #define DEFAULT_XJERK 10.0
 #define DEFAULT_YJERK 10.0
-#define DEFAULT_ZJERK 0.3
+#define DEFAULT_ZJERK 0.4
 
 //#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
 
