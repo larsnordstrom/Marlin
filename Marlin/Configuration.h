@@ -503,9 +503,9 @@
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
 // Ender 3 pro stock nozzle combo.
-#define DEFAULT_Kp 25.39
-#define DEFAULT_Ki 2.31
-#define DEFAULT_Kd 69.67
+#define DEFAULT_Kp 42.39
+#define DEFAULT_Ki 4.34
+#define DEFAULT_Kd 103.63
 
 #endif // PIDTEMP
 
