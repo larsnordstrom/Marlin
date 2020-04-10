@@ -2085,7 +2085,7 @@
 #define INTERPOLATE true    // Interpolate X/Y/Z_MICROSTEPS to 256
 
 #if AXIS_IS_TMC(X)
-#define X_CURRENT 500      // (mA) RMS current. Multiply by 1.414 for peak current.
+#define X_CURRENT 550      // (mA) RMS current. Multiply by 1.414 for peak current.
 #define X_CURRENT_HOME 180 // (mA) RMS current for sensorless homing
 #define X_MICROSTEPS 16    // 0..256
 #define X_RSENSE 0.11
