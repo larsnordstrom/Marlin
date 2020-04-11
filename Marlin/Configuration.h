@@ -787,7 +787,7 @@
 #if ENABLED(CLASSIC_JERK)
 #define DEFAULT_XJERK 10.0
 #define DEFAULT_YJERK 10.0
-#define DEFAULT_ZJERK 0.3
+#define DEFAULT_ZJERK 0.4
 
 //#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
 
@@ -800,7 +800,7 @@
 #endif
 #endif
 
-#define DEFAULT_EJERK 3.5 // May be used by Linear Advance
+#define DEFAULT_EJERK 4.5 // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
@@ -1373,10 +1373,8 @@
 #define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-#define Z_SAFE_HOMING_X_POINT 30
-#define Z_SAFE_HOMING_Y_POINT 30
-//#define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2) // X point for Z homing when homing all axes (G28).
-//#define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2) // Y point for Z homing when homing all axes (G28).
+#define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2) // X point for Z homing when homing all axes (G28).
+#define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2) // Y point for Z homing when homing all axes (G28).
 #endif
 
 // Homing speeds (mm/m)
