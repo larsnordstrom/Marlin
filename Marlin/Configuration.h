@@ -502,9 +502,9 @@
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
 // E3d 24v, copper block.
-#define DEFAULT_Kp 22.29
-#define DEFAULT_Ki 2.08
-#define DEFAULT_Kd 59.68
+#define DEFAULT_Kp 20.83
+#define DEFAULT_Ki 1.90
+#define DEFAULT_Kd 56.98
 
 #endif // PIDTEMP
 
@@ -543,9 +543,9 @@
 
 //Mk52 24V Pid tune 80c 8times
 // Pidtune: M303 E-1 C8 S80 U
-#define DEFAULT_bedKp 49.74
-#define DEFAULT_bedKi 2.62
-#define DEFAULT_bedKd 630.51
+#define DEFAULT_bedKp 45.26
+#define DEFAULT_bedKi 2.4
+#define DEFAULT_bedKd 569.08
 
 // Pidtune: M303 E-1 C8 S80 U
 #endif // PIDTEMPBED
