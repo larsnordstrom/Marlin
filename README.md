@@ -12,7 +12,7 @@ This branch is for SKR 1.4 Turbo with TMC2209 and should be PNP for the most par
 * Adaptive Stepsmoothing.
 * Junction Deviation.
 * Babystepping.
-*  P.I.N.D.A temp compensation.
+* P.I.N.D.A temp compensation.
 * Z-Stepper auto alignment.
 
 
