@@ -584,10 +584,10 @@
 #define X2_MIN_POS 80          // Set a minimum to ensure the  second X-carriage can't hit the parked first X-carriage
 #define X2_MAX_POS 353         // Set this to the distance between toolheads when both heads are homed
 #define X2_HOME_DIR 1          // Set to 1. The second X-carriage always homes to the maximum endstop position
-#define X2_HOME_POS X2_MAX_POS // Default X2 home position. Set to X2_MAX_POS.
-                               // However: In this mode the HOTEND_OFFSET_X value for the second extruder provides a software
-                               // override for X2_HOME_POS. This also allow recalibration of the distance between the two endstops
-                               // without modifying the firmware (through the "M218 T1 X???" command).
+#define X2_HOME_POS X2_MAX_POS // Default X2 home position. Set to X2_MAX_POS.                                                     \
+                               // However: In this mode the HOTEND_OFFSET_X value for the second extruder provides a software      \
+                               // override for X2_HOME_POS. This also allow recalibration of the distance between the two endstops \
+                               // without modifying the firmware (through the "M218 T1 X???" command).                             \
                                // Remember: you should set the second extruder x-offset to 0 in your slicer.
 
 // This is the default power-up mode which can be later using M605.
@@ -966,7 +966,7 @@
 #define DIGIPOT_I2C_MOTOR_CURRENTS           \
    {                                         \
       1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 \
-   } //  AZTEEG_X3_PRO
+   } // AZTEEG_X3_PRO
 
 //#define DIGIPOT_USE_RAW_VALUES    // Use DIGIPOT_MOTOR_CURRENT raw wiper values (instead of A4988 motor currents)
 
@@ -2314,9 +2314,9 @@
 #define CHOPPER_TIMING CHOPPER_DEFAULT_24V
 
 /**
-   * Monitor Trinamic drivers for error conditions,
-   * like overtemperature and short to ground.
-   * In the case of overtemperature Marlin can decrease the driver current until error condition clears.
+   * Monitor Trinamic drivers
+   * for error conditions like overtemperature and short to ground.
+   * To manage over-temp Marlin can decrease the driver current until the error condition clears.
    * Other detected conditions can be used to stop the current print.
    * Relevant g-codes:
    * M906 - Set or get motor current in milliamps using axis codes X, Y, Z, E. Report values if no axis codes given.
@@ -2392,6 +2392,18 @@
 //#define SPI_ENDSTOPS              // TMC2130 only
 //#define IMPROVE_HOMING_RELIABILITY
 #endif
+
+/**
+   * TMC Homing stepper phase.
+   *
+   * Improve homing repeatability by homing to stepper coil's nearest absolute
+   * phase position. Trinamic drivers use a stepper phase table with 1024 values
+   * spanning 4 full steps with 256 positions each (ergo, 1024 positions).
+   * Full step positions (128, 384, 640, 896) have the highest holding torque.
+   *
+   * Values from 0..1023, -1 to disable homing phase for that axis.
+   */
+//#define TMC_HOME_PHASE { 896, 896, 896 }
 
 /**
    * Beta feature!
