@@ -799,10 +799,16 @@
 #define SLOWDOWN_DIVISOR 2
 #endif
 
-// Frequency limit
-// See nophead's blog for more info
-// Not working O
-//#define XY_FREQUENCY_LIMIT  15
+/**
+ * XY Frequency limit
+ * Reduce resonance by limiting the frequency of small zigzag infill moves.
+ * See http://hydraraptor.blogspot.com/2010/12/frequency-limit.html
+ * Use M201 F<freq> G<min%> to change limits at runtime.
+ */
+//#define XY_FREQUENCY_LIMIT      10 // (Hz) Maximum frequency of small zigzag infill moves. Set with M201 F<hertz>.
+#ifdef XY_FREQUENCY_LIMIT
+#define XY_FREQUENCY_MIN_PERCENT 5 // (percent) Minimum FR percentage to apply. Set with M201 G<min%>.
+#endif
 
 // Minimum planner junction speed. Sets the default minimum speed the planner plans for at the end
 // of the buffer and all stops. This should not be much greater than zero and should only be changed
@@ -1412,6 +1418,7 @@
 //#define AO_EXP2_PINMAP      // AlephObjects CLCD UI EXP2 mapping
 //#define CR10_TFT_PINMAP     // Rudolph Riedel's CR10 pin mapping
 //#define S6_TFT_PINMAP       // FYSETC S6 pin mapping
+//#define CHEETAH_TFT_PINMAP  // FYSETC Cheetah pin mapping
 //#define E3_EXP1_PINMAP      // E3 type boards (SKR E3/DIP, FYSETC Cheetah and Stock boards) EXP1 pin mapping
 //#define GENERIC_EXP2_PINMAP // GENERIC EXP2 pin mapping
 
@@ -1574,8 +1581,8 @@
 #define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
 //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
-#define LIN_ADVANCE_K 0.0 // Unit: mm compression per 1mm/s extruder speed
-                          //#define LA_DEBUG            // If enabled, this will generate debug information output over USB.
+#define LIN_ADVANCE_K 0.0 // Unit: mm compression per 1mm/s extruder speed                                                   \
+                          //#define LA_DEBUG            // If enabled, this will generate debug information output over USB. \
                           //#define EXPERIMENTAL_SCURVE // Enable this option to permit S-Curve Acceleration
 #endif
 
@@ -1921,7 +1928,7 @@
 // (May break filament if not retracted beforehand.)
 //#define TOOLCHANGE_FS_INIT_BEFORE_SWAP
 
-// Prime on the first T command even if the same or no toolchange / swap
+// Prime on the first T0 (If other, TOOLCHANGE_FS_INIT_BEFORE_SWAP applied)
 // Enable it (M217 V[0/1]) before printing, to avoid unwanted priming on host connect
 //#define TOOLCHANGE_FS_PRIME_FIRST_USED
 
@@ -1949,8 +1956,8 @@
    {                                 \
       X_MIN_POS + 10, Y_MIN_POS + 10 \
    }
-#define TOOLCHANGE_PARK_XY_FEEDRATE 6000 // (mm/m)
-                                         //#define TOOLCHANGE_PARK_X_ONLY          // X axis only move
+#define TOOLCHANGE_PARK_XY_FEEDRATE 6000 // (mm/m)                                                     \
+                                         //#define TOOLCHANGE_PARK_X_ONLY          // X axis only move \
                                          //#define TOOLCHANGE_PARK_Y_ONLY          // Y axis only move
 #endif
 #endif // EXTRUDERS > 1
@@ -2428,7 +2435,11 @@
 #define X_STALL_SENSITIVITY 8
 #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
 #define Y_STALL_SENSITIVITY 8
-//#define Z_STALL_SENSITIVITY  8
+#define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
+#define Z_STALL_SENSITIVITY 8
+#define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+#define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+#define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
 //#define SPI_ENDSTOPS              // TMC2130 only
 //#define IMPROVE_HOMING_RELIABILITY
 #endif
@@ -3323,6 +3334,29 @@
        {-10.0, 400},          \
    {                          \
       -50.0, 2000             \
+   }
+#endif
+
+// Using a sensor like the MMU2S
+//#define PRUSA_MMU2_S_MODE
+#if ENABLED(PRUSA_MMU2_S_MODE)
+#define MMU2_C0_RETRY 5 // Number of retries (total time = timeout*retries)
+
+#define MMU2_CAN_LOAD_FEEDRATE 800 // (mm/m)
+#define MMU2_CAN_LOAD_SEQUENCE         \
+   {0.1, MMU2_CAN_LOAD_FEEDRATE},      \
+       {60.0, MMU2_CAN_LOAD_FEEDRATE}, \
+   {                                   \
+      -52.0, MMU2_CAN_LOAD_FEEDRATE    \
+   }
+
+#define MMU2_CAN_LOAD_RETRACT 6.0   // (mm) Keep under the distance between Load Sequence values
+#define MMU2_CAN_LOAD_DEVIATION 0.8 // (mm) Acceptable deviation
+
+#define MMU2_CAN_LOAD_INCREMENT 0.2 // (mm) To reuse within MMU2 module
+#define MMU2_CAN_LOAD_INCREMENT_SEQUENCE               \
+   {                                                   \
+      -MMU2_CAN_LOAD_INCREMENT, MMU2_CAN_LOAD_FEEDRATE \
    }
 
 #endif
