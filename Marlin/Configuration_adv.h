@@ -785,25 +785,28 @@
 //#define ASSISTED_TRAMMING
 #if ENABLED(ASSISTED_TRAMMING)
 
-  // Define positions for probing points, use the hotend as reference not the sensor.
-  #define TRAMMING_POINT_XY { {  20, 20 }, { 200,  20 }, { 200, 200 }, { 20, 200 } }
+// Define positions for probing points, use the hotend as reference not the sensor.
+#define TRAMMING_POINT_XY                          \
+   {                                               \
+      {20, 20}, {200, 20}, {200, 200}, { 20, 200 } \
+   }
 
-  // Define positions names for probing points.
-  #define TRAMMING_POINT_NAME_1 "Front-Left"
-  #define TRAMMING_POINT_NAME_2 "Front-Right"
-  #define TRAMMING_POINT_NAME_3 "Back-Right"
-  #define TRAMMING_POINT_NAME_4 "Back-Left"
+// Define positions names for probing points.
+#define TRAMMING_POINT_NAME_1 "Front-Left"
+#define TRAMMING_POINT_NAME_2 "Front-Right"
+#define TRAMMING_POINT_NAME_3 "Back-Right"
+#define TRAMMING_POINT_NAME_4 "Back-Left"
 
-  // Enable to restore leveling setup after operation
-  #define RESTORE_LEVELING_AFTER_G35
+// Enable to restore leveling setup after operation
+#define RESTORE_LEVELING_AFTER_G35
 
-  /**
+/**
    * Screw thread:
    *   M3: 30 = Clockwise, 31 = Counter-Clockwise
    *   M4: 40 = Clockwise, 41 = Counter-Clockwise
    *   M5: 50 = Clockwise, 51 = Counter-Clockwise
    */
-  #define TRAMMING_SCREW_THREAD 30
+#define TRAMMING_SCREW_THREAD 30
 
 #endif
 
@@ -1552,7 +1555,7 @@
 // ADC Button Debounce
 //
 #if HAS_ADC_BUTTONS
-#define ADC_BUTTON_DEBOUNCE_DELAY 16 // (ms) Increase if buttons bounce or repeat too fast
+#define ADC_BUTTON_DEBOUNCE_DELAY 16 // Increase if buttons bounce or repeat too fast
 #endif
 
 // @section safety
@@ -3071,9 +3074,9 @@
 //#define POWER_MONITOR_CURRENT   // Monitor the system current
 //#define POWER_MONITOR_VOLTAGE   // Monitor the system voltage
 #if EITHER(POWER_MONITOR_CURRENT, POWER_MONITOR_VOLTAGE)
-  #define POWER_MONITOR_VOLTS_PER_AMP   0.05000   // Input voltage to the MCU analog pin per amp  - DO NOT apply more than ADC_VREF!
-  #define POWER_MONITOR_VOLTS_PER_VOLT  0.11786   // Input voltage to the MCU analog pin per volt - DO NOT apply more than ADC_VREF!
-  #define POWER_MONITOR_FIXED_VOLTAGE   13.6      // Voltage for a current sensor with no voltage sensor (for power display)
+#define POWER_MONITOR_VOLTS_PER_AMP 0.05000  // Input voltage to the MCU analog pin per amp  - DO NOT apply more than ADC_VREF!
+#define POWER_MONITOR_VOLTS_PER_VOLT 0.11786 // Input voltage to the MCU analog pin per volt - DO NOT apply more than ADC_VREF!
+#define POWER_MONITOR_FIXED_VOLTAGE 13.6     // Voltage for a current sensor with no voltage sensor (for power display)
 #endif
 
 /**
