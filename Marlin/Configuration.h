@@ -1319,8 +1319,8 @@
 
 //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-#define MESH_INSET 1         // Set Mesh bounds as an inset region of the bed
-#define GRID_MAX_POINTS_X 11 // Don't use more than 15 points per axis, implementation limited.
+#define MESH_INSET 1        // Set Mesh bounds as an inset region of the bed
+#define GRID_MAX_POINTS_X 9 // Don't use more than 15 points per axis, implementation limited.
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
 #define UBL_MESH_EDIT_MOVES_Z   // Sophisticated users prefer no movement of nozzle
@@ -1727,7 +1727,7 @@
  *
  * Use CRC checks and retries on the SD communication.
  */
-#define SD_CHECK_AND_RETRY
+//#define SD_CHECK_AND_RETRY
 
 /**
  * LCD Menu Items
@@ -1736,7 +1736,7 @@
  * just remove some extraneous menu items to recover space.
  */
 //#define NO_LCD_MENUS
-#define SLIM_LCD_MENUS
+//#define SLIM_LCD_MENUS
 
 //
 // ENCODER SETTINGS
