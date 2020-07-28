@@ -348,7 +348,7 @@
  * Hotend Idle Timeout
  * Prevent filament in the nozzle from charring and causing a critical jam.
  */
-//#define HOTEND_IDLE_TIMEOUT
+#define HOTEND_IDLE_TIMEOUT
 #if ENABLED(HOTEND_IDLE_TIMEOUT)
 #define HOTEND_IDLE_TIMEOUT_SEC (5 * 60) // (seconds) Time without extruder movement to trigger protection
 #define HOTEND_IDLE_MIN_TRIGGER 180      // (°C) Minimum temperature to enable hotend protection
@@ -633,7 +633,10 @@
  * the position of the toolhead relative to the workspace.
  */
 
-//#define SENSORLESS_BACKOFF_MM  { 2, 2 }     // (mm) Backoff from endstops before sensorless homing
+#define SENSORLESS_BACKOFF_MM \
+   {                          \
+      5, 5                    \
+   } // (mm) Backoff from endstops before sensorless homing
 
 #define HOMING_BUMP_MM \
    {                   \
@@ -1162,8 +1165,8 @@
 
 #define SD_PROCEDURE_DEPTH 1 // Increase if you need more nested M32 calls
 
-#define SD_FINISHED_STEPPERRELEASE true  // Disable steppers when SD Print is finished
-#define SD_FINISHED_RELEASECOMMAND "M84" // Use "M84XYE" to keep Z enabled so your bed stays in place
+#define SD_FINISHED_STEPPERRELEASE false    // Disable steppers when SD Print is finished
+#define SD_FINISHED_RELEASECOMMAND "M84XYE" // Use "M84XYE" to keep Z enabled so your bed stays in place
 
 // Reverse SD sort to show "more recent" files first, according to the card's FAT.
 // Since the FAT gets out of order with usage, SDCARD_SORT_ALPHA is recommended.
@@ -1889,7 +1892,7 @@
 #if BOTH(SDSUPPORT, DIRECT_STEPPING)
 #define BLOCK_BUFFER_SIZE 8
 #elif ENABLED(SDSUPPORT)
-#define BLOCK_BUFFER_SIZE 16
+#define BLOCK_BUFFER_SIZE 32
 #else
 #define BLOCK_BUFFER_SIZE 16
 #endif
@@ -1942,7 +1945,7 @@
  * Currently handles M108, M112, M410, M876
  * NOTE: Not yet implemented for all platforms.
  */
-//#define EMERGENCY_PARSER
+#define EMERGENCY_PARSER
 
 // Bad Serial-connections can miss a received command by sending an 'ok'
 // Therefore some clients abort after 30 seconds in a timeout.
@@ -2386,10 +2389,10 @@
    * Provided parameter sets are
    * CHOPPER_DEFAULT_12V
    * CHOPPER_DEFAULT_19V
-   * CHOPPER_DEFAULT_24V  // { 4,  2, 1 }
+   * CHOPPER_DEFAULT_24V  // { 4, 2, 1 }
    * CHOPPER_DEFAULT_36V
    * CHOPPER_09STEP_24V   // 0.9 degree steppers (24V)
-   * CHOPPER_PRUSAMK3_24V // Imported parameters from the official Prusa firmware for MK3 (24V)
+   * CHOPPER_PRUSAMK3_24V // { 3, -2, 6 } Imported parameters from the official Prusa firmware for MK3 (24V)
    * CHOPPER_MARLIN_119   // Old defaults from Marlin v1.1.9
    *
    * Define you own with
@@ -2399,7 +2402,7 @@
    {                   \
       3, 0, 5          \
    }
-#define CHOPPER_TIMING CHOPPER_PRUSAMK3_24V //  { 3, -2, 6 }
+#define CHOPPER_TIMING CHOPPER_DEFAULT_24V //  { 3, -2, 6 }
 
 /**
    * Monitor Trinamic drivers
@@ -2494,7 +2497,7 @@
    */
 #define TMC_HOME_PHASE \
    {                   \
-      896, 896, 896    \
+      896, 896, -1     \
    }
 
 /**
@@ -3214,9 +3217,9 @@
  * Host Prompt Support enables Marlin to use the host for user prompts so
  * filament runout and other processes can be managed from the host side.
  */
-//#define HOST_ACTION_COMMANDS
+#define HOST_ACTION_COMMANDS
 #if ENABLED(HOST_ACTION_COMMANDS)
-//#define HOST_PROMPT_SUPPORT
+#define HOST_PROMPT_SUPPORT
 #endif
 
 /**

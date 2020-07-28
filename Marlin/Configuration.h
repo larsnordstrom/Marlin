@@ -832,7 +832,7 @@
  *   https://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-#define JUNCTION_DEVIATION_MM 0.017 // (mm) Distance from real junction edge
+#define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
 #define JD_HANDLE_SMALL_SEGMENTS    // Use curvature estimation instead of just the junction angle \
                                     // for small segments (< 1mm) with large junction angles (> 135°).
 #endif
@@ -1004,7 +1004,7 @@
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBE_MARGIN 20
+#define PROBE_MARGIN 0
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 8000
@@ -1041,12 +1041,12 @@
  * Example: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
  *     But: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
  */
-#define Z_CLEARANCE_DEPLOY_PROBE 2   // Z Clearance for Deploy/Stow
+#define Z_CLEARANCE_DEPLOY_PROBE 0   // Z Clearance for Deploy/Stow
 #define Z_CLEARANCE_BETWEEN_PROBES 2 // Z Clearance between probe points
-#define Z_CLEARANCE_MULTI_PROBE 1    // Z Clearance between multiple probes
+#define Z_CLEARANCE_MULTI_PROBE 2    // Z Clearance between multiple probes
 //#define Z_AFTER_PROBING           5 // Z position after probing is done
 
-#define Z_PROBE_LOW_POINT -1 // Farthest distance below the trigger-point to go before stopping
+#define Z_PROBE_LOW_POINT -2 // Farthest distance below the trigger-point to go before stopping
 
 // For M851 give a range for adjusting the Z probe offset
 #define Z_PROBE_OFFSET_RANGE_MIN -3
@@ -1068,7 +1068,7 @@
  * These options are most useful for the BLTouch probe, but may also improve
  * readings with inductive probes and piezo sensors.
  */
-//#define PROBING_HEATERS_OFF       // Turn heaters off when probing
+#define PROBING_HEATERS_OFF // Turn heaters off when probing
 #if ENABLED(PROBING_HEATERS_OFF)
 //#define WAIT_FOR_BED_HEATER     // Wait for bed to heat back up between probes (to improve accuracy)
 #endif
@@ -1326,7 +1326,7 @@
 
 //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-#define MESH_INSET 1         // Set Mesh bounds as an inset region of the bed
+#define MESH_INSET 0         // Set Mesh bounds as an inset region of the bed
 #define GRID_MAX_POINTS_X 10 // Don't use more than 15 points per axis, implementation limited.
 #define GRID_MAX_POINTS_Y 10
 
