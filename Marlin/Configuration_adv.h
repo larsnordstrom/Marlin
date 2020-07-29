@@ -1612,7 +1612,7 @@
 
 #define DOUBLECLICK_FOR_Z_BABYSTEPPING // Double-click on the Status Screen for Z Babystepping.
 #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
-#define DOUBLECLICK_MAX_INTERVAL 1250 // Maximum interval between clicks, in milliseconds. \
+#define DOUBLECLICK_MAX_INTERVAL 1000 // Maximum interval between clicks, in milliseconds. \
                                       // Note: Extra time may be added to mitigate controller latency.
 //#define BABYSTEP_ALWAYS_AVAILABLE     // Allow babystepping at all times (not just during movement).
 #define MOVE_Z_WHEN_IDLE // Jump to the move Z menu on doubleclick when printer is idle.
@@ -2402,7 +2402,7 @@
    {                   \
       3, 0, 5          \
    }
-#define CHOPPER_TIMING CHOPPER_DEFAULT_24V //  { 3, -2, 6 }
+#define CHOPPER_TIMING CHOPPER_PRUSAMK3_24V //  { 3, -2, 6 }
 
 /**
    * Monitor Trinamic drivers
