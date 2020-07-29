@@ -1326,9 +1326,9 @@
 
 //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-#define MESH_INSET 0         // Set Mesh bounds as an inset region of the bed
-#define GRID_MAX_POINTS_X 10 // Don't use more than 15 points per axis, implementation limited.
-#define GRID_MAX_POINTS_Y 10
+#define MESH_INSET 0        // Set Mesh bounds as an inset region of the bed
+#define GRID_MAX_POINTS_X 7 // Don't use more than 15 points per axis, implementation limited.
+#define GRID_MAX_POINTS_Y 7
 
 #define UBL_MESH_EDIT_MOVES_Z   // Sophisticated users prefer no movement of nozzle
 #define UBL_SAVE_ACTIVE_ON_M500 // Save the currently active mesh in the current slot on M500
@@ -1528,6 +1528,10 @@
 #define PREHEAT_2_TEMP_BED 80
 #define PREHEAT_2_FAN_SPEED 0 // Value from 0 to 255
 
+#define PREHEAT_3_LABEL "TPU"
+#define PREHEAT_3_TEMP_HOTEND 230
+#define PREHEAT_3_TEMP_BED 80
+#define PREHEAT_3_FAN_SPEED 0 // Value from 0 to 255
 /**
  * Nozzle Park
  *
