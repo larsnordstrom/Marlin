@@ -59,10 +59,11 @@
 #include "gcode/parser.h"
 #include "gcode/queue.h"
 
-#if ENABLED(TFT_LVGL_UI)
-  #include "lvgl.h"
+#if HAS_TFT_LVGL_UI
   #include "lcd/extui/lib/mks_ui/tft_lvgl_configuration.h"
   #include "lcd/extui/lib/mks_ui/draw_ui.h"
+  #include "lcd/extui/lib/mks_ui/mks_hardware_test.h"
+  #include <lvgl.h>
 #endif
 
 #if ENABLED(DWIN_CREALITY_LCD)
@@ -79,7 +80,7 @@
   #include "feature/direct_stepping.h"
 #endif
 
-#if ENABLED(TOUCH_BUTTONS)
+#if HAS_TOUCH_XPT2046
   #include "feature/touch/xpt2046.h"
 #endif
 
@@ -755,7 +756,7 @@ void idle(TERN_(ADVANCED_PAUSE_FEATURE, bool no_stepper_sleep/*=false*/)) {
   // Direct Stepping
   TERN_(DIRECT_STEPPING, page_manager.write_responses());
 
-  #if ENABLED(TFT_LVGL_UI)
+  #if HAS_TFT_LVGL_UI
     LV_TASK_HANDLER();
   #endif
 }
@@ -1005,7 +1006,7 @@ void setup() {
   SETUP_RUN(settings.first_load());   // Load data from EEPROM if available (or use defaults)
                                       // This also updates variables in the planner, elsewhere
 
-  #if ENABLED(TOUCH_BUTTONS)
+  #if HAS_TOUCH_XPT2046
     SETUP_RUN(touch.init());
   #endif
 
@@ -1192,7 +1193,7 @@ void setup() {
     SETUP_RUN(page_manager.init());
   #endif
 
-  #if ENABLED(TFT_LVGL_UI)
+  #if HAS_TFT_LVGL_UI
     if (!card.isMounted()) SETUP_RUN(card.mount()); // Mount SD to load graphics and fonts
     SETUP_RUN(tft_lvgl_init());
   #endif
@@ -1229,7 +1230,7 @@ void loop() {
 
     endstops.event_handler();
 
-    TERN_(TFT_LVGL_UI, printer_state_polling());
+    TERN_(HAS_TFT_LVGL_UI, printer_state_polling());
 
   } while (ENABLED(__AVR__)); // Loop forever on slower (AVR) boards
 }

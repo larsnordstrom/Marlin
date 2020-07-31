@@ -689,7 +689,7 @@
    * Danger: Don't activate 5V mode unless attached to a 5V-tolerant controller!
    * V3.0 or 3.1: Set default mode to 5V mode at Marlin startup.
    * If disabled, OD mode is the hard-coded default on 3.0
-   * On startup, Marlin will compare its eeprom to this vale. If the selected mode
+   * On startup, Marlin will compare its eeprom to this value. If the selected mode
    * differs, a mode set eeprom write will be completed at initialization.
    * Use the option below to force an eeprom write to a V3.1 probe regardless.
    */
@@ -918,6 +918,9 @@
  */
 //#define CALIBRATION_GCODE
 #if ENABLED(CALIBRATION_GCODE)
+
+//#define CALIBRATION_SCRIPT_PRE  "M117 Starting Auto-Calibration\nT0\nG28\nG12\nM117 Calibrating..."
+//#define CALIBRATION_SCRIPT_POST "M500\nM117 Calibration data saved"
 
 #define CALIBRATION_MEASUREMENT_RESOLUTION 0.01 // mm
 
@@ -1542,9 +1545,10 @@
 #endif
 
 //
-// FSMC Graphical TFT
+// FSMC / SPI Graphical TFT
 //
-#if ENABLED(FSMC_GRAPHICAL_TFT)
+#if TFT_SCALED_DOGLCD
+//#define GRAPHICAL_TFT_ROTATE_180
 //#define TFT_MARLINUI_COLOR 0xFFFF // White
 //#define TFT_MARLINBG_COLOR 0x0000 // Black
 //#define TFT_DISABLED_COLOR 0x0003 // Almost black

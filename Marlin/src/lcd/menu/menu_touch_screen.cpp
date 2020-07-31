@@ -19,16 +19,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#pragma once
 
-#ifdef __cplusplus
-extern "C" { /* C-declarations for C++ */
-#endif
+#include "../../inc/MarlinConfigPre.h"
 
-extern void lv_draw_opration(void);
-extern void lv_clear_opration();
+#if ENABLED(TOUCH_SCREEN_CALIBRATION)
 
-//extern void disp_temp_ready_print();
-#ifdef __cplusplus
-} /* C-declarations for C++ */
-#endif
+#include "menu.h"
+#include "../ultralcd.h"
+
+void touch_screen_calibration() {
+  ui.touch_calibration();
+}
+
+#endif // TOUCH_SCREEN_CALIBRATION
