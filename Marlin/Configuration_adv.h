@@ -788,12 +788,8 @@
 //
 //#define ASSISTED_TRAMMING
 #if ENABLED(ASSISTED_TRAMMING)
-
-// Define positions for probing points, use the hotend as reference not the sensor.
-#define TRAMMING_POINT_XY                          \
-   {                                               \
-      {20, 20}, {200, 20}, {200, 200}, { 20, 200 } \
-   }
+  // Define positions for probing points, use the hotend as reference not the sensor.
+  #define TRAMMING_POINT_XY { {  20, 20 }, { 200,  20 }, { 200, 200 }, { 20, 200 } }
 
 // Define positions names for probing points.
 #define TRAMMING_POINT_NAME_1 "Front-Left"
@@ -804,14 +800,16 @@
 // Enable to restore leveling setup after operation
 #define RESTORE_LEVELING_AFTER_G35
 
-/**
+  // Add a menu item for Assisted Tramming
+  //#define ASSISTED_TRAMMING_MENU_ITEM
+
+  /**
    * Screw thread:
    *   M3: 30 = Clockwise, 31 = Counter-Clockwise
    *   M4: 40 = Clockwise, 41 = Counter-Clockwise
    *   M5: 50 = Clockwise, 51 = Counter-Clockwise
    */
-#define TRAMMING_SCREW_THREAD 30
-
+  #define TRAMMING_SCREW_THREAD 30
 #endif
 
 // @section motion
@@ -2034,14 +2032,14 @@
  * Universal tool change settings.
  * Applies to all types of extruders except where explicitly noted.
  */
-#if EXTRUDERS > 1
-// Z raise distance for tool-change, as needed for some extruders
-#define TOOLCHANGE_ZRAISE 2 // (mm)
-//#define TOOLCHANGE_ZRAISE_BEFORE_RETRACT  // Apply raise before swap retraction (if enabled)
-//#define TOOLCHANGE_NO_RETURN              // Never return to previous position on tool-change
-#if ENABLED(TOOLCHANGE_NO_RETURN)
-//#define EVENT_GCODE_AFTER_TOOLCHANGE "G12X"   // Extra G-code to run after tool-change
-#endif
+#if HAS_MULTI_EXTRUDER
+  // Z raise distance for tool-change, as needed for some extruders
+  #define TOOLCHANGE_ZRAISE                 2 // (mm)
+  //#define TOOLCHANGE_ZRAISE_BEFORE_RETRACT  // Apply raise before swap retraction (if enabled)
+  //#define TOOLCHANGE_NO_RETURN              // Never return to previous position on tool-change
+  #if ENABLED(TOOLCHANGE_NO_RETURN)
+    //#define EVENT_GCODE_AFTER_TOOLCHANGE "G12X"   // Extra G-code to run after tool-change
+  #endif
 
 /**
    * Retract and prime filament on tool-change to reduce
@@ -2091,17 +2089,14 @@
    * Position to park head during tool change.
    * Doesn't apply to SWITCHING_TOOLHEAD, DUAL_X_CARRIAGE, or PARKING_EXTRUDER
    */
-//#define TOOLCHANGE_PARK
-#if ENABLED(TOOLCHANGE_PARK)
-#define TOOLCHANGE_PARK_XY           \
-   {                                 \
-      X_MIN_POS + 10, Y_MIN_POS + 10 \
-   }
-#define TOOLCHANGE_PARK_XY_FEEDRATE 6000 // (mm/min)
-                                         //#define TOOLCHANGE_PARK_X_ONLY          // X axis only move
-                                         //#define TOOLCHANGE_PARK_Y_ONLY          // Y axis only move
-#endif
-#endif // EXTRUDERS > 1
+  //#define TOOLCHANGE_PARK
+  #if ENABLED(TOOLCHANGE_PARK)
+    #define TOOLCHANGE_PARK_XY    { X_MIN_POS + 10, Y_MIN_POS + 10 }
+    #define TOOLCHANGE_PARK_XY_FEEDRATE 6000  // (mm/min)
+    //#define TOOLCHANGE_PARK_X_ONLY          // X axis only move
+    //#define TOOLCHANGE_PARK_Y_ONLY          // Y axis only move
+  #endif
+#endif // HAS_MULTI_EXTRUDER
 
 /**
  * Advanced Pause
