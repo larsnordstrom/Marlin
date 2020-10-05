@@ -502,10 +502,10 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.0 }
     #define DEFAULT_Kd_LIST { 114.00, 112.0 }
   #else
-    // E3d 24v, copper block.
-    #define DEFAULT_Kp 20.83
-    #define DEFAULT_Ki 1.90
-    #define DEFAULT_Kd 56.98
+    // E3d 24v, 40w, copper block. // 30w heater
+    #define DEFAULT_Kp 20.83 // 23.57
+    #define DEFAULT_Ki 1.90  // 1.94
+    #define DEFAULT_Kd 56.98 // 71.47
   #endif
 #endif // PIDTEMP
 
