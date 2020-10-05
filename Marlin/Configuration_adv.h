@@ -1075,11 +1075,19 @@
 
 #if HAS_LCD_MENU
 
-// Include a page of printer information in the LCD Main Menu
-//#define LCD_INFO_MENU
-#if ENABLED(LCD_INFO_MENU)
-//#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
-#endif
+  // Add Probe Z Offset calibration to the Bed Leveling menu
+  #if HAS_BED_PROBE
+    //#define PROBE_OFFSET_WIZARD
+    #if ENABLED(PROBE_OFFSET_WIZARD)
+      #define PROBE_OFFSET_START -4.0   // Estimated nozzle-to-probe Z offset, plus a little extra
+    #endif
+  #endif
+
+  // Include a page of printer information in the LCD Main Menu
+  //#define LCD_INFO_MENU
+  #if ENABLED(LCD_INFO_MENU)
+    //#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
+  #endif
 
 // BACK menu items keep the highlight at the top
 //#define TURBO_BACK_MENU_ITEM
@@ -1810,13 +1818,14 @@
 //
 #define ARC_SUPPORT // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
-#define MM_PER_ARC_SEGMENT 1 // (mm) Length (or minimum length) of each arc segment
-//#define ARC_SEGMENTS_PER_R    1 // Max segment length, MM_PER = Min
-#define MIN_ARC_SEGMENTS 24 // Minimum number of segments in a complete circle
-//#define ARC_SEGMENTS_PER_SEC 50 // Use feedrate to choose segment length (with MM_PER_ARC_SEGMENT as the minimum)
-#define N_ARC_CORRECTION 25 // Number of interpolated segments between corrections                                    \
-                            //#define ARC_P_CIRCLES           // Enable the 'P' parameter to specify complete circles \
-                            //#define CNC_WORKSPACE_PLANES    // Allow G2/G3 to operate in XY, ZX, or YZ planes
+  #define MM_PER_ARC_SEGMENT      1 // (mm) Length (or minimum length) of each arc segment
+  //#define ARC_SEGMENTS_PER_R    1 // Max segment length, MM_PER = Min
+  #define MIN_ARC_SEGMENTS       24 // Minimum number of segments in a complete circle
+  //#define ARC_SEGMENTS_PER_SEC 50 // Use feedrate to choose segment length (with MM_PER_ARC_SEGMENT as the minimum)
+  #define N_ARC_CORRECTION       25 // Number of interpolated segments between corrections
+  //#define ARC_P_CIRCLES           // Enable the 'P' parameter to specify complete circles
+  //#define CNC_WORKSPACE_PLANES    // Allow G2/G3 to operate in XY, ZX, or YZ planes
+  //#define SF_ARC_FIX              // Enable only if using SkeinForge with "Arc Point" fillet procedure
 #endif
 
 // Support for G5 with XYZE destination and IJPQ offsets. Requires ~2666 bytes.
@@ -3520,17 +3529,10 @@
    * move up to the gears. If no filament is detected, the MMU2 can make some more attempts.
    * If all attempts fail, a filament runout will be triggered.
    */
-<<<<<<< HEAD
-//#define MMU_EXTRUDER_SENSOR
-#if ENABLED(MMU_EXTRUDER_SENSOR)
-#define MMU_LOADING_ATTEMPTS_NR 5 //max. number of attempts to load filament if first load fail
-#endif
-=======
   //#define MMU_EXTRUDER_SENSOR
   #if ENABLED(MMU_EXTRUDER_SENSOR)
     #define MMU_LOADING_ATTEMPTS_NR 5 // max. number of attempts to load filament if first load fail
   #endif
->>>>>>> bugfix-2.0.x
 
 /**
    * Using a sensor like the MMU2S
