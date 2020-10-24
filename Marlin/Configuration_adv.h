@@ -2309,128 +2309,149 @@
  */
 #if HAS_TRINAMIC_CONFIG
 
-#define HOLD_MULTIPLIER 0.5 // Scales down the holding current from run current
-#define INTERPOLATE true    // Interpolate X/Y/Z_MICROSTEPS to 256
+  #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
 
-#if AXIS_IS_TMC(X)
-#define X_CURRENT 500      // (mA) RMS current. Multiply by 1.414 for peak current.
-#define X_CURRENT_HOME 180 // (mA) RMS current for sensorless homing
-#define X_MICROSTEPS 16    // 0..256
-#define X_RSENSE 0.11
-#define X_CHAIN_POS -1 // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
-#endif
+  /**
+   * Interpolate microsteps to 256
+   * Override for each driver with <driver>_INTERPOLATE settings below
+   */
+  #define INTERPOLATE      true
 
-#if AXIS_IS_TMC(X2)
-#define X2_CURRENT 800
-#define X2_CURRENT_HOME X2_CURRENT
-#define X2_MICROSTEPS 16
-#define X2_RSENSE 0.11
-#define X2_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(X)
+    #define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
+    #define X_MICROSTEPS     16        // 0..256
+    #define X_RSENSE          0.11
+    #define X_CHAIN_POS      -1        // -1..0: Not chained. 1: MCU MOSI connected. 2: Next in chain, ...
+    //#define X_INTERPOLATE  true      // Enable to override 'INTERPOLATE' for the X axis
+  #endif
 
-#if AXIS_IS_TMC(Y)
-#define Y_CURRENT 600
-#define Y_CURRENT_HOME 200
-#define Y_MICROSTEPS 16
-#define Y_RSENSE 0.11
-#define Y_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(X2)
+    #define X2_CURRENT      800
+    #define X2_CURRENT_HOME X2_CURRENT
+    #define X2_MICROSTEPS    16
+    #define X2_RSENSE         0.11
+    #define X2_CHAIN_POS     -1
+    //#define X2_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(Y2)
-#define Y2_CURRENT 800
-#define Y2_CURRENT_HOME Y2_CURRENT
-#define Y2_MICROSTEPS 16
-#define Y2_RSENSE 0.11
-#define Y2_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(Y)
+    #define Y_CURRENT       800
+    #define Y_CURRENT_HOME  Y_CURRENT
+    #define Y_MICROSTEPS     16
+    #define Y_RSENSE          0.11
+    #define Y_CHAIN_POS      -1
+    //#define Y_INTERPOLATE  true
+  #endif
 
-#if AXIS_IS_TMC(Z)
-#define Z_CURRENT 450
-#define Z_CURRENT_HOME Z_CURRENT
-#define Z_MICROSTEPS 16
-#define Z_RSENSE 0.11
-#define Z_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(Y2)
+    #define Y2_CURRENT      800
+    #define Y2_CURRENT_HOME Y2_CURRENT
+    #define Y2_MICROSTEPS    16
+    #define Y2_RSENSE         0.11
+    #define Y2_CHAIN_POS     -1
+    //#define Y2_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(Z2)
-#define Z2_CURRENT 450
-#define Z2_CURRENT_HOME Z2_CURRENT
-#define Z2_MICROSTEPS 16
-#define Z2_RSENSE 0.11
-#define Z2_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(Z)
+    #define Z_CURRENT       800
+    #define Z_CURRENT_HOME  Z_CURRENT
+    #define Z_MICROSTEPS     16
+    #define Z_RSENSE          0.11
+    #define Z_CHAIN_POS      -1
+    //#define Z_INTERPOLATE  true
+  #endif
 
-#if AXIS_IS_TMC(Z3)
-#define Z3_CURRENT 800
-#define Z3_CURRENT_HOME Z3_CURRENT
-#define Z3_MICROSTEPS 16
-#define Z3_RSENSE 0.11
-#define Z3_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(Z2)
+    #define Z2_CURRENT      800
+    #define Z2_CURRENT_HOME Z2_CURRENT
+    #define Z2_MICROSTEPS    16
+    #define Z2_RSENSE         0.11
+    #define Z2_CHAIN_POS     -1
+    //#define Z2_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(Z4)
-#define Z4_CURRENT 800
-#define Z4_CURRENT_HOME Z4_CURRENT
-#define Z4_MICROSTEPS 16
-#define Z4_RSENSE 0.11
-#define Z4_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(Z3)
+    #define Z3_CURRENT      800
+    #define Z3_CURRENT_HOME Z3_CURRENT
+    #define Z3_MICROSTEPS    16
+    #define Z3_RSENSE         0.11
+    #define Z3_CHAIN_POS     -1
+    //#define Z3_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(E0)
-#define E0_CURRENT 550
-#define E0_MICROSTEPS 16
-#define E0_RSENSE 0.11
-#define E0_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(Z4)
+    #define Z4_CURRENT      800
+    #define Z4_CURRENT_HOME Z4_CURRENT
+    #define Z4_MICROSTEPS    16
+    #define Z4_RSENSE         0.11
+    #define Z4_CHAIN_POS     -1
+    //#define Z4_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(E1)
-#define E1_CURRENT 800
-#define E1_MICROSTEPS 16
-#define E1_RSENSE 0.11
-#define E1_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(E0)
+    #define E0_CURRENT      800
+    #define E0_MICROSTEPS    16
+    #define E0_RSENSE         0.11
+    #define E0_CHAIN_POS     -1
+    //#define E0_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(E2)
-#define E2_CURRENT 800
-#define E2_MICROSTEPS 16
-#define E2_RSENSE 0.11
-#define E2_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(E1)
+    #define E1_CURRENT      800
+    #define E1_MICROSTEPS    16
+    #define E1_RSENSE         0.11
+    #define E1_CHAIN_POS     -1
+    //#define E1_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(E3)
-#define E3_CURRENT 800
-#define E3_MICROSTEPS 16
-#define E3_RSENSE 0.11
-#define E3_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(E2)
+    #define E2_CURRENT      800
+    #define E2_MICROSTEPS    16
+    #define E2_RSENSE         0.11
+    #define E2_CHAIN_POS     -1
+    //#define E2_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(E4)
-#define E4_CURRENT 800
-#define E4_MICROSTEPS 16
-#define E4_RSENSE 0.11
-#define E4_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(E3)
+    #define E3_CURRENT      800
+    #define E3_MICROSTEPS    16
+    #define E3_RSENSE         0.11
+    #define E3_CHAIN_POS     -1
+    //#define E3_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(E5)
-#define E5_CURRENT 800
-#define E5_MICROSTEPS 16
-#define E5_RSENSE 0.11
-#define E5_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(E4)
+    #define E4_CURRENT      800
+    #define E4_MICROSTEPS    16
+    #define E4_RSENSE         0.11
+    #define E4_CHAIN_POS     -1
+    //#define E4_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(E6)
-#define E6_CURRENT 800
-#define E6_MICROSTEPS 16
-#define E6_RSENSE 0.11
-#define E6_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(E5)
+    #define E5_CURRENT      800
+    #define E5_MICROSTEPS    16
+    #define E5_RSENSE         0.11
+    #define E5_CHAIN_POS     -1
+    //#define E5_INTERPOLATE true
+  #endif
 
-#if AXIS_IS_TMC(E7)
-#define E7_CURRENT 800
-#define E7_MICROSTEPS 16
-#define E7_RSENSE 0.11
-#define E7_CHAIN_POS -1
-#endif
+  #if AXIS_IS_TMC(E6)
+    #define E6_CURRENT      800
+    #define E6_MICROSTEPS    16
+    #define E6_RSENSE         0.11
+    #define E6_CHAIN_POS     -1
+    //#define E6_INTERPOLATE true
+  #endif
+
+  #if AXIS_IS_TMC(E7)
+    #define E7_CURRENT      800
+    #define E7_MICROSTEPS    16
+    #define E7_RSENSE         0.11
+    #define E7_CHAIN_POS     -1
+    //#define E7_INTERPOLATE true
+  #endif
 
 /**
    * Override default SPI pins for TMC2130, TMC2160, TMC2660, TMC5130 and TMC5160 drivers here.
@@ -2520,10 +2541,30 @@
    * CHOPPER_PRUSAMK3_24V // Imported parameters from the official Průša firmware for MK3 (24V)
    * CHOPPER_MARLIN_119   // Old defaults from Marlin v1.1.9
    *
-   * Define you own with
+   * Define your own with:
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
+<<<<<<< HEAD
 #define CHOPPER_TIMING CHOPPER_DEFAULT_24V
+=======
+  #define CHOPPER_TIMING CHOPPER_DEFAULT_12V        // All axes (override below)
+  //#define CHOPPER_TIMING_X  CHOPPER_DEFAULT_12V   // For X Axes (override below)
+  //#define CHOPPER_TIMING_X2 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_Y  CHOPPER_DEFAULT_12V   // For Y Axes (override below)
+  //#define CHOPPER_TIMING_Y2 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_Z  CHOPPER_DEFAULT_12V   // For Z Axes (override below)
+  //#define CHOPPER_TIMING_Z2 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_Z3 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_Z4 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_E  CHOPPER_DEFAULT_12V   // For Extruders (override below)
+  //#define CHOPPER_TIMING_E1 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_E2 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_E3 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_E4 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_E5 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_E6 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_E7 CHOPPER_DEFAULT_12V
+>>>>>>> bugfix-2.0.x
 
 /**
    * Monitor Trinamic drivers
@@ -3489,6 +3530,13 @@
 #if ENABLED(NANODLP_Z_SYNC)
 //#define NANODLP_ALL_AXIS  // Enables "Z_move_comp" output on any axis move.
 // Default behavior is limited to Z axis only.
+#endif
+
+/**
+ * Ethernet. Use M552 to enable and set the IP address.
+ */
+#if HAS_ETHERNET
+  #define MAC_ADDRESS { 0xDE, 0xAD, 0xBE, 0xEF, 0xF0, 0x0D }  // A MAC address unique to your network
 #endif
 
 /**
