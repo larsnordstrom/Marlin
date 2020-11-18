@@ -1116,13 +1116,14 @@
 
 #if HAS_LCD_MENU
 
-// Add Probe Z Offset calibration to the Z Probe Offsets menu
-#if HAS_BED_PROBE
-//#define PROBE_OFFSET_WIZARD
-#if ENABLED(PROBE_OFFSET_WIZARD)
-#define PROBE_OFFSET_START -4.0 // Estimated nozzle-to-probe Z offset, plus a little extra
-#endif
-#endif
+  // Add Probe Z Offset calibration to the Z Probe Offsets menu
+  #if HAS_BED_PROBE
+    //#define PROBE_OFFSET_WIZARD
+    #if ENABLED(PROBE_OFFSET_WIZARD)
+      #define PROBE_OFFSET_START -4.0   // Estimated nozzle-to-probe Z offset, plus a little extra
+      //#define PROBE_OFFSET_WIZARD_XY_POS XY_CENTER // Set a convenient position to do the measurement
+    #endif
+  #endif
 
 // Include a page of printer information in the LCD Main Menu
 //#define LCD_INFO_MENU
@@ -1228,7 +1229,9 @@
 
 //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
 
-#define EVENT_GCODE_SD_ABORT "G28XY" // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
+  //#define BROWSE_MEDIA_ON_INSERT          // Open the file browser when media is inserted
+
+  #define EVENT_GCODE_SD_ABORT "G28XY"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
 
 #if ENABLED(PRINTER_EVENT_LEDS)
 #define PE_LEDS_COMPLETED_TIME (30 * 60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
@@ -3509,10 +3512,10 @@
 #define GANTRY_CALIBRATION_FEEDRATE 500    // Feedrate for correction move
 //#define GANTRY_CALIBRATION_TO_MIN                 // Enable to calibrate Z in the MIN direction
 
-//#define GANTRY_CALIBRATION_SAFE_POSITION  { X_CENTER, Y_CENTER } // Safe position for nozzle
-//#define GANTRY_CALIBRATION_XY_PARK_FEEDRATE 3000  // XY Park Feedrate - MMM
-//#define GANTRY_CALIBRATION_COMMANDS_PRE   ""
-#define GANTRY_CALIBRATION_COMMANDS_POST "G28" // G28 highly recommended to ensure an accurate position
+  //#define GANTRY_CALIBRATION_SAFE_POSITION XY_CENTER // Safe position for nozzle
+  //#define GANTRY_CALIBRATION_XY_PARK_FEEDRATE 3000  // XY Park Feedrate - MMM
+  //#define GANTRY_CALIBRATION_COMMANDS_PRE   ""
+  #define GANTRY_CALIBRATION_COMMANDS_POST  "G28"     // G28 highly recommended to ensure an accurate position
 #endif
 
 /**
@@ -3594,81 +3597,73 @@
 #endif
 
 /**
- * Průša Multi-Material Unit v2
+ * Průša Multi-Material Unit (MMU)
  * Enable in Configuration.h
+ *
+ * These devices allow a single stepper driver on the board to drive
+ * multi-material feeders with any number of stepper motors.
  */
-#if ENABLED(PRUSA_MMU2)
-
-// Serial port used for communication with MMU2.
-// For AVR enable the UART port used for the MMU. (e.g., mmuSerial)
-// For 32-bit boards check your HAL for available serial ports. (e.g., Serial2)
-#define MMU2_SERIAL_PORT 2
-#define MMU2_SERIAL mmuSerial
-
-// Use hardware reset for MMU if a pin is defined for it
-//#define MMU2_RST_PIN 23
-
-// Enable if the MMU2 has 12V stepper motors (MMU2 Firmware 1.0.2 and up)
-//#define MMU2_MODE_12V
-
-// G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
-#define MMU2_FILAMENT_RUNOUT_SCRIPT "M600"
-
-// Add an LCD menu for MMU2
-//#define MMU2_MENUS
-#if ENABLED(MMU2_MENUS)
-// Settings for filament load / unload from the LCD menu.
-// This is for Průša MK3-style extruders. Customize for your hardware.
-#define MMU2_FILAMENTCHANGE_EJECT_FEED 80.0
-#define MMU2_LOAD_TO_NOZZLE_SEQUENCE \
-  {7.2, 1145},                       \
-      {14.4, 871},                   \
-      {36.0, 1393},                  \
-      {14.4, 871},                   \
-  {                                  \
-    50.0, 198                        \
-  }
-
-#define MMU2_RAMMING_SEQUENCE \
-  {1.0, 1000},                \
-      {1.0, 1500},            \
-      {2.0, 2000},            \
-      {1.5, 3000},            \
-      {2.5, 4000},            \
-      {-15.0, 5000},          \
-      {-14.0, 1200},          \
-      {-6.0, 600},            \
-      {10.0, 700},            \
-      {-10.0, 400},           \
-  {                           \
-    -50.0, 2000               \
-  }
-#endif
-
-/**
-   * MMU Extruder Sensor
+#if HAS_PRUSA_MMU1
+  /**
+   * This option only allows the multiplexer to switch on tool-change.
+   * Additional options to configure custom E moves are pending.
    *
-   * Support for a Průša (or other) IR Sensor to detect filament near the extruder
-   * and make loading more reliable. Suitable for an extruder equipped with a filament
-   * sensor less than 38mm from the gears.
-   *
-   * During loading the extruder will stop when the sensor is triggered, then do a last
-   * move up to the gears. If no filament is detected, the MMU2 can make some more attempts.
-   * If all attempts fail, a filament runout will be triggered.
+   * Override the default DIO selector pins here, if needed.
+   * Some pins files may provide defaults for these pins.
    */
-//#define MMU_EXTRUDER_SENSOR
-#if ENABLED(MMU_EXTRUDER_SENSOR)
-#define MMU_LOADING_ATTEMPTS_NR 5 // max. number of attempts to load filament if first load fail
-#endif
+  //#define E_MUX0_PIN 40  // Always Required
+  //#define E_MUX1_PIN 42  // Needed for 3 to 8 inputs
+  //#define E_MUX2_PIN 44  // Needed for 5 to 8 inputs
+#elif HAS_PRUSA_MMU2
+  // Serial port used for communication with MMU2.
+  // For AVR enable the UART port used for the MMU. (e.g., mmuSerial)
+  // For 32-bit boards check your HAL for available serial ports. (e.g., Serial2)
+  #define MMU2_SERIAL_PORT 2
+  #define MMU2_SERIAL mmuSerial
 
-/**
+  // Use hardware reset for MMU if a pin is defined for it
+  //#define MMU2_RST_PIN 23
+
+  // Enable if the MMU2 has 12V stepper motors (MMU2 Firmware 1.0.2 and up)
+  //#define MMU2_MODE_12V
+
+  // G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
+  #define MMU2_FILAMENT_RUNOUT_SCRIPT "M600"
+
+  // Add an LCD menu for MMU2
+  //#define MMU2_MENUS
+  #if EITHER(MMU2_MENUS, HAS_PRUSA_MMU2S)
+    // Settings for filament load / unload from the LCD menu.
+    // This is for Průša MK3-style extruders. Customize for your hardware.
+    #define MMU2_FILAMENTCHANGE_EJECT_FEED 80.0
+    #define MMU2_LOAD_TO_NOZZLE_SEQUENCE \
+      {  7.2, 1145 }, \
+      { 14.4,  871 }, \
+      { 36.0, 1393 }, \
+      { 14.4,  871 }, \
+      { 50.0,  198 }
+
+    #define MMU2_RAMMING_SEQUENCE \
+      {   1.0, 1000 }, \
+      {   1.0, 1500 }, \
+      {   2.0, 2000 }, \
+      {   1.5, 3000 }, \
+      {   2.5, 4000 }, \
+      { -15.0, 5000 }, \
+      { -14.0, 1200 }, \
+      {  -6.0,  600 }, \
+      {  10.0,  700 }, \
+      { -10.0,  400 }, \
+      { -50.0, 2000 }
+  #endif
+
+  /**
    * Using a sensor like the MMU2S
    * This mode requires a MK3S extruder with a sensor at the extruder idler, like the MMU2S.
    * See https://help.prusa3d.com/en/guide/3b-mk3s-mk2-5s-extruder-upgrade_41560, step 11
    */
-//#define PRUSA_MMU2_S_MODE
-#if ENABLED(PRUSA_MMU2_S_MODE)
-#define MMU2_C0_RETRY 5 // Number of retries (total time = timeout*retries)
+  #if HAS_PRUSA_MMU2S
+    #define MMU2_C0_RETRY   5             // Number of retries (total time = timeout*retries)
 
 #define MMU2_CAN_LOAD_FEEDRATE 800 // (mm/min)
 #define MMU2_CAN_LOAD_SEQUENCE        \
@@ -3687,11 +3682,29 @@
     -MMU2_CAN_LOAD_INCREMENT, MMU2_CAN_LOAD_FEEDRATE \
   }
 
-#endif
+  #else
+
+    /**
+     * MMU1 Extruder Sensor
+     *
+     * Support for a Průša (or other) IR Sensor to detect filament near the extruder
+     * and make loading more reliable. Suitable for an extruder equipped with a filament
+     * sensor less than 38mm from the gears.
+     *
+     * During loading the extruder will stop when the sensor is triggered, then do a last
+     * move up to the gears. If no filament is detected, the MMU2 can make some more attempts.
+     * If all attempts fail, a filament runout will be triggered.
+     */
+    //#define MMU_EXTRUDER_SENSOR
+    #if ENABLED(MMU_EXTRUDER_SENSOR)
+      #define MMU_LOADING_ATTEMPTS_NR 5 // max. number of attempts to load filament if first load fail
+    #endif
+
+  #endif
 
 //#define MMU2_DEBUG  // Write debug info to serial output
 
-#endif // PRUSA_MMU2
+#endif // HAS_PRUSA_MMU2
 
 /**
  * Advanced Print Counter settings
