@@ -1147,8 +1147,8 @@
 
 // @section homing
 
-//#define NO_MOTION_BEFORE_HOMING // Inhibit movement until all axes have been homed
-
+//#define NO_MOTION_BEFORE_HOMING // Inhibit movement until all axes have been homed. Also enable HOME_AFTER_DEACTIVATE for extra safety.
+//#define HOME_AFTER_DEACTIVATE   // Require rehoming after steppers are deactivated. Also enable NO_MOTION_BEFORE_HOMING for extra safety.
 //#define UNKNOWN_Z_NO_RAISE      // Don't raise Z (lower the bed) if Z is "unknown." For beds that fall when Z is powered off.
 
 //#define Z_HOMING_HEIGHT  4      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
@@ -1220,61 +1220,61 @@
  */
 //#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
-  #define FIL_RUNOUT_ENABLED_DEFAULT true // Enable the sensor on startup. Override with M412 followed by M500.
-  #define NUM_RUNOUT_SENSORS   1          // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
+#define FIL_RUNOUT_ENABLED_DEFAULT true // Enable the sensor on startup. Override with M412 followed by M500.
+#define NUM_RUNOUT_SENSORS 1            // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
 
-  #define FIL_RUNOUT_STATE     LOW        // Pin state indicating that filament is NOT present.
-  #define FIL_RUNOUT_PULLUP               // Use internal pullup for filament runout pins.
-  //#define FIL_RUNOUT_PULLDOWN           // Use internal pulldown for filament runout pins.
+#define FIL_RUNOUT_STATE LOW // Pin state indicating that filament is NOT present.
+#define FIL_RUNOUT_PULLUP    // Use internal pullup for filament runout pins.
+//#define FIL_RUNOUT_PULLDOWN           // Use internal pulldown for filament runout pins.
 
-  // Override individually if the runout sensors vary
-  //#define FIL_RUNOUT1_STATE LOW
-  //#define FIL_RUNOUT1_PULLUP
-  //#define FIL_RUNOUT1_PULLDOWN
+// Override individually if the runout sensors vary
+//#define FIL_RUNOUT1_STATE LOW
+//#define FIL_RUNOUT1_PULLUP
+//#define FIL_RUNOUT1_PULLDOWN
 
-  //#define FIL_RUNOUT2_STATE LOW
-  //#define FIL_RUNOUT2_PULLUP
-  //#define FIL_RUNOUT2_PULLDOWN
+//#define FIL_RUNOUT2_STATE LOW
+//#define FIL_RUNOUT2_PULLUP
+//#define FIL_RUNOUT2_PULLDOWN
 
-  //#define FIL_RUNOUT3_STATE LOW
-  //#define FIL_RUNOUT3_PULLUP
-  //#define FIL_RUNOUT3_PULLDOWN
+//#define FIL_RUNOUT3_STATE LOW
+//#define FIL_RUNOUT3_PULLUP
+//#define FIL_RUNOUT3_PULLDOWN
 
-  //#define FIL_RUNOUT4_STATE LOW
-  //#define FIL_RUNOUT4_PULLUP
-  //#define FIL_RUNOUT4_PULLDOWN
+//#define FIL_RUNOUT4_STATE LOW
+//#define FIL_RUNOUT4_PULLUP
+//#define FIL_RUNOUT4_PULLDOWN
 
-  //#define FIL_RUNOUT5_STATE LOW
-  //#define FIL_RUNOUT5_PULLUP
-  //#define FIL_RUNOUT5_PULLDOWN
+//#define FIL_RUNOUT5_STATE LOW
+//#define FIL_RUNOUT5_PULLUP
+//#define FIL_RUNOUT5_PULLDOWN
 
-  //#define FIL_RUNOUT6_STATE LOW
-  //#define FIL_RUNOUT6_PULLUP
-  //#define FIL_RUNOUT6_PULLDOWN
+//#define FIL_RUNOUT6_STATE LOW
+//#define FIL_RUNOUT6_PULLUP
+//#define FIL_RUNOUT6_PULLDOWN
 
-  //#define FIL_RUNOUT7_STATE LOW
-  //#define FIL_RUNOUT7_PULLUP
-  //#define FIL_RUNOUT7_PULLDOWN
+//#define FIL_RUNOUT7_STATE LOW
+//#define FIL_RUNOUT7_PULLUP
+//#define FIL_RUNOUT7_PULLDOWN
 
-  //#define FIL_RUNOUT8_STATE LOW
-  //#define FIL_RUNOUT8_PULLUP
-  //#define FIL_RUNOUT8_PULLDOWN
+//#define FIL_RUNOUT8_STATE LOW
+//#define FIL_RUNOUT8_PULLUP
+//#define FIL_RUNOUT8_PULLDOWN
 
-  // Set one or more commands to execute on filament runout.
-  // (After 'M412 H' Marlin will ask the host to handle the process.)
-  #define FILAMENT_RUNOUT_SCRIPT "M600"
+// Set one or more commands to execute on filament runout.
+// (After 'M412 H' Marlin will ask the host to handle the process.)
+#define FILAMENT_RUNOUT_SCRIPT "M600"
 
-  // After a runout is detected, continue printing this length of filament
-  // before executing the runout script. Useful for a sensor at the end of
-  // a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
-  //#define FILAMENT_RUNOUT_DISTANCE_MM 25
+// After a runout is detected, continue printing this length of filament
+// before executing the runout script. Useful for a sensor at the end of
+// a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
+//#define FILAMENT_RUNOUT_DISTANCE_MM 25
 
-  #ifdef FILAMENT_RUNOUT_DISTANCE_MM
-    // Enable this option to use an encoder disc that toggles the runout pin
-    // as the filament moves. (Be sure to set FILAMENT_RUNOUT_DISTANCE_MM
-    // large enough to avoid false positives.)
-    //#define FILAMENT_MOTION_SENSOR
-  #endif
+#ifdef FILAMENT_RUNOUT_DISTANCE_MM
+// Enable this option to use an encoder disc that toggles the runout pin
+// as the filament moves. (Be sure to set FILAMENT_RUNOUT_DISTANCE_MM
+// large enough to avoid false positives.)
+//#define FILAMENT_MOTION_SENSOR
+#endif
 #endif
 
 //===========================================================================
@@ -1443,6 +1443,12 @@
 #define LEVEL_CORNERS_HEIGHT 0.0 // (mm) Z height of nozzle at leveling points
 #define LEVEL_CORNERS_Z_HOP 4.0  // (mm) Z height of nozzle between leveling points
 //#define LEVEL_CENTER_TOO              // Move to the center after the last corner
+//#define LEVEL_CORNERS_USE_PROBE
+#if ENABLED(LEVEL_CORNERS_USE_PROBE)
+#define LEVEL_CORNERS_PROBE_TOLERANCE 0.1
+#define LEVEL_CORNERS_VERIFY_RAISED // After adjustment triggers the probe, re-probe to verify
+//#define LEVEL_CORNERS_AUDIO_FEEDBACK
+#endif
 #endif
 
 /**
@@ -2426,10 +2432,10 @@
 
 #define TOUCH_SCREEN_CALIBRATION
 
-  //#define TOUCH_CALIBRATION_X 12316
-  //#define TOUCH_CALIBRATION_Y -8981
-  //#define TOUCH_OFFSET_X        -43
-  //#define TOUCH_OFFSET_Y        257
+//#define TOUCH_CALIBRATION_X 12316
+//#define TOUCH_CALIBRATION_Y -8981
+//#define TOUCH_OFFSET_X        -43
+//#define TOUCH_OFFSET_Y        257
 
 #if ENABLED(TFT_COLOR_UI)
 //#define SINGLE_TOUCH_NAVIGATION
