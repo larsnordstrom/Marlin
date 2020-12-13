@@ -1115,7 +1115,7 @@
   #endif
 
   // Include a page of printer information in the LCD Main Menu
-  //#define LCD_INFO_MENU
+  #define LCD_INFO_MENU
   #if ENABLED(LCD_INFO_MENU)
     //#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
   #endif
@@ -2126,7 +2126,7 @@
  * Requires NOZZLE_PARK_FEATURE.
  * This feature is required for the default FILAMENT_RUNOUT_SCRIPT.
  */
-//#define ADVANCED_PAUSE_FEATURE
+#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
 #define PAUSE_PARK_RETRACT_FEEDRATE 60       // (mm/s) Initial retract feedrate.
 #define PAUSE_PARK_RETRACT_LENGTH 2          // (mm) Initial retract. \
@@ -2424,7 +2424,7 @@
    * Define you own with
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-#define CHOPPER_TIMING CHOPPER_DEFAULT_24V
+#define CHOPPER_TIMING CHOPPER_DEFAULT_12V
 
 /**
    * Monitor Trinamic drivers
@@ -2496,20 +2496,20 @@
    *
    * Comment *_STALL_SENSITIVITY to disable sensorless homing for that axis.
    */
-//#define SENSORLESS_HOMING // StallGuard capable drivers only
+#define SENSORLESS_HOMING // StallGuard capable drivers only
 
 #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
 // TMC2209: 0...255. TMC2130: -64...63
-#define X_STALL_SENSITIVITY 100
-#define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-#define Y_STALL_SENSITIVITY 100
-#define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
+#define X_STALL_SENSITIVITY 54
+//#define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
+#define Y_STALL_SENSITIVITY 54
+//#define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
 //#define Z_STALL_SENSITIVITY  8
 //#define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
 //#define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
 //#define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
 //#define SPI_ENDSTOPS              // TMC2130 only
-//#define IMPROVE_HOMING_RELIABILITY
+#define IMPROVE_HOMING_RELIABILITY
 #endif
 
 /**
