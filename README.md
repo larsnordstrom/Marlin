@@ -1,19 +1,21 @@
 # Marlin 3D Printer Firmware
 
-This firmware is for the stock Ender3 Pro with SKRmini e3 v1.2 with tmc2209 drivers. It is configured to use with Bondtech 3-1 geared extruder clone or original.
+This firmware is for the stock CR10-mini, SKR1.4 with tmc2209 drivers. It is configured to use with Bondtech 3-1 geared extruder clone or original.
 
-The firmware is configured to use standard endstops.
+The firmware is configured to use standard endstops on Z.
 - Junction Deviation
 - Linear Advanced
-- S  CURVE ACCELERATION 
+- S_CURVE_ACCELERATION 
 - Babystepping
 - Adaptive Step smoothing
 - Increased buffers
+- Sensorless Homing X/Y
+- Hybrid Threshold
+- REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER or BTT TFT screen
 - and more...
 
 This firmware do not use, but can be enabled if you wish:
-- Sensorless Homing
-- Hybrid Threshold
+
 - Ender Creality Bootscreen
 - Probe
 - ABL
