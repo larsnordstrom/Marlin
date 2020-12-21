@@ -1087,12 +1087,15 @@
 // @section lcd
 
 #if EITHER(IS_ULTIPANEL, EXTENSIBLE_UI)
-  #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
-  #define FINE_MANUAL_MOVE 0.025    // (mm) Smallest manual move (< 0.1mm) applying to Z on most machines
-  #if IS_ULTIPANEL
-    #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
-    #define ULTIPANEL_FEEDMULTIPLY  // Encoder sets the feedrate multiplier on the Status Screen
-  #endif
+#define MANUAL_FEEDRATE              \
+  {                                  \
+    50 * 60, 50 * 60, 4 * 60, 2 * 60 \
+  }                            // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
+#define FINE_MANUAL_MOVE 0.025 // (mm) Smallest manual move (< 0.1mm) applying to Z on most machines
+#if IS_ULTIPANEL
+#define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
+#define ULTIPANEL_FEEDMULTIPLY  // Encoder sets the feedrate multiplier on the Status Screen
+#endif
 #endif
 
 // Change values more rapidly when the encoder is rotated faster
@@ -1111,35 +1114,35 @@
 
 #if HAS_LCD_MENU
 
-  // Add Probe Z Offset calibration to the Z Probe Offsets menu
-  #if HAS_BED_PROBE
-    //#define PROBE_OFFSET_WIZARD
-    #if ENABLED(PROBE_OFFSET_WIZARD)
-      //
-      // Enable to init the Probe Z-Offset when starting the Wizard.
-      // Use a height slightly above the estimated nozzle-to-probe Z offset.
-      // For example, with an offset of -5, consider a starting height of -4.
-      //
-      //#define PROBE_OFFSET_WIZARD_START_Z -4.0
+// Add Probe Z Offset calibration to the Z Probe Offsets menu
+#if HAS_BED_PROBE
+//#define PROBE_OFFSET_WIZARD
+#if ENABLED(PROBE_OFFSET_WIZARD)
+//
+// Enable to init the Probe Z-Offset when starting the Wizard.
+// Use a height slightly above the estimated nozzle-to-probe Z offset.
+// For example, with an offset of -5, consider a starting height of -4.
+//
+//#define PROBE_OFFSET_WIZARD_START_Z -4.0
 
-      // Set a convenient position to do the calibration (probing point and nozzle/bed-distance)
-      //#define PROBE_OFFSET_WIZARD_XY_POS { X_CENTER, Y_CENTER }
-    #endif
-  #endif
+// Set a convenient position to do the calibration (probing point and nozzle/bed-distance)
+//#define PROBE_OFFSET_WIZARD_XY_POS { X_CENTER, Y_CENTER }
+#endif
+#endif
 
-  // Include a page of printer information in the LCD Main Menu
-  //#define LCD_INFO_MENU
-  #if ENABLED(LCD_INFO_MENU)
-    //#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
-  #endif
+// Include a page of printer information in the LCD Main Menu
+//#define LCD_INFO_MENU
+#if ENABLED(LCD_INFO_MENU)
+//#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
+#endif
 
-  // BACK menu items keep the highlight at the top
-  //#define TURBO_BACK_MENU_ITEM
+// BACK menu items keep the highlight at the top
+//#define TURBO_BACK_MENU_ITEM
 
-  // Add a mute option to the LCD menu
-  //#define SOUND_MENU_ITEM
+// Add a mute option to the LCD menu
+//#define SOUND_MENU_ITEM
 
-  /**
+/**
    * LED Control Menu
    * Add LED Control to the LCD menu
    */
@@ -1231,8 +1234,8 @@
 
 #define SD_MENU_CONFIRM_START // Confirm the selected SD file before printing
 
-  //#define NO_SD_AUTOSTART                 // Remove auto#.g file support completely to save some Flash, SRAM
-  //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
+//#define NO_SD_AUTOSTART                 // Remove auto#.g file support completely to save some Flash, SRAM
+//#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
 
 //#define BROWSE_MEDIA_ON_INSERT          // Open the file browser when media is inserted
 
@@ -2526,22 +2529,22 @@
    * Set *_SERIAL_TX_PIN and *_SERIAL_RX_PIN to match for all drivers
    * on the same serial port, either here or in your board's pins file.
    */
-#define X_SLAVE_ADDRESS 0
-#define Y_SLAVE_ADDRESS 0
-#define Z_SLAVE_ADDRESS 0
-#define X2_SLAVE_ADDRESS 0
-#define Y2_SLAVE_ADDRESS 0
-#define Z2_SLAVE_ADDRESS 0
-#define Z3_SLAVE_ADDRESS 0
-#define Z4_SLAVE_ADDRESS 0
-#define E0_SLAVE_ADDRESS 0
-#define E1_SLAVE_ADDRESS 0
-#define E2_SLAVE_ADDRESS 0
-#define E3_SLAVE_ADDRESS 0
-#define E4_SLAVE_ADDRESS 0
-#define E5_SLAVE_ADDRESS 0
-#define E6_SLAVE_ADDRESS 0
-#define E7_SLAVE_ADDRESS 0
+//#define  X_SLAVE_ADDRESS 0
+//#define  Y_SLAVE_ADDRESS 0
+//#define  Z_SLAVE_ADDRESS 0
+//#define X2_SLAVE_ADDRESS 0
+//#define Y2_SLAVE_ADDRESS 0
+//#define Z2_SLAVE_ADDRESS 0
+//#define Z3_SLAVE_ADDRESS 0
+//#define Z4_SLAVE_ADDRESS 0
+//#define E0_SLAVE_ADDRESS 0
+//#define E1_SLAVE_ADDRESS 0
+//#define E2_SLAVE_ADDRESS 0
+//#define E3_SLAVE_ADDRESS 0
+//#define E4_SLAVE_ADDRESS 0
+//#define E5_SLAVE_ADDRESS 0
+//#define E6_SLAVE_ADDRESS 0
+//#define E7_SLAVE_ADDRESS 0
 
 /**
    * Software enable
@@ -3520,7 +3523,7 @@
 #if ENABLED(MECHANICAL_GANTRY_CALIBRATION)
 #define GANTRY_CALIBRATION_CURRENT 600     // Default calibration current in ma
 #define GANTRY_CALIBRATION_EXTRA_HEIGHT 15 // Extra distance in mm past Z_###_POS to move
-#define GANTRY_CALIBRATION_FEEDRATE 500    // Feedrate for correction move
+#define GANTRY_CALIBRATION_FEEDRATE 500    // Feedrate for correction move \
                                            //#define GANTRY_CALIBRATION_TO_MIN                 // Enable to calibrate Z in the MIN direction
 
 //#define GANTRY_CALIBRATION_SAFE_POSITION XY_CENTER // Safe position for nozzle

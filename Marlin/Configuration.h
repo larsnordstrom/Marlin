@@ -1049,10 +1049,37 @@
 #define XY_PROBE_SPEED (133 * 60)
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (4*60)
+#define Z_PROBE_SPEED_FAST (4 * 60)
 
 // Feedrate (mm/min) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
+
+/**
+ * Probe Activation Switch
+ * A switch indicating proper deployment, or an optical
+ * switch triggered when the carriage is near the bed.
+ */
+//#define PROBE_ACTIVATION_SWITCH
+#if ENABLED(PROBE_ACTIVATION_SWITCH)
+#define PROBE_ACTIVATION_SWITCH_STATE LOW // State indicating probe is active
+//#define PROBE_ACTIVATION_SWITCH_PIN PC6 // Override default pin
+#endif
+
+/**
+ * Tare Probe (determine zero-point) prior to each probe.
+ * Useful for a strain gauge or piezo sensor that needs to factor out
+ * elements such as cables pulling on the carriage.
+ */
+//#define PROBE_TARE
+#if ENABLED(PROBE_TARE)
+#define PROBE_TARE_TIME 200   // (ms) Time to hold tare pin
+#define PROBE_TARE_DELAY 200  // (ms) Delay after tare before
+#define PROBE_TARE_STATE HIGH // State to write pin for tare
+//#define PROBE_TARE_PIN PA5    // Override default pin
+#if ENABLED(PROBE_ACTIVATION_SWITCH)
+//#define PROBE_TARE_ONLY_WHILE_INACTIVE  // Fail to tare/probe if PROBE_ACTIVATION_SWITCH is active
+#endif
+#endif
 
 /**
  * Multiple Probing
@@ -1114,6 +1141,13 @@
 //#define PROBING_FANS_OFF          // Turn fans off when probing
 //#define PROBING_STEPPERS_OFF      // Turn steppers off (unless needed to hold position) when probing
 //#define DELAY_BEFORE_PROBING 200  // (ms) To prevent vibrations from triggering piezo sensors
+
+// Require minimum nozzle and/or bed temperature for probing.
+//#define PREHEAT_BEFORE_PROBING
+#if ENABLED(PREHEAT_BEFORE_PROBING)
+#define PROBING_NOZZLE_TEMP 120 // (°C) Only applies to E0 at this time
+#define PROBING_BED_TEMP 50
+#endif
 
 // For Inverting Stepper Enable Pins (Active Low) use 0, Non Inverting (Active High) use 1
 // :{ 0:'Low', 1:'High' }
@@ -1344,8 +1378,8 @@
  */
 //#define PREHEAT_BEFORE_LEVELING
 #if ENABLED(PREHEAT_BEFORE_LEVELING)
-  #define LEVELING_NOZZLE_TEMP 120
-  #define LEVELING_BED_TEMP     50
+#define LEVELING_NOZZLE_TEMP 120 // (°C) Only applies to E0 at this time
+#define LEVELING_BED_TEMP 50
 #endif
 
 /**
@@ -1356,21 +1390,21 @@
 //#define DEBUG_LEVELING_FEATURE
 
 #if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_BILINEAR, AUTO_BED_LEVELING_UBL)
-  // Gradually reduce leveling correction until a set height is reached,
-  // at which point movement will be level to the machine's XY plane.
-  // The height can be set with M420 Z<height>
-  #define ENABLE_LEVELING_FADE_HEIGHT
-  #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
-    #define DEFAULT_LEVELING_FADE_HEIGHT 10.0 // (mm) Default fade height.
-  #endif
+// Gradually reduce leveling correction until a set height is reached,
+// at which point movement will be level to the machine's XY plane.
+// The height can be set with M420 Z<height>
+#define ENABLE_LEVELING_FADE_HEIGHT
+#if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
+#define DEFAULT_LEVELING_FADE_HEIGHT 10.0 // (mm) Default fade height.
+#endif
 
-  // For Cartesian machines, instead of dividing moves on mesh boundaries,
-  // split up moves into short segments like a Delta. This follows the
-  // contours of the bed more closely than edge-to-edge straight moves.
-  #define SEGMENT_LEVELED_MOVES
-  #define LEVELED_SEGMENT_LENGTH 5.0 // (mm) Length of all segments (except the last one)
+// For Cartesian machines, instead of dividing moves on mesh boundaries,
+// split up moves into short segments like a Delta. This follows the
+// contours of the bed more closely than edge-to-edge straight moves.
+#define SEGMENT_LEVELED_MOVES
+#define LEVELED_SEGMENT_LENGTH 5.0 // (mm) Length of all segments (except the last one)
 
-  /**
+/**
    * Enable the G26 Mesh Validation Pattern tool.
    */
 //#define G26_MESH_VALIDATION
@@ -1509,7 +1543,10 @@
 #endif
 
 // Homing speeds (mm/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60) }
+#define HOMING_FEEDRATE_MM_M       \
+  {                                \
+    (50 * 60), (50 * 60), (4 * 60) \
+  }
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -1729,6 +1766,10 @@
 
 // For a purge/clean station mounted on the X axis
 //#define NOZZLE_CLEAN_NO_Y
+
+// Require a minimum hotend temperature for cleaning
+#define NOZZLE_CLEAN_MIN_TEMP 170
+//#define NOZZLE_CLEAN_HEATUP       // Heat up the nozzle instead of skipping wipe
 
 // Explicit wipe G-code script applies to a G12 with no arguments.
 //#define WIPE_SEQUENCE_COMMANDS "G1 X-17 Y25 Z10 F4000\nG1 Z1\nM114\nG1 X-17 Y25\nG1 X-17 Y95\nG1 X-17 Y25\nG1 X-17 Y95\nG1 X-17 Y25\nG1 X-17 Y95\nG1 X-17 Y25\nG1 X-17 Y95\nG1 X-17 Y25\nG1 X-17 Y95\nG1 X-17 Y25\nG1 X-17 Y95\nG1 Z15\nM400\nG0 X-10.0 Y-9.0"
