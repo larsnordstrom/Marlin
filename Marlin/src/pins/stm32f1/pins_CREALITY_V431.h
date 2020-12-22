@@ -19,24 +19,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#pragma once
 
 /**
- * Test TEENSY35_36 specific configuration values for errors at compile-time.
+ * CREALITY v4.3.1 (STM32F103) board pin assignments
  */
 
-#if ENABLED(EMERGENCY_PARSER)
-  #error "EMERGENCY_PARSER is not yet implemented for Teensy 3.5/3.6. Disable EMERGENCY_PARSER to continue."
-#endif
+#define BOARD_INFO_NAME      "Creality v4.3.1"
+#define DEFAULT_MACHINE_NAME "Creality3D"
 
-#if ENABLED(FAST_PWM_FAN) || SPINDLE_LASER_FREQUENCY
-  #error "Features requiring Hardware PWM (FAST_PWM_FAN, SPINDLE_LASER_FREQUENCY) are not yet supported on Teensy 3.5/3.6."
-#endif
+//
+// Steppers
+//
+#define X_STEP_PIN                        PB8
+#define X_DIR_PIN                         PB7
 
-#if HAS_TMC_SW_SERIAL
-  #error "TMC220x Software Serial is not supported on Teensy 3.5/3.6."
-#endif
+#define Y_STEP_PIN                        PC2
+#define Y_DIR_PIN                         PB9
 
-#if ENABLED(BAUD_RATE_GCODE)
-  #error "BAUD_RATE_GCODE is not yet supported on Teensy 3.5/3.6."
-#endif
+#include "pins_CREALITY_V4.h"

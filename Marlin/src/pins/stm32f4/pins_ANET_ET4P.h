@@ -16,27 +16,19 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 #pragma once
 
-/**
- * Test TEENSY35_36 specific configuration values for errors at compile-time.
- */
+#define BOARD_INFO_NAME "Anet ET4P 1.x"
 
-#if ENABLED(EMERGENCY_PARSER)
-  #error "EMERGENCY_PARSER is not yet implemented for Teensy 3.5/3.6. Disable EMERGENCY_PARSER to continue."
+//
+// TMC2208 Configuration_adv defaults for Anet ET4P-MB_V1.x
+//
+#if !AXIS_DRIVER_TYPE_X(TMC2208_STANDALONE) || !AXIS_DRIVER_TYPE_Y(TMC2208_STANDALONE) || !AXIS_DRIVER_TYPE_Z(TMC2208_STANDALONE) || !AXIS_DRIVER_TYPE_E0(TMC2208_STANDALONE)
+  #error "ANET_ET4P requires ([XYZ]|E0)_DRIVER_TYPE set to TMC2208_STANDALONE."
 #endif
 
-#if ENABLED(FAST_PWM_FAN) || SPINDLE_LASER_FREQUENCY
-  #error "Features requiring Hardware PWM (FAST_PWM_FAN, SPINDLE_LASER_FREQUENCY) are not yet supported on Teensy 3.5/3.6."
-#endif
-
-#if HAS_TMC_SW_SERIAL
-  #error "TMC220x Software Serial is not supported on Teensy 3.5/3.6."
-#endif
-
-#if ENABLED(BAUD_RATE_GCODE)
-  #error "BAUD_RATE_GCODE is not yet supported on Teensy 3.5/3.6."
-#endif
+#include "pins_ANET_ET4.h"
