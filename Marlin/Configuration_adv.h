@@ -1170,46 +1170,48 @@
 
 #endif // HAS_LCD_MENU
 
-// Scroll a longer status message into view
-//#define STATUS_MESSAGE_SCROLLING
+#if HAS_DISPLAY
+  // The timeout (in ms) to return to the status screen from sub-menus
+  //#define LCD_TIMEOUT_TO_STATUS 15000
 
-// On the Info Screen, display XY with one decimal place when possible
-//#define LCD_DECIMAL_SMALL_XY
+  #if ENABLED(SHOW_BOOTSCREEN)
+    #define BOOTSCREEN_TIMEOUT 4000      // (ms) Total Duration to display the boot screen(s)
+  #endif
 
-// The timeout (in ms) to return to the status screen from sub-menus
-//#define LCD_TIMEOUT_TO_STATUS 15000
+  // Scroll a longer status message into view
+  //#define STATUS_MESSAGE_SCROLLING
 
-// Add an 'M73' G-code to set the current percentage
-//#define LCD_SET_PROGRESS_MANUALLY
+  // On the Info Screen, display XY with one decimal place when possible
+  //#define LCD_DECIMAL_SMALL_XY
 
-// Show the E position (filament used) during printing
-//#define LCD_SHOW_E_TOTAL
+  // Add an 'M73' G-code to set the current percentage
+  //#define LCD_SET_PROGRESS_MANUALLY
 
-#if ENABLED(SHOW_BOOTSCREEN)
-#define BOOTSCREEN_TIMEOUT 4000 // (ms) Total Duration to display the boot screen(s)
+  // Show the E position (filament used) during printing
+  //#define LCD_SHOW_E_TOTAL
 #endif
 
-#if EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY) && ANY(HAS_MARLINUI_U8GLIB, HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL)
-//#define SHOW_REMAINING_TIME       // Display estimated time to completion
-#if ENABLED(SHOW_REMAINING_TIME)
-//#define USE_M73_REMAINING_TIME  // Use remaining time from M73 command instead of estimation
-//#define ROTATE_PROGRESS_DISPLAY // Display (P)rogress, (E)lapsed, and (R)emaining time
-#endif
+#if EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY) && ANY(HAS_MARLINUI_U8GLIB, HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL, EXTENSIBLE_UI)
+  //#define SHOW_REMAINING_TIME       // Display estimated time to completion
+  #if ENABLED(SHOW_REMAINING_TIME)
+    //#define USE_M73_REMAINING_TIME  // Use remaining time from M73 command instead of estimation
+    //#define ROTATE_PROGRESS_DISPLAY // Display (P)rogress, (E)lapsed, and (R)emaining time
+  #endif
 
-#if HAS_MARLINUI_U8GLIB
-//#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
-#endif
+  #if EITHER(HAS_MARLINUI_U8GLIB, EXTENSIBLE_UI)
+    //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
+  #endif
 
-#if EITHER(HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL)
-//#define LCD_PROGRESS_BAR            // Show a progress bar on HD44780 LCDs for SD printing
-#if ENABLED(LCD_PROGRESS_BAR)
-#define PROGRESS_BAR_BAR_TIME 2000 // (ms) Amount of time to show the bar
-#define PROGRESS_BAR_MSG_TIME 3000 // (ms) Amount of time to show the status message
-#define PROGRESS_MSG_EXPIRE 0      // (ms) Amount of time to retain the status message (0=forever)
-//#define PROGRESS_MSG_ONCE         // Show the message for MSG_TIME then clear it
-//#define LCD_PROGRESS_BAR_TEST     // Add a menu item to test the progress bar
-#endif
-#endif
+  #if EITHER(HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL)
+    //#define LCD_PROGRESS_BAR            // Show a progress bar on HD44780 LCDs for SD printing
+    #if ENABLED(LCD_PROGRESS_BAR)
+      #define PROGRESS_BAR_BAR_TIME 2000  // (ms) Amount of time to show the bar
+      #define PROGRESS_BAR_MSG_TIME 3000  // (ms) Amount of time to show the status message
+      #define PROGRESS_MSG_EXPIRE   0     // (ms) Amount of time to retain the status message (0=forever)
+      //#define PROGRESS_MSG_ONCE         // Show the message for MSG_TIME then clear it
+      //#define LCD_PROGRESS_BAR_TEST     // Add a menu item to test the progress bar
+    #endif
+  #endif
 #endif
 
 #if ENABLED(SDSUPPORT)
@@ -1536,90 +1538,93 @@
 // Touch UI for the FTDI Embedded Video Engine (EVE)
 //
 #if ENABLED(TOUCH_UI_FTDI_EVE)
-// Display board used
-//#define LCD_FTDI_VM800B35A        // FTDI 3.5" with FT800 (320x240)
-//#define LCD_4DSYSTEMS_4DLCD_FT843 // 4D Systems 4.3" (480x272)
-//#define LCD_HAOYU_FT800CB         // Haoyu with 4.3" or 5" (480x272)
-//#define LCD_HAOYU_FT810CB         // Haoyu with 5" (800x480)
-//#define LCD_ALEPHOBJECTS_CLCD_UI  // Aleph Objects Color LCD UI
-//#define LCD_FYSETC_TFT81050       // FYSETC with 5" (800x480)
+  // Display board used
+  //#define LCD_FTDI_VM800B35A        // FTDI 3.5" with FT800 (320x240)
+  //#define LCD_4DSYSTEMS_4DLCD_FT843 // 4D Systems 4.3" (480x272)
+  //#define LCD_HAOYU_FT800CB         // Haoyu with 4.3" or 5" (480x272)
+  //#define LCD_HAOYU_FT810CB         // Haoyu with 5" (800x480)
+  //#define LCD_ALEPHOBJECTS_CLCD_UI  // Aleph Objects Color LCD UI
+  //#define LCD_FYSETC_TFT81050       // FYSETC with 5" (800x480)
 
-// Correct the resolution if not using the stock TFT panel.
-//#define TOUCH_UI_320x240
-//#define TOUCH_UI_480x272
-//#define TOUCH_UI_800x480
+  // Correct the resolution if not using the stock TFT panel.
+  //#define TOUCH_UI_320x240
+  //#define TOUCH_UI_480x272
+  //#define TOUCH_UI_800x480
 
-// Mappings for boards with a standard RepRapDiscount Display connector
-//#define AO_EXP1_PINMAP      // AlephObjects CLCD UI EXP1 mapping
-//#define AO_EXP2_PINMAP      // AlephObjects CLCD UI EXP2 mapping
-//#define CR10_TFT_PINMAP     // Rudolph Riedel's CR10 pin mapping
-//#define S6_TFT_PINMAP       // FYSETC S6 pin mapping
-//#define F6_TFT_PINMAP       // FYSETC F6 pin mapping
+  // Mappings for boards with a standard RepRapDiscount Display connector
+  //#define AO_EXP1_PINMAP      // AlephObjects CLCD UI EXP1 mapping
+  //#define AO_EXP2_PINMAP      // AlephObjects CLCD UI EXP2 mapping
+  //#define CR10_TFT_PINMAP     // Rudolph Riedel's CR10 pin mapping
+  //#define S6_TFT_PINMAP       // FYSETC S6 pin mapping
+  //#define F6_TFT_PINMAP       // FYSETC F6 pin mapping
 
-//#define OTHER_PIN_LAYOUT  // Define pins manually below
-#if ENABLED(OTHER_PIN_LAYOUT)
-// Pins for CS and MOD_RESET (PD) must be chosen
-#define CLCD_MOD_RESET 9
-#define CLCD_SPI_CS 10
+  //#define OTHER_PIN_LAYOUT  // Define pins manually below
+  #if ENABLED(OTHER_PIN_LAYOUT)
+    // Pins for CS and MOD_RESET (PD) must be chosen
+    #define CLCD_MOD_RESET  9
+    #define CLCD_SPI_CS    10
 
-// If using software SPI, specify pins for SCLK, MOSI, MISO
-//#define CLCD_USE_SOFT_SPI
-#if ENABLED(CLCD_USE_SOFT_SPI)
-#define CLCD_SOFT_SPI_MOSI 11
-#define CLCD_SOFT_SPI_MISO 12
-#define CLCD_SOFT_SPI_SCLK 13
-#endif
-#endif
+    // If using software SPI, specify pins for SCLK, MOSI, MISO
+    //#define CLCD_USE_SOFT_SPI
+    #if ENABLED(CLCD_USE_SOFT_SPI)
+      #define CLCD_SOFT_SPI_MOSI 11
+      #define CLCD_SOFT_SPI_MISO 12
+      #define CLCD_SOFT_SPI_SCLK 13
+    #endif
+  #endif
 
-// Display Orientation. An inverted (i.e. upside-down) display
-// is supported on the FT800. The FT810 and beyond also support
-// portrait and mirrored orientations.
-//#define TOUCH_UI_INVERTED
-//#define TOUCH_UI_PORTRAIT
-//#define TOUCH_UI_MIRRORED
+  // Display Orientation. An inverted (i.e. upside-down) display
+  // is supported on the FT800. The FT810 and beyond also support
+  // portrait and mirrored orientations.
+  //#define TOUCH_UI_INVERTED
+  //#define TOUCH_UI_PORTRAIT
+  //#define TOUCH_UI_MIRRORED
 
-// UTF8 processing and rendering.
-// Unsupported characters are shown as '?'.
-//#define TOUCH_UI_USE_UTF8
-#if ENABLED(TOUCH_UI_USE_UTF8)
-// Western accents support. These accented characters use
-// combined bitmaps and require relatively little storage.
-#define TOUCH_UI_UTF8_WESTERN_CHARSET
-#if ENABLED(TOUCH_UI_UTF8_WESTERN_CHARSET)
-// Additional character groups. These characters require
-// full bitmaps and take up considerable storage:
-//#define TOUCH_UI_UTF8_SUPERSCRIPTS  // ¹ ² ³
-//#define TOUCH_UI_UTF8_COPYRIGHT     // © ®
-//#define TOUCH_UI_UTF8_GERMANIC      // ß
-//#define TOUCH_UI_UTF8_SCANDINAVIAN  // Æ Ð Ø Þ æ ð ø þ
-//#define TOUCH_UI_UTF8_PUNCTUATION   // « » ¿ ¡
-//#define TOUCH_UI_UTF8_CURRENCY      // ¢ £ ¤ ¥
-//#define TOUCH_UI_UTF8_ORDINALS      // º ª
-//#define TOUCH_UI_UTF8_MATHEMATICS   // ± × ÷
-//#define TOUCH_UI_UTF8_FRACTIONS     // ¼ ½ ¾
-//#define TOUCH_UI_UTF8_SYMBOLS       // µ ¶ ¦ § ¬
-#endif
-#endif
+  // UTF8 processing and rendering.
+  // Unsupported characters are shown as '?'.
+  //#define TOUCH_UI_USE_UTF8
+  #if ENABLED(TOUCH_UI_USE_UTF8)
+    // Western accents support. These accented characters use
+    // combined bitmaps and require relatively little storage.
+    #define TOUCH_UI_UTF8_WESTERN_CHARSET
+    #if ENABLED(TOUCH_UI_UTF8_WESTERN_CHARSET)
+      // Additional character groups. These characters require
+      // full bitmaps and take up considerable storage:
+      //#define TOUCH_UI_UTF8_SUPERSCRIPTS  // ¹ ² ³
+      //#define TOUCH_UI_UTF8_COPYRIGHT     // © ®
+      //#define TOUCH_UI_UTF8_GERMANIC      // ß
+      //#define TOUCH_UI_UTF8_SCANDINAVIAN  // Æ Ð Ø Þ æ ð ø þ
+      //#define TOUCH_UI_UTF8_PUNCTUATION   // « » ¿ ¡
+      //#define TOUCH_UI_UTF8_CURRENCY      // ¢ £ ¤ ¥
+      //#define TOUCH_UI_UTF8_ORDINALS      // º ª
+      //#define TOUCH_UI_UTF8_MATHEMATICS   // ± × ÷
+      //#define TOUCH_UI_UTF8_FRACTIONS     // ¼ ½ ¾
+      //#define TOUCH_UI_UTF8_SYMBOLS       // µ ¶ ¦ § ¬
+    #endif
 
-// Use a smaller font when labels don't fit buttons
-#define TOUCH_UI_FIT_TEXT
+    // Cyrillic character set, costs about 27KiB of flash
+    //#define TOUCH_UI_UTF8_CYRILLIC_CHARSET
+  #endif
 
-// Allow language selection from menu at run-time (otherwise use LCD_LANGUAGE)
-//#define LCD_LANGUAGE_1 en
-//#define LCD_LANGUAGE_2 fr
-//#define LCD_LANGUAGE_3 de
-//#define LCD_LANGUAGE_4 es
-//#define LCD_LANGUAGE_5 it
+  // Use a smaller font when labels don't fit buttons
+  #define TOUCH_UI_FIT_TEXT
 
-// Use a numeric passcode for "Screen lock" keypad.
-// (recommended for smaller displays)
-//#define TOUCH_UI_PASSCODE
+  // Allow language selection from menu at run-time (otherwise use LCD_LANGUAGE)
+  //#define LCD_LANGUAGE_1 en
+  //#define LCD_LANGUAGE_2 fr
+  //#define LCD_LANGUAGE_3 de
+  //#define LCD_LANGUAGE_4 es
+  //#define LCD_LANGUAGE_5 it
 
-// Output extra debug info for Touch UI events
-//#define TOUCH_UI_DEBUG
+  // Use a numeric passcode for "Screen lock" keypad.
+  // (recommended for smaller displays)
+  //#define TOUCH_UI_PASSCODE
 
-// Developer menu (accessed by touching "About Printer" copyright text)
-//#define TOUCH_UI_DEVELOPER_MENU
+  // Output extra debug info for Touch UI events
+  //#define TOUCH_UI_DEBUG
+
+  // Developer menu (accessed by touching "About Printer" copyright text)
+  //#define TOUCH_UI_DEVELOPER_MENU
 #endif
 
 //
