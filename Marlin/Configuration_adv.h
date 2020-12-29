@@ -813,17 +813,14 @@
 //#define ASSISTED_TRAMMING
 #if ENABLED(ASSISTED_TRAMMING)
 
-// Define positions for probing points, use the hotend as reference not the sensor.
-#define TRAMMING_POINT_XY                        \
-  {                                              \
-    {20, 20}, {200, 20}, {200, 200}, { 20, 200 } \
-  }
+  // Define positions for probe points.
+  #define TRAMMING_POINT_XY { {  20, 20 }, { 180,  20 }, { 180, 180 }, { 20, 180 } }
 
-// Define positions names for probing points.
-#define TRAMMING_POINT_NAME_1 "Front-Left"
-#define TRAMMING_POINT_NAME_2 "Front-Right"
-#define TRAMMING_POINT_NAME_3 "Back-Right"
-#define TRAMMING_POINT_NAME_4 "Back-Left"
+  // Define position names for probe points.
+  #define TRAMMING_POINT_NAME_1 "Front-Left"
+  #define TRAMMING_POINT_NAME_2 "Front-Right"
+  #define TRAMMING_POINT_NAME_3 "Back-Right"
+  #define TRAMMING_POINT_NAME_4 "Back-Left"
 
 #define RESTORE_LEVELING_AFTER_G35 // Enable to restore leveling setup after operation
 //#define REPORT_TRAMMING_MM          // Report Z deviation (mm) for each point relative to the first
@@ -1176,6 +1173,9 @@
 
   #if ENABLED(SHOW_BOOTSCREEN)
     #define BOOTSCREEN_TIMEOUT 4000      // (ms) Total Duration to display the boot screen(s)
+    #if EITHER(HAS_MARLINUI_U8GLIB, TFT_COLOR_UI)
+      #define BOOT_MARLIN_LOGO_SMALL     // Show a smaller Marlin logo on the Boot Screen (saving lots of flash)
+    #endif
   #endif
 
   // Scroll a longer status message into view
@@ -1357,12 +1357,9 @@
    *
    * [1] On AVR an interrupt-capable pin is best for UHS3 compatibility.
    */
-//#define USB_FLASH_DRIVE_SUPPORT
-#if ENABLED(USB_FLASH_DRIVE_SUPPORT)
-#define USB_CS_PIN SDSS
-#define USB_INTR_PIN SD_DETECT_PIN
-
-/**
+  //#define USB_FLASH_DRIVE_SUPPORT
+  #if ENABLED(USB_FLASH_DRIVE_SUPPORT)
+    /**
      * USB Host Shield Library
      *
      * - UHS2 uses no interrupts and has been production-tested
@@ -1372,8 +1369,19 @@
      *   is less tested and is known to interfere with Servos.
      *   [1] This requires USB_INTR_PIN to be interrupt-capable.
      */
-//#define USE_UHS3_USB
-#endif
+    //#define USE_UHS2_USB
+    //#define USE_UHS3_USB
+
+    /**
+     * Native USB Host supported by some boards (USB OTG)
+     */
+    //#define USE_OTG_USB_HOST
+
+    #if DISABLED(USE_OTG_USB_HOST)
+      #define USB_CS_PIN    SDSS
+      #define USB_INTR_PIN  SD_DETECT_PIN
+    #endif
+  #endif
 
 /**
    * When using a bootloader that supports SD-Firmware-Flashing,
@@ -1475,28 +1483,6 @@
    * These options may affect code size and screen render time.
    * Custom status screens can forcibly override these settings.
    */
-//#define STATUS_COMBINE_HEATERS    // Use combined heater images instead of separate ones
-//#define STATUS_HOTEND_NUMBERLESS  // Use plain hotend icons instead of numbered ones (with 2+ hotends)
-#define STATUS_HOTEND_INVERTED // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM)
-#define STATUS_HOTEND_ANIM     // Use a second bitmap to indicate hotend heating
-#define STATUS_BED_ANIM        // Use a second bitmap to indicate bed heating
-#define STATUS_CHAMBER_ANIM    // Use a second bitmap to indicate chamber heating                                                               \
-                               //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active                    \
-                               //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap                                            \
-                               //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap                                            \
-                               //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames                               \
-                               //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar                                            \
-                               //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash) \
-                               //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
-
-// Frivolous Game Options
-//#define MARLIN_BRICKOUT
-//#define MARLIN_INVADERS
-//#define MARLIN_SNAKE
-//#define GAMES_EASTER_EGG          // Add extra blank lines above the "Games" sub-menu
-
-#endif // HAS_MARLINUI_U8GLIB
-
 //
 // Additional options for DGUS / DWIN displays
 //
@@ -1515,7 +1501,6 @@
 #define DGUS_PREHEAT_UI     // Display a preheat screen during heatup
 
 #if ENABLED(DGUS_LCD_UI_FYSETC)
-//#define DGUS_UI_MOVE_DIS_OPTION   // Disabled by default for UI_FYSETC
 #else
 #define DGUS_UI_MOVE_DIS_OPTION // Enabled by default for UI_HIPRECY
 #endif
