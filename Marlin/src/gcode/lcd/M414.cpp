@@ -19,35 +19,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#pragma once
 
-#include "pins_BTT_SKR_MINI_E3_common.h"
+#include "../../inc/MarlinConfig.h"
 
-#define BOARD_INFO_NAME "BTT SKR Mini E3 V1.2"
+#if HAS_MULTI_LANGUAGE
 
-#ifndef NEOPIXEL_PIN
-  #define NEOPIXEL_PIN                      PC7   // LED driving pin
-#endif
+#include "../gcode.h"
+#include "../../MarlinCore.h"
+#include "../../lcd/marlinui.h"
 
 /**
- * TMC2208/TMC2209 stepper drivers
+ * M414: Set the language for the UI
+ *
+ * Parameters
+ *  S<index> : The language to select
  */
-#if HAS_TMC_UART
-  //
-  // Software serial
-  //
-  #define X_SERIAL_TX_PIN                   PB15
-  #define X_SERIAL_RX_PIN                   PB15
+void GcodeSuite::M414() {
 
-  #define Y_SERIAL_TX_PIN                   PC6
-  #define Y_SERIAL_RX_PIN                   PC6
+  if (parser.seenval('S'))
+    ui.set_language(parser.value_byte());
 
-  #define Z_SERIAL_TX_PIN                   PC10
-  #define Z_SERIAL_RX_PIN                   PC10
+}
 
-  #define E0_SERIAL_TX_PIN                  PC11
-  #define E0_SERIAL_RX_PIN                  PC11
-
-  // Reduce baud rate to improve software serial reliability
-  #define TMC_BAUD_RATE 19200
-#endif
+#endif // HAS_MULTI_LANGUAGE

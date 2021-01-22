@@ -555,22 +555,22 @@
 
 //#define X_DUAL_STEPPER_DRIVERS
 #if ENABLED(X_DUAL_STEPPER_DRIVERS)
-  //#define INVERT_X2_VS_X_DIR    // Enable if X2 direction signal is opposite to X
-  //#define X_DUAL_ENDSTOPS
-  #if ENABLED(X_DUAL_ENDSTOPS)
-    #define X2_USE_ENDSTOP _XMAX_
-    #define X2_ENDSTOP_ADJUSTMENT  0
-  #endif
+//#define INVERT_X2_VS_X_DIR    // Enable if X2 direction signal is opposite to X
+//#define X_DUAL_ENDSTOPS
+#if ENABLED(X_DUAL_ENDSTOPS)
+#define X2_USE_ENDSTOP _XMAX_
+#define X2_ENDSTOP_ADJUSTMENT 0
+#endif
 #endif
 
 //#define Y_DUAL_STEPPER_DRIVERS
 #if ENABLED(Y_DUAL_STEPPER_DRIVERS)
-  //#define INVERT_Y2_VS_Y_DIR   // Enable if Y2 direction signal is opposite to Y
-  //#define Y_DUAL_ENDSTOPS
-  #if ENABLED(Y_DUAL_ENDSTOPS)
-    #define Y2_USE_ENDSTOP _YMAX_
-    #define Y2_ENDSTOP_ADJUSTMENT  0
-  #endif
+//#define INVERT_Y2_VS_Y_DIR   // Enable if Y2 direction signal is opposite to Y
+//#define Y_DUAL_ENDSTOPS
+#if ENABLED(Y_DUAL_ENDSTOPS)
+#define Y2_USE_ENDSTOP _YMAX_
+#define Y2_ENDSTOP_ADJUSTMENT 0
+#endif
 #endif
 
 //
@@ -579,24 +579,24 @@
 #define NUM_Z_STEPPER_DRIVERS 1 // (1-4) Z options change based on how many
 
 #if NUM_Z_STEPPER_DRIVERS > 1
-  // Enable if Z motor direction signals are the opposite of Z1
-  //#define INVERT_Z2_VS_Z_DIR
-  //#define INVERT_Z3_VS_Z_DIR
-  //#define INVERT_Z4_VS_Z_DIR
+// Enable if Z motor direction signals are the opposite of Z1
+//#define INVERT_Z2_VS_Z_DIR
+//#define INVERT_Z3_VS_Z_DIR
+//#define INVERT_Z4_VS_Z_DIR
 
-  //#define Z_MULTI_ENDSTOPS
-  #if ENABLED(Z_MULTI_ENDSTOPS)
-    #define Z2_USE_ENDSTOP          _XMAX_
-    #define Z2_ENDSTOP_ADJUSTMENT   0
-    #if NUM_Z_STEPPER_DRIVERS >= 3
-      #define Z3_USE_ENDSTOP        _YMAX_
-      #define Z3_ENDSTOP_ADJUSTMENT 0
-    #endif
-    #if NUM_Z_STEPPER_DRIVERS >= 4
-      #define Z4_USE_ENDSTOP        _ZMAX_
-      #define Z4_ENDSTOP_ADJUSTMENT 0
-    #endif
-  #endif
+//#define Z_MULTI_ENDSTOPS
+#if ENABLED(Z_MULTI_ENDSTOPS)
+#define Z2_USE_ENDSTOP _XMAX_
+#define Z2_ENDSTOP_ADJUSTMENT 0
+#if NUM_Z_STEPPER_DRIVERS >= 3
+#define Z3_USE_ENDSTOP _YMAX_
+#define Z3_ENDSTOP_ADJUSTMENT 0
+#endif
+#if NUM_Z_STEPPER_DRIVERS >= 4
+#define Z4_USE_ENDSTOP _ZMAX_
+#define Z4_ENDSTOP_ADJUSTMENT 0
+#endif
+#endif
 #endif
 
 /**
@@ -818,21 +818,24 @@
 //#define ASSISTED_TRAMMING
 #if ENABLED(ASSISTED_TRAMMING)
 
-  // Define positions for probe points.
-  #define TRAMMING_POINT_XY { {  20, 20 }, { 180,  20 }, { 180, 180 }, { 20, 180 } }
+// Define positions for probe points.
+#define TRAMMING_POINT_XY                        \
+  {                                              \
+    {20, 20}, {180, 20}, {180, 180}, { 20, 180 } \
+  }
 
-  // Define position names for probe points.
-  #define TRAMMING_POINT_NAME_1 "Front-Left"
-  #define TRAMMING_POINT_NAME_2 "Front-Right"
-  #define TRAMMING_POINT_NAME_3 "Back-Right"
-  #define TRAMMING_POINT_NAME_4 "Back-Left"
+// Define position names for probe points.
+#define TRAMMING_POINT_NAME_1 "Front-Left"
+#define TRAMMING_POINT_NAME_2 "Front-Right"
+#define TRAMMING_POINT_NAME_3 "Back-Right"
+#define TRAMMING_POINT_NAME_4 "Back-Left"
 
 #define RESTORE_LEVELING_AFTER_G35 // Enable to restore leveling setup after operation
 //#define REPORT_TRAMMING_MM          // Report Z deviation (mm) for each point relative to the first
 
-  //#define ASSISTED_TRAMMING_WIZARD    // Add a Tramming Wizard to the LCD menu
+//#define ASSISTED_TRAMMING_WIZARD    // Add a Tramming Wizard to the LCD menu
 
-  //#define ASSISTED_TRAMMING_WAIT_POSITION { X_CENTER, Y_CENTER, 30 } // Move the nozzle out of the way for adjustment
+//#define ASSISTED_TRAMMING_WAIT_POSITION { X_CENTER, Y_CENTER, 30 } // Move the nozzle out of the way for adjustment
 
 /**
    * Screw thread:
@@ -1173,54 +1176,54 @@
 #endif // HAS_LCD_MENU
 
 #if HAS_DISPLAY
-  // The timeout (in ms) to return to the status screen from sub-menus
-  //#define LCD_TIMEOUT_TO_STATUS 15000
+// The timeout (in ms) to return to the status screen from sub-menus
+//#define LCD_TIMEOUT_TO_STATUS 15000
 
-  #if ENABLED(SHOW_BOOTSCREEN)
-    #define BOOTSCREEN_TIMEOUT 4000      // (ms) Total Duration to display the boot screen(s)
-    #if EITHER(HAS_MARLINUI_U8GLIB, TFT_COLOR_UI)
-      #define BOOT_MARLIN_LOGO_SMALL     // Show a smaller Marlin logo on the Boot Screen (saving lots of flash)
-    #endif
-  #endif
+#if ENABLED(SHOW_BOOTSCREEN)
+#define BOOTSCREEN_TIMEOUT 4000 // (ms) Total Duration to display the boot screen(s)
+#if EITHER(HAS_MARLINUI_U8GLIB, TFT_COLOR_UI)
+#define BOOT_MARLIN_LOGO_SMALL // Show a smaller Marlin logo on the Boot Screen (saving lots of flash)
+#endif
+#endif
 
-  // Scroll a longer status message into view
-  //#define STATUS_MESSAGE_SCROLLING
+// Scroll a longer status message into view
+//#define STATUS_MESSAGE_SCROLLING
 
-  // On the Info Screen, display XY with one decimal place when possible
-  //#define LCD_DECIMAL_SMALL_XY
+// On the Info Screen, display XY with one decimal place when possible
+//#define LCD_DECIMAL_SMALL_XY
 
-  // Add an 'M73' G-code to set the current percentage
-  //#define LCD_SET_PROGRESS_MANUALLY
+// Add an 'M73' G-code to set the current percentage
+//#define LCD_SET_PROGRESS_MANUALLY
 
-  // Show the E position (filament used) during printing
-  //#define LCD_SHOW_E_TOTAL
+// Show the E position (filament used) during printing
+//#define LCD_SHOW_E_TOTAL
 #endif
 
 #if EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY) && ANY(HAS_MARLINUI_U8GLIB, HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL, EXTENSIBLE_UI)
-  //#define SHOW_REMAINING_TIME       // Display estimated time to completion
-  #if ENABLED(SHOW_REMAINING_TIME)
-    //#define USE_M73_REMAINING_TIME  // Use remaining time from M73 command instead of estimation
-    //#define ROTATE_PROGRESS_DISPLAY // Display (P)rogress, (E)lapsed, and (R)emaining time
-  #endif
+//#define SHOW_REMAINING_TIME       // Display estimated time to completion
+#if ENABLED(SHOW_REMAINING_TIME)
+//#define USE_M73_REMAINING_TIME  // Use remaining time from M73 command instead of estimation
+//#define ROTATE_PROGRESS_DISPLAY // Display (P)rogress, (E)lapsed, and (R)emaining time
+#endif
 
-  #if EITHER(HAS_MARLINUI_U8GLIB, EXTENSIBLE_UI)
-    //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
-  #endif
+#if EITHER(HAS_MARLINUI_U8GLIB, EXTENSIBLE_UI)
+//#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
+#endif
 
-  #if EITHER(HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL)
-    //#define LCD_PROGRESS_BAR            // Show a progress bar on HD44780 LCDs for SD printing
-    #if ENABLED(LCD_PROGRESS_BAR)
-      #define PROGRESS_BAR_BAR_TIME 2000  // (ms) Amount of time to show the bar
-      #define PROGRESS_BAR_MSG_TIME 3000  // (ms) Amount of time to show the status message
-      #define PROGRESS_MSG_EXPIRE   0     // (ms) Amount of time to retain the status message (0=forever)
-      //#define PROGRESS_MSG_ONCE         // Show the message for MSG_TIME then clear it
-      //#define LCD_PROGRESS_BAR_TEST     // Add a menu item to test the progress bar
-    #endif
-  #endif
+#if EITHER(HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL)
+//#define LCD_PROGRESS_BAR            // Show a progress bar on HD44780 LCDs for SD printing
+#if ENABLED(LCD_PROGRESS_BAR)
+#define PROGRESS_BAR_BAR_TIME 2000 // (ms) Amount of time to show the bar
+#define PROGRESS_BAR_MSG_TIME 3000 // (ms) Amount of time to show the status message
+#define PROGRESS_MSG_EXPIRE 0      // (ms) Amount of time to retain the status message (0=forever)
+//#define PROGRESS_MSG_ONCE         // Show the message for MSG_TIME then clear it
+//#define LCD_PROGRESS_BAR_TEST     // Add a menu item to test the progress bar
+#endif
+#endif
 #endif
 
 #if ENABLED(SDSUPPORT)
-  /**
+/**
    * SD Card SPI Speed
    * May be required to resolve "volume init" errors.
    *
@@ -1229,7 +1232,7 @@
    *
    * :['SPI_HALF_SPEED', 'SPI_QUARTER_SPEED', 'SPI_EIGHTH_SPEED']
    */
-  //#define SD_SPI_SPEED SPI_HALF_SPEED
+//#define SD_SPI_SPEED SPI_HALF_SPEED
 
 // The standard SD detect circuit reads LOW when media is inserted and HIGH when empty.
 // Enable this option and set to HIGH if your SD cards are incorrectly detected.
@@ -1372,9 +1375,9 @@
    *
    * [1] On AVR an interrupt-capable pin is best for UHS3 compatibility.
    */
-  //#define USB_FLASH_DRIVE_SUPPORT
-  #if ENABLED(USB_FLASH_DRIVE_SUPPORT)
-    /**
+//#define USB_FLASH_DRIVE_SUPPORT
+#if ENABLED(USB_FLASH_DRIVE_SUPPORT)
+/**
      * USB Host Shield Library
      *
      * - UHS2 uses no interrupts and has been production-tested
@@ -1384,19 +1387,19 @@
      *   is less tested and is known to interfere with Servos.
      *   [1] This requires USB_INTR_PIN to be interrupt-capable.
      */
-    //#define USE_UHS2_USB
-    //#define USE_UHS3_USB
+//#define USE_UHS2_USB
+//#define USE_UHS3_USB
 
-    /**
+/**
      * Native USB Host supported by some boards (USB OTG)
      */
-    //#define USE_OTG_USB_HOST
+//#define USE_OTG_USB_HOST
 
-    #if DISABLED(USE_OTG_USB_HOST)
-      #define USB_CS_PIN    SDSS
-      #define USB_INTR_PIN  SD_DETECT_PIN
-    #endif
-  #endif
+#if DISABLED(USE_OTG_USB_HOST)
+#define USB_CS_PIN SDSS
+#define USB_INTR_PIN SD_DETECT_PIN
+#endif
+#endif
 
 /**
    * When using a bootloader that supports SD-Firmware-Flashing,
@@ -1428,8 +1431,8 @@
    */
 //#define SDCARD_CONNECTION LCD
 
-  // Enable if SD detect is rendered useless (e.g., by using an SD extender)
-  //#define NO_SD_DETECT
+// Enable if SD detect is rendered useless (e.g., by using an SD extender)
+//#define NO_SD_DETECT
 
 #endif // SDSUPPORT
 
@@ -1538,96 +1541,99 @@
 #endif // HAS_DGUS_LCD
 
 //
+// Specify additional languages for the UI. Default specified by LCD_LANGUAGE.
+//
+#if EITHER(DOGLCD, TOUCH_UI_FTDI_EVE)
+//#define LCD_LANGUAGE_2 fr
+//#define LCD_LANGUAGE_3 de
+//#define LCD_LANGUAGE_4 es
+//#define LCD_LANGUAGE_5 it
+#endif
+
+//
 // Touch UI for the FTDI Embedded Video Engine (EVE)
 //
 #if ENABLED(TOUCH_UI_FTDI_EVE)
-  // Display board used
-  //#define LCD_FTDI_VM800B35A        // FTDI 3.5" with FT800 (320x240)
-  //#define LCD_4DSYSTEMS_4DLCD_FT843 // 4D Systems 4.3" (480x272)
-  //#define LCD_HAOYU_FT800CB         // Haoyu with 4.3" or 5" (480x272)
-  //#define LCD_HAOYU_FT810CB         // Haoyu with 5" (800x480)
-  //#define LCD_ALEPHOBJECTS_CLCD_UI  // Aleph Objects Color LCD UI
-  //#define LCD_FYSETC_TFT81050       // FYSETC with 5" (800x480)
+// Display board used
+//#define LCD_FTDI_VM800B35A        // FTDI 3.5" with FT800 (320x240)
+//#define LCD_4DSYSTEMS_4DLCD_FT843 // 4D Systems 4.3" (480x272)
+//#define LCD_HAOYU_FT800CB         // Haoyu with 4.3" or 5" (480x272)
+//#define LCD_HAOYU_FT810CB         // Haoyu with 5" (800x480)
+//#define LCD_ALEPHOBJECTS_CLCD_UI  // Aleph Objects Color LCD UI
+//#define LCD_FYSETC_TFT81050       // FYSETC with 5" (800x480)
 
-  // Correct the resolution if not using the stock TFT panel.
-  //#define TOUCH_UI_320x240
-  //#define TOUCH_UI_480x272
-  //#define TOUCH_UI_800x480
+// Correct the resolution if not using the stock TFT panel.
+//#define TOUCH_UI_320x240
+//#define TOUCH_UI_480x272
+//#define TOUCH_UI_800x480
 
-  // Mappings for boards with a standard RepRapDiscount Display connector
-  //#define AO_EXP1_PINMAP      // AlephObjects CLCD UI EXP1 mapping
-  //#define AO_EXP2_PINMAP      // AlephObjects CLCD UI EXP2 mapping
-  //#define CR10_TFT_PINMAP     // Rudolph Riedel's CR10 pin mapping
-  //#define S6_TFT_PINMAP       // FYSETC S6 pin mapping
-  //#define F6_TFT_PINMAP       // FYSETC F6 pin mapping
+// Mappings for boards with a standard RepRapDiscount Display connector
+//#define AO_EXP1_PINMAP      // AlephObjects CLCD UI EXP1 mapping
+//#define AO_EXP2_PINMAP      // AlephObjects CLCD UI EXP2 mapping
+//#define CR10_TFT_PINMAP     // Rudolph Riedel's CR10 pin mapping
+//#define S6_TFT_PINMAP       // FYSETC S6 pin mapping
+//#define F6_TFT_PINMAP       // FYSETC F6 pin mapping
 
-  //#define OTHER_PIN_LAYOUT  // Define pins manually below
-  #if ENABLED(OTHER_PIN_LAYOUT)
-    // Pins for CS and MOD_RESET (PD) must be chosen
-    #define CLCD_MOD_RESET  9
-    #define CLCD_SPI_CS    10
+//#define OTHER_PIN_LAYOUT  // Define pins manually below
+#if ENABLED(OTHER_PIN_LAYOUT)
+// Pins for CS and MOD_RESET (PD) must be chosen
+#define CLCD_MOD_RESET 9
+#define CLCD_SPI_CS 10
 
-    // If using software SPI, specify pins for SCLK, MOSI, MISO
-    //#define CLCD_USE_SOFT_SPI
-    #if ENABLED(CLCD_USE_SOFT_SPI)
-      #define CLCD_SOFT_SPI_MOSI 11
-      #define CLCD_SOFT_SPI_MISO 12
-      #define CLCD_SOFT_SPI_SCLK 13
-    #endif
-  #endif
+// If using software SPI, specify pins for SCLK, MOSI, MISO
+//#define CLCD_USE_SOFT_SPI
+#if ENABLED(CLCD_USE_SOFT_SPI)
+#define CLCD_SOFT_SPI_MOSI 11
+#define CLCD_SOFT_SPI_MISO 12
+#define CLCD_SOFT_SPI_SCLK 13
+#endif
+#endif
 
-  // Display Orientation. An inverted (i.e. upside-down) display
-  // is supported on the FT800. The FT810 and beyond also support
-  // portrait and mirrored orientations.
-  //#define TOUCH_UI_INVERTED
-  //#define TOUCH_UI_PORTRAIT
-  //#define TOUCH_UI_MIRRORED
+// Display Orientation. An inverted (i.e. upside-down) display
+// is supported on the FT800. The FT810 and beyond also support
+// portrait and mirrored orientations.
+//#define TOUCH_UI_INVERTED
+//#define TOUCH_UI_PORTRAIT
+//#define TOUCH_UI_MIRRORED
 
-  // UTF8 processing and rendering.
-  // Unsupported characters are shown as '?'.
-  //#define TOUCH_UI_USE_UTF8
-  #if ENABLED(TOUCH_UI_USE_UTF8)
-    // Western accents support. These accented characters use
-    // combined bitmaps and require relatively little storage.
-    #define TOUCH_UI_UTF8_WESTERN_CHARSET
-    #if ENABLED(TOUCH_UI_UTF8_WESTERN_CHARSET)
-      // Additional character groups. These characters require
-      // full bitmaps and take up considerable storage:
-      //#define TOUCH_UI_UTF8_SUPERSCRIPTS  // ¹ ² ³
-      //#define TOUCH_UI_UTF8_COPYRIGHT     // © ®
-      //#define TOUCH_UI_UTF8_GERMANIC      // ß
-      //#define TOUCH_UI_UTF8_SCANDINAVIAN  // Æ Ð Ø Þ æ ð ø þ
-      //#define TOUCH_UI_UTF8_PUNCTUATION   // « » ¿ ¡
-      //#define TOUCH_UI_UTF8_CURRENCY      // ¢ £ ¤ ¥
-      //#define TOUCH_UI_UTF8_ORDINALS      // º ª
-      //#define TOUCH_UI_UTF8_MATHEMATICS   // ± × ÷
-      //#define TOUCH_UI_UTF8_FRACTIONS     // ¼ ½ ¾
-      //#define TOUCH_UI_UTF8_SYMBOLS       // µ ¶ ¦ § ¬
-    #endif
+// UTF8 processing and rendering.
+// Unsupported characters are shown as '?'.
+//#define TOUCH_UI_USE_UTF8
+#if ENABLED(TOUCH_UI_USE_UTF8)
+// Western accents support. These accented characters use
+// combined bitmaps and require relatively little storage.
+#define TOUCH_UI_UTF8_WESTERN_CHARSET
+#if ENABLED(TOUCH_UI_UTF8_WESTERN_CHARSET)
+// Additional character groups. These characters require
+// full bitmaps and take up considerable storage:
+//#define TOUCH_UI_UTF8_SUPERSCRIPTS  // ¹ ² ³
+//#define TOUCH_UI_UTF8_COPYRIGHT     // © ®
+//#define TOUCH_UI_UTF8_GERMANIC      // ß
+//#define TOUCH_UI_UTF8_SCANDINAVIAN  // Æ Ð Ø Þ æ ð ø þ
+//#define TOUCH_UI_UTF8_PUNCTUATION   // « » ¿ ¡
+//#define TOUCH_UI_UTF8_CURRENCY      // ¢ £ ¤ ¥
+//#define TOUCH_UI_UTF8_ORDINALS      // º ª
+//#define TOUCH_UI_UTF8_MATHEMATICS   // ± × ÷
+//#define TOUCH_UI_UTF8_FRACTIONS     // ¼ ½ ¾
+//#define TOUCH_UI_UTF8_SYMBOLS       // µ ¶ ¦ § ¬
+#endif
 
-    // Cyrillic character set, costs about 27KiB of flash
-    //#define TOUCH_UI_UTF8_CYRILLIC_CHARSET
-  #endif
+// Cyrillic character set, costs about 27KiB of flash
+//#define TOUCH_UI_UTF8_CYRILLIC_CHARSET
+#endif
 
-  // Use a smaller font when labels don't fit buttons
-  #define TOUCH_UI_FIT_TEXT
+// Use a smaller font when labels don't fit buttons
+#define TOUCH_UI_FIT_TEXT
 
-  // Allow language selection from menu at run-time (otherwise use LCD_LANGUAGE)
-  //#define LCD_LANGUAGE_1 en
-  //#define LCD_LANGUAGE_2 fr
-  //#define LCD_LANGUAGE_3 de
-  //#define LCD_LANGUAGE_4 es
-  //#define LCD_LANGUAGE_5 it
+// Use a numeric passcode for "Screen lock" keypad.
+// (recommended for smaller displays)
+//#define TOUCH_UI_PASSCODE
 
-  // Use a numeric passcode for "Screen lock" keypad.
-  // (recommended for smaller displays)
-  //#define TOUCH_UI_PASSCODE
+// Output extra debug info for Touch UI events
+//#define TOUCH_UI_DEBUG
 
-  // Output extra debug info for Touch UI events
-  //#define TOUCH_UI_DEBUG
-
-  // Developer menu (accessed by touching "About Printer" copyright text)
-  //#define TOUCH_UI_DEVELOPER_MENU
+// Developer menu (accessed by touching "About Printer" copyright text)
+//#define TOUCH_UI_DEVELOPER_MENU
 #endif
 
 //
@@ -1790,7 +1796,7 @@
 #endif
 
 #if BOTH(AUTO_BED_LEVELING_UBL, EEPROM_SETTINGS)
-  //#define OPTIMIZED_MESH_STORAGE  // Store mesh with less precision to save EEPROM space
+//#define OPTIMIZED_MESH_STORAGE  // Store mesh with less precision to save EEPROM space
 #endif
 
 /**
@@ -3086,16 +3092,16 @@
 
 #else
 
-#define SPEED_POWER_INTERCEPT 0 // (%) 0-100 i.e., Minimum power percentage
-#define SPEED_POWER_MIN 0       // (%) 0-100
-#define SPEED_POWER_MAX 100     // (%) 0-100
-#define SPEED_POWER_STARTUP 80  // (%) M3/M4 speed/power default (with no arguments)
+#define SPEED_POWER_INTERCEPT 0  // (%) 0-100 i.e., Minimum power percentage
+#define SPEED_POWER_MIN 0        // (%) 0-100
+#define SPEED_POWER_MAX 100      // (%) 0-100
+#define SPEED_POWER_STARTUP 80   // (%) M3/M4 speed/power default (with no arguments)
 
-    // Define the minimum and maximum test pulse time values for a laser test fire function
-    #define LASER_TEST_PULSE_MIN           1   // Used with Laser Control Menu
-    #define LASER_TEST_PULSE_MAX         999   // Caution: Menu may not show more than 3 characters
+// Define the minimum and maximum test pulse time values for a laser test fire function
+#define LASER_TEST_PULSE_MIN 1   // Used with Laser Control Menu
+#define LASER_TEST_PULSE_MAX 999 // Caution: Menu may not show more than 3 characters
 
-    /**
+/**
      * Enable inline laser power to be handled in the planner / stepper routines.
      * Inline power is specified by the I (inline) flag in an M3 command (e.g., M3 S20 I)
      * or by the 'S' parameter in G0/G1/G2/G3 moves (see LASER_MOVE_POWER).
@@ -3377,7 +3383,7 @@
 //#define USER_SCRIPT_RETURN  // Return to status screen after a script
 
 #define USER_DESC_1 "Home & UBL Info"
-#define USER_GCODE_1 "G28\nG29 W"
+#define USER_GCODE_1 "G28\nG29W"
 
 #define USER_DESC_2 "Preheat for " PREHEAT_1_LABEL
 #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
@@ -3646,10 +3652,7 @@
 //#define E_MUX2_PIN 44  // Needed for 5 to 8 inputs
 #elif HAS_PRUSA_MMU2
 // Serial port used for communication with MMU2.
-// For AVR enable the UART port used for the MMU. (e.g., mmuSerial)
-// For 32-bit boards check your HAL for available serial ports. (e.g., Serial2)
 #define MMU2_SERIAL_PORT 2
-#define MMU2_SERIAL mmuSerial
 
 // Use hardware reset for MMU if a pin is defined for it
 //#define MMU2_RST_PIN 23
