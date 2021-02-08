@@ -113,6 +113,12 @@
 #define CHAMBER_BETA 3950                  // Beta value
 #endif
 
+#if TEMP_SENSOR_PROBE == 1000
+  #define PROBE_PULLUP_RESISTOR_OHMS   4700    // Pullup resistor
+  #define PROBE_RESISTANCE_25C_OHMS    100000  // Resistance at 25C
+  #define PROBE_BETA                   3950    // Beta value
+#endif
+
 //
 // Hephestos 2 24V heated bed upgrade kit.
 // https://store.bq.com/en/heated-bed-kit-hephestos2
@@ -138,35 +144,35 @@
 // Heated Chamber options
 //
 #if TEMP_SENSOR_CHAMBER
-#define CHAMBER_MINTEMP 5
-#define CHAMBER_MAXTEMP 60
-#define TEMP_CHAMBER_HYSTERESIS 1 // (°C) Temperature proximity considered "close enough" to the target
-//#define CHAMBER_LIMIT_SWITCHING
-//#define HEATER_CHAMBER_PIN       44   // Chamber heater on/off pin
-//#define HEATER_CHAMBER_INVERTING false
+  #define CHAMBER_MINTEMP             5
+  #define CHAMBER_MAXTEMP            60
+  #define TEMP_CHAMBER_HYSTERESIS     1   // (°C) Temperature proximity considered "close enough" to the target
+  //#define CHAMBER_LIMIT_SWITCHING
+  //#define HEATER_CHAMBER_PIN       44   // Chamber heater on/off pin
+  //#define HEATER_CHAMBER_INVERTING false
 
-//#define CHAMBER_FAN               // Enable a fan on the chamber
-#if ENABLED(CHAMBER_FAN)
-#define CHAMBER_FAN_MODE 2 // Fan control mode: 0=Static; 1=Linear increase when temp is higher than target; 2=V-shaped curve.
-#if CHAMBER_FAN_MODE == 0
-#define CHAMBER_FAN_BASE 255 // Chamber fan PWM (0-255)
-#elif CHAMBER_FAN_MODE == 1
-#define CHAMBER_FAN_BASE 128  // Base chamber fan PWM (0-255); turns on when chamber temperature is above the target
-#define CHAMBER_FAN_FACTOR 25 // PWM increase per °C above target
-#elif CHAMBER_FAN_MODE == 2
-#define CHAMBER_FAN_BASE 128  // Minimum chamber fan PWM (0-255)
-#define CHAMBER_FAN_FACTOR 25 // PWM increase per °C difference from target
-#endif
-#endif
+  //#define CHAMBER_FAN               // Enable a fan on the chamber
+  #if ENABLED(CHAMBER_FAN)
+    #define CHAMBER_FAN_MODE 2        // Fan control mode: 0=Static; 1=Linear increase when temp is higher than target; 2=V-shaped curve.
+    #if CHAMBER_FAN_MODE == 0
+      #define CHAMBER_FAN_BASE  255   // Chamber fan PWM (0-255)
+    #elif CHAMBER_FAN_MODE == 1
+      #define CHAMBER_FAN_BASE  128   // Base chamber fan PWM (0-255); turns on when chamber temperature is above the target
+      #define CHAMBER_FAN_FACTOR 25   // PWM increase per °C above target
+    #elif CHAMBER_FAN_MODE == 2
+      #define CHAMBER_FAN_BASE  128   // Minimum chamber fan PWM (0-255)
+      #define CHAMBER_FAN_FACTOR 25   // PWM increase per °C difference from target
+    #endif
+  #endif
 
-//#define CHAMBER_VENT              // Enable a servo-controlled vent on the chamber
-#if ENABLED(CHAMBER_VENT)
-#define CHAMBER_VENT_SERVO_NR 1  // Index of the vent servo
-#define HIGH_EXCESS_HEAT_LIMIT 5 // How much above target temp to consider there is excess heat in the chamber
-#define LOW_EXCESS_HEAT_LIMIT 3
-#define MIN_COOLING_SLOPE_TIME_CHAMBER_VENT 20
-#define MIN_COOLING_SLOPE_DEG_CHAMBER_VENT 1.5
-#endif
+  //#define CHAMBER_VENT              // Enable a servo-controlled vent on the chamber
+  #if ENABLED(CHAMBER_VENT)
+    #define CHAMBER_VENT_SERVO_NR  1  // Index of the vent servo
+    #define HIGH_EXCESS_HEAT_LIMIT 5  // How much above target temp to consider there is excess heat in the chamber
+    #define LOW_EXCESS_HEAT_LIMIT  3
+    #define MIN_COOLING_SLOPE_TIME_CHAMBER_VENT 20
+    #define MIN_COOLING_SLOPE_DEG_CHAMBER_VENT 1.5
+  #endif
 #endif
 
 /**
@@ -206,8 +212,8 @@
    * and/or decrease WATCH_TEMP_INCREASE. WATCH_TEMP_INCREASE should not be set
    * below 2.
    */
-#define WATCH_TEMP_PERIOD 20  // Seconds
-#define WATCH_TEMP_INCREASE 2 // Degrees Celsius
+  #define WATCH_TEMP_PERIOD  20               // Seconds
+  #define WATCH_TEMP_INCREASE 2               // Degrees Celsius
 #endif
 
 /**
@@ -283,9 +289,9 @@
 // Just figure out Kf at fullspeed (255) and PID_FAN_SCALING_MIN_SPEED.
 // DEFAULT_Kf and PID_FAN_SCALING_LIN_FACTOR are calculated accordingly.
 
-#define PID_FAN_SCALING_AT_FULL_SPEED 13.0 //=PID_FAN_SCALING_LIN_FACTOR*255+DEFAULT_Kf
-#define PID_FAN_SCALING_AT_MIN_SPEED 6.0   //=PID_FAN_SCALING_LIN_FACTOR*PID_FAN_SCALING_MIN_SPEED+DEFAULT_Kf
-#define PID_FAN_SCALING_MIN_SPEED 10.0     // Minimum fan speed at which to enable PID_FAN_SCALING
+      #define PID_FAN_SCALING_AT_FULL_SPEED 13.0        //=PID_FAN_SCALING_LIN_FACTOR*255+DEFAULT_Kf
+      #define PID_FAN_SCALING_AT_MIN_SPEED   6.0        //=PID_FAN_SCALING_LIN_FACTOR*PID_FAN_SCALING_MIN_SPEED+DEFAULT_Kf
+      #define PID_FAN_SCALING_MIN_SPEED     10.0        // Minimum fan speed at which to enable PID_FAN_SCALING
 
 #define DEFAULT_Kf (255.0 * PID_FAN_SCALING_AT_MIN_SPEED - PID_FAN_SCALING_AT_FULL_SPEED * PID_FAN_SCALING_MIN_SPEED) / (255.0 - PID_FAN_SCALING_MIN_SPEED)
 #define PID_FAN_SCALING_LIN_FACTOR (PID_FAN_SCALING_AT_FULL_SPEED - DEFAULT_Kf) / 255.0
@@ -331,7 +337,7 @@
  * High Temperature Thermistor Support
  *
  * Thermistors able to support high temperature tend to have a hard time getting
- * good readings at room and lower temperatures. This means HEATER_X_RAW_LO_TEMP
+ * good readings at room and lower temperatures. This means TEMP_SENSOR_X_RAW_LO_TEMP
  * will probably be caught when the heating element first turns on during the
  * preheating process, which will trigger a min_temp_error as a safety measure
  * and force stop everything.
@@ -1543,11 +1549,14 @@
 //
 // Specify additional languages for the UI. Default specified by LCD_LANGUAGE.
 //
-#if EITHER(DOGLCD, TOUCH_UI_FTDI_EVE)
-//#define LCD_LANGUAGE_2 fr
-//#define LCD_LANGUAGE_3 de
-//#define LCD_LANGUAGE_4 es
-//#define LCD_LANGUAGE_5 it
+#if ANY(DOGLCD, TFT_COLOR_UI, TOUCH_UI_FTDI_EVE)
+  //#define LCD_LANGUAGE_2 fr
+  //#define LCD_LANGUAGE_3 de
+  //#define LCD_LANGUAGE_4 es
+  //#define LCD_LANGUAGE_5 it
+  #ifdef LCD_LANGUAGE_2
+    //#define LCD_LANGUAGE_AUTO_SAVE // Automatically save language to EEPROM on change
+  #endif
 #endif
 
 //
@@ -2087,22 +2096,22 @@
  */
 //#define FWRETRACT
 #if ENABLED(FWRETRACT)
-#define FWRETRACT_AUTORETRACT // Override slicer retractions
-#if ENABLED(FWRETRACT_AUTORETRACT)
-#define MIN_AUTORETRACT 0.1  // (mm) Don't convert E moves under this length
-#define MAX_AUTORETRACT 10.0 // (mm) Don't convert E moves over this length
-#endif
-#define RETRACT_LENGTH 3                // (mm) Default retract length (positive value)
-#define RETRACT_LENGTH_SWAP 13          // (mm) Default swap retract length (positive value)
-#define RETRACT_FEEDRATE 45             // (mm/s) Default feedrate for retracting
-#define RETRACT_ZRAISE 0                // (mm) Default retract Z-raise
-#define RETRACT_RECOVER_LENGTH 0        // (mm) Default additional recover length (added to retract length on recover)
-#define RETRACT_RECOVER_LENGTH_SWAP 0   // (mm) Default additional swap recover length (added to retract length on recover from toolchange)
-#define RETRACT_RECOVER_FEEDRATE 8      // (mm/s) Default feedrate for recovering from retraction
-#define RETRACT_RECOVER_FEEDRATE_SWAP 8 // (mm/s) Default feedrate for recovering from swap retraction
-#if ENABLED(MIXING_EXTRUDER)
-//#define RETRACT_SYNC_MIXING         // Retract and restore all mixing steppers simultaneously
-#endif
+  #define FWRETRACT_AUTORETRACT             // Override slicer retractions
+  #if ENABLED(FWRETRACT_AUTORETRACT)
+    #define MIN_AUTORETRACT             0.1 // (mm) Don't convert E moves under this length
+    #define MAX_AUTORETRACT            10.0 // (mm) Don't convert E moves over this length
+  #endif
+  #define RETRACT_LENGTH                3   // (mm) Default retract length (positive value)
+  #define RETRACT_LENGTH_SWAP          13   // (mm) Default swap retract length (positive value)
+  #define RETRACT_FEEDRATE             45   // (mm/s) Default feedrate for retracting
+  #define RETRACT_ZRAISE                0   // (mm) Default retract Z-raise
+  #define RETRACT_RECOVER_LENGTH        0   // (mm) Default additional recover length (added to retract length on recover)
+  #define RETRACT_RECOVER_LENGTH_SWAP   0   // (mm) Default additional swap recover length (added to retract length on recover from toolchange)
+  #define RETRACT_RECOVER_FEEDRATE      8   // (mm/s) Default feedrate for recovering from retraction
+  #define RETRACT_RECOVER_FEEDRATE_SWAP 8   // (mm/s) Default feedrate for recovering from swap retraction
+  #if ENABLED(MIXING_EXTRUDER)
+    //#define RETRACT_SYNC_MIXING           // Retract and restore all mixing steppers simultaneously
+  #endif
 #endif
 
 /**
@@ -3334,6 +3343,8 @@
 //#define GCODE_QUOTED_STRINGS  // Support for quoted string parameters
 #endif
 
+//#define MEATPACK                // Support for MeatPack G-code compression (https://github.com/scottmudge/OctoPrint-MeatPack)
+
 //#define GCODE_CASE_INSENSITIVE  // Accept G-code sent to the firmware in lowercase
 
 //#define REPETIER_GCODE_M360     // Add commands originally from Repetier FW
@@ -3373,7 +3384,8 @@
 #endif
 
 /**
- * User-defined menu items that execute custom GCode
+ * User-defined menu items to run custom G-code.
+ * Up to 25 may be defined, but the actual number is LCD-dependent.
  */
 //#define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
