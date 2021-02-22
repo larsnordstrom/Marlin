@@ -37,6 +37,6 @@
   #error "TMC220x Software Serial is not supported on Teensy 3.1/3.2."
 #endif
 
-#if ENABLED(BAUD_RATE_GCODE)
-  #error "BAUD_RATE_GCODE is not yet supported on Teensy 3.1/3.2."
+#if ENABLED(POSTMORTEM_DEBUGGING)
+  #error "POSTMORTEM_DEBUGGING is not yet supported on Teensy 3.1/3.2."
 #endif
