@@ -143,13 +143,17 @@
 //
 // Heated Chamber options
 //
+#if DISABLED(PIDTEMPCHAMBER)
+  #define CHAMBER_CHECK_INTERVAL 5000   // (ms) Interval between checks in bang-bang control
+  #if ENABLED(CHAMBER_LIMIT_SWITCHING)
+    #define CHAMBER_HYSTERESIS 2        // (°C) Only set the relevant heater state when ABS(T-target) > CHAMBER_HYSTERESIS
+  #endif
+#endif
+
 #if TEMP_SENSOR_CHAMBER
-  #define CHAMBER_MINTEMP             5
-  #define CHAMBER_MAXTEMP            60
-  #define TEMP_CHAMBER_HYSTERESIS     1   // (°C) Temperature proximity considered "close enough" to the target
-  //#define CHAMBER_LIMIT_SWITCHING
-  //#define HEATER_CHAMBER_PIN       44   // Chamber heater on/off pin
+  //#define HEATER_CHAMBER_PIN      P2_04   // Required heater on/off pin (example: SKR 1.4 Turbo HE1 plug)
   //#define HEATER_CHAMBER_INVERTING false
+  //#define FAN1_PIN                   -1   // Remove the fan signal on pin P2_04 (example: SKR 1.4 Turbo HE1 plug)
 
   //#define CHAMBER_FAN               // Enable a fan on the chamber
   #if ENABLED(CHAMBER_FAN)
@@ -511,20 +515,22 @@
  */
 //#define CASE_LIGHT_ENABLE
 #if ENABLED(CASE_LIGHT_ENABLE)
-//#define CASE_LIGHT_PIN 4                  // Override the default pin if needed
-#define INVERT_CASE_LIGHT false           // Set true if Case Light is ON when pin is LOW
-#define CASE_LIGHT_DEFAULT_ON true        // Set default power-up state on
-#define CASE_LIGHT_DEFAULT_BRIGHTNESS 105 // Set default power-up brightness (0-255, requires PWM pin)
-//#define CASE_LIGHT_MAX_PWM 128            // Limit pwm
-//#define CASE_LIGHT_MENU                   // Add Case Light options to the LCD menu
-//#define CASE_LIGHT_NO_BRIGHTNESS          // Disable brightness control. Enable for non-PWM lighting.
-//#define CASE_LIGHT_USE_NEOPIXEL           // Use NeoPixel LED as case light, requires NEOPIXEL_LED.
-#if ENABLED(CASE_LIGHT_USE_NEOPIXEL)
-#define CASE_LIGHT_NEOPIXEL_COLOR \
-  {                               \
-    255, 255, 255, 255            \
-  } // { Red, Green, Blue, White }
-#endif
+  //#define CASE_LIGHT_PIN 4                  // Override the default pin if needed
+  #define INVERT_CASE_LIGHT false             // Set true if Case Light is ON when pin is LOW
+  #define CASE_LIGHT_DEFAULT_ON true          // Set default power-up state on
+  #define CASE_LIGHT_DEFAULT_BRIGHTNESS 105   // Set default power-up brightness (0-255, requires PWM pin)
+  //#define CASE_LIGHT_NO_BRIGHTNESS          // Disable brightness control. Enable for non-PWM lighting.
+  //#define CASE_LIGHT_MAX_PWM 128            // Limit PWM duty cycle (0-255)
+  //#define CASE_LIGHT_MENU                   // Add Case Light options to the LCD menu
+  #if ENABLED(NEOPIXEL_LED)
+    //#define CASE_LIGHT_USE_NEOPIXEL         // Use NeoPixel LED as case light
+  #endif
+  #if EITHER(RGB_LED, RGBW_LED)
+    //#define CASE_LIGHT_USE_RGB_LED          // Use RGB / RGBW LED as case light
+  #endif
+  #if EITHER(CASE_LIGHT_USE_NEOPIXEL, CASE_LIGHT_USE_RGB_LED)
+    #define CASE_LIGHT_DEFAULT_COLOR { 255, 255, 255, 255 } // { Red, Green, Blue, White }
+  #endif
 #endif
 
 // @section homing
@@ -745,8 +751,8 @@
 /**
    * Use "HIGH SPEED" mode for probing.
    * Danger: Disable if your probe sometimes fails. Only suitable for stable well-adjusted systems.
-   * This feature was designed for Delta's with very fast Z moves however higher speed cartesians may function
-   * If the machine cannot raise the probe fast enough after a trigger, it may enter a fault state.
+   * This feature was designed for Deltabots with very fast Z moves; however, higher speed Cartesians
+   * might be able to use it. If the machine can't raise Z fast enough the BLTouch may go into ALARM.
    */
 //#define BLTOUCH_HS_MODE
 
@@ -880,9 +886,6 @@
 #define DISABLE_INACTIVE_Z true // Set 'false' if the nozzle could fall onto your printed part!
 #define DISABLE_INACTIVE_E true
 
-// If the Nozzle or Bed falls when the Z stepper is disabled, set its resting position here.
-//#define Z_AFTER_DEACTIVATE Z_HOME_POS
-
 // Default Minimum Feedrates for printing and travel moves
 #define DEFAULT_MINIMUMFEEDRATE 0.0   // (mm/s) Minimum feedrate. Set with M205 S.
 #define DEFAULT_MINTRAVELFEEDRATE 0.0 // (mm/s) Minimum travel feedrate. Set with M205 T.
@@ -919,34 +922,31 @@
 //
 //#define BACKLASH_COMPENSATION
 #if ENABLED(BACKLASH_COMPENSATION)
-// Define values for backlash distance and correction.
-// If BACKLASH_GCODE is enabled these values are the defaults.
-#define BACKLASH_DISTANCE_MM \
-  {                          \
-    0, 0, 0                  \
-  }                             // (mm)
-#define BACKLASH_CORRECTION 0.0 // 0.0 = no correction; 1.0 = full correction
+  // Define values for backlash distance and correction.
+  // If BACKLASH_GCODE is enabled these values are the defaults.
+  #define BACKLASH_DISTANCE_MM { 0, 0, 0 } // (mm)
+  #define BACKLASH_CORRECTION    0.0       // 0.0 = no correction; 1.0 = full correction
 
-// Set BACKLASH_SMOOTHING_MM to spread backlash correction over multiple segments
-// to reduce print artifacts. (Enabling this is costly in memory and computation!)
-//#define BACKLASH_SMOOTHING_MM 3 // (mm)
+  // Set BACKLASH_SMOOTHING_MM to spread backlash correction over multiple segments
+  // to reduce print artifacts. (Enabling this is costly in memory and computation!)
+  //#define BACKLASH_SMOOTHING_MM 3 // (mm)
 
-// Add runtime configuration and tuning of backlash values (M425)
-//#define BACKLASH_GCODE
+  // Add runtime configuration and tuning of backlash values (M425)
+  //#define BACKLASH_GCODE
 
-#if ENABLED(BACKLASH_GCODE)
-// Measure the Z backlash when probing (G29) and set with "M425 Z"
-#define MEASURE_BACKLASH_WHEN_PROBING
+  #if ENABLED(BACKLASH_GCODE)
+    // Measure the Z backlash when probing (G29) and set with "M425 Z"
+    #define MEASURE_BACKLASH_WHEN_PROBING
 
-#if ENABLED(MEASURE_BACKLASH_WHEN_PROBING)
-// When measuring, the probe will move up to BACKLASH_MEASUREMENT_LIMIT
-// mm away from point of contact in BACKLASH_MEASUREMENT_RESOLUTION
-// increments while checking for the contact to be broken.
-#define BACKLASH_MEASUREMENT_LIMIT 0.5                   // (mm)
-#define BACKLASH_MEASUREMENT_RESOLUTION 0.005            // (mm)
-#define BACKLASH_MEASUREMENT_FEEDRATE Z_PROBE_SPEED_SLOW // (mm/min)
-#endif
-#endif
+    #if ENABLED(MEASURE_BACKLASH_WHEN_PROBING)
+      // When measuring, the probe will move up to BACKLASH_MEASUREMENT_LIMIT
+      // mm away from point of contact in BACKLASH_MEASUREMENT_RESOLUTION
+      // increments while checking for the contact to be broken.
+      #define BACKLASH_MEASUREMENT_LIMIT       0.5   // (mm)
+      #define BACKLASH_MEASUREMENT_RESOLUTION  0.005 // (mm)
+      #define BACKLASH_MEASUREMENT_FEEDRATE    Z_PROBE_FEEDRATE_SLOW // (mm/min)
+    #endif
+  #endif
 #endif
 
 /**
@@ -1178,6 +1178,9 @@
 //#define NEO2_USER_PRESET_STARTUP       // Have the printer display the user preset color on startup for the second strip
 #endif
 #endif
+
+  // Insert a menu for preheating at the top level to allow for quick access
+  //#define PREHEAT_SHORTCUT_MENU_ITEM
 
 #endif // HAS_LCD_MENU
 
@@ -1523,14 +1526,15 @@
 
 #define DGUS_UPDATE_INTERVAL_MS 500 // (ms) Interval between automatic screen updates
 
-#if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
-#define DGUS_PRINT_FILENAME // Display the filename during printing
-#define DGUS_PREHEAT_UI     // Display a preheat screen during heatup
+  #if ANY(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_MKS, DGUS_LCD_UI_HIPRECY)
+    #define DGUS_PRINT_FILENAME           // Display the filename during printing
+    #define DGUS_PREHEAT_UI               // Display a preheat screen during heatup
 
-#if ENABLED(DGUS_LCD_UI_FYSETC)
-#else
-#define DGUS_UI_MOVE_DIS_OPTION // Enabled by default for UI_HIPRECY
-#endif
+    #if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_MKS)
+      //#define DGUS_UI_MOVE_DIS_OPTION   // Disabled by default for FYSETC and MKS
+    #else
+      #define DGUS_UI_MOVE_DIS_OPTION     // Enabled by default for UI_HIPRECY
+    #endif
 
 #define DGUS_FILAMENT_LOADUNLOAD
 #if ENABLED(DGUS_FILAMENT_LOADUNLOAD)
@@ -1563,86 +1567,88 @@
 // Touch UI for the FTDI Embedded Video Engine (EVE)
 //
 #if ENABLED(TOUCH_UI_FTDI_EVE)
-// Display board used
-//#define LCD_FTDI_VM800B35A        // FTDI 3.5" with FT800 (320x240)
-//#define LCD_4DSYSTEMS_4DLCD_FT843 // 4D Systems 4.3" (480x272)
-//#define LCD_HAOYU_FT800CB         // Haoyu with 4.3" or 5" (480x272)
-//#define LCD_HAOYU_FT810CB         // Haoyu with 5" (800x480)
-//#define LCD_ALEPHOBJECTS_CLCD_UI  // Aleph Objects Color LCD UI
-//#define LCD_FYSETC_TFT81050       // FYSETC with 5" (800x480)
+  // Display board used
+  //#define LCD_FTDI_VM800B35A        // FTDI 3.5" with FT800 (320x240)
+  //#define LCD_4DSYSTEMS_4DLCD_FT843 // 4D Systems 4.3" (480x272)
+  //#define LCD_HAOYU_FT800CB         // Haoyu with 4.3" or 5" (480x272)
+  //#define LCD_HAOYU_FT810CB         // Haoyu with 5" (800x480)
+  //#define LCD_ALEPHOBJECTS_CLCD_UI  // Aleph Objects Color LCD UI
+  //#define LCD_FYSETC_TFT81050       // FYSETC with 5" (800x480)
+  //#define LCD_EVE3_50G              // Matrix Orbital 5.0", 800x480, BT815
+  //#define LCD_EVE2_50G              // Matrix Orbital 5.0", 800x480, FT813
 
-// Correct the resolution if not using the stock TFT panel.
-//#define TOUCH_UI_320x240
-//#define TOUCH_UI_480x272
-//#define TOUCH_UI_800x480
+  // Correct the resolution if not using the stock TFT panel.
+  //#define TOUCH_UI_320x240
+  //#define TOUCH_UI_480x272
+  //#define TOUCH_UI_800x480
 
-// Mappings for boards with a standard RepRapDiscount Display connector
-//#define AO_EXP1_PINMAP      // AlephObjects CLCD UI EXP1 mapping
-//#define AO_EXP2_PINMAP      // AlephObjects CLCD UI EXP2 mapping
-//#define CR10_TFT_PINMAP     // Rudolph Riedel's CR10 pin mapping
-//#define S6_TFT_PINMAP       // FYSETC S6 pin mapping
-//#define F6_TFT_PINMAP       // FYSETC F6 pin mapping
+  // Mappings for boards with a standard RepRapDiscount Display connector
+  //#define AO_EXP1_PINMAP      // AlephObjects CLCD UI EXP1 mapping
+  //#define AO_EXP2_PINMAP      // AlephObjects CLCD UI EXP2 mapping
+  //#define CR10_TFT_PINMAP     // Rudolph Riedel's CR10 pin mapping
+  //#define S6_TFT_PINMAP       // FYSETC S6 pin mapping
+  //#define F6_TFT_PINMAP       // FYSETC F6 pin mapping
 
-//#define OTHER_PIN_LAYOUT  // Define pins manually below
-#if ENABLED(OTHER_PIN_LAYOUT)
-// Pins for CS and MOD_RESET (PD) must be chosen
-#define CLCD_MOD_RESET 9
-#define CLCD_SPI_CS 10
+  //#define OTHER_PIN_LAYOUT  // Define pins manually below
+  #if ENABLED(OTHER_PIN_LAYOUT)
+    // Pins for CS and MOD_RESET (PD) must be chosen
+    #define CLCD_MOD_RESET  9
+    #define CLCD_SPI_CS    10
 
-// If using software SPI, specify pins for SCLK, MOSI, MISO
-//#define CLCD_USE_SOFT_SPI
-#if ENABLED(CLCD_USE_SOFT_SPI)
-#define CLCD_SOFT_SPI_MOSI 11
-#define CLCD_SOFT_SPI_MISO 12
-#define CLCD_SOFT_SPI_SCLK 13
-#endif
-#endif
+    // If using software SPI, specify pins for SCLK, MOSI, MISO
+    //#define CLCD_USE_SOFT_SPI
+    #if ENABLED(CLCD_USE_SOFT_SPI)
+      #define CLCD_SOFT_SPI_MOSI 11
+      #define CLCD_SOFT_SPI_MISO 12
+      #define CLCD_SOFT_SPI_SCLK 13
+    #endif
+  #endif
 
-// Display Orientation. An inverted (i.e. upside-down) display
-// is supported on the FT800. The FT810 and beyond also support
-// portrait and mirrored orientations.
-//#define TOUCH_UI_INVERTED
-//#define TOUCH_UI_PORTRAIT
-//#define TOUCH_UI_MIRRORED
+  // Display Orientation. An inverted (i.e. upside-down) display
+  // is supported on the FT800. The FT810 and beyond also support
+  // portrait and mirrored orientations.
+  //#define TOUCH_UI_INVERTED
+  //#define TOUCH_UI_PORTRAIT
+  //#define TOUCH_UI_MIRRORED
 
-// UTF8 processing and rendering.
-// Unsupported characters are shown as '?'.
-//#define TOUCH_UI_USE_UTF8
-#if ENABLED(TOUCH_UI_USE_UTF8)
-// Western accents support. These accented characters use
-// combined bitmaps and require relatively little storage.
-#define TOUCH_UI_UTF8_WESTERN_CHARSET
-#if ENABLED(TOUCH_UI_UTF8_WESTERN_CHARSET)
-// Additional character groups. These characters require
-// full bitmaps and take up considerable storage:
-//#define TOUCH_UI_UTF8_SUPERSCRIPTS  // ¹ ² ³
-//#define TOUCH_UI_UTF8_COPYRIGHT     // © ®
-//#define TOUCH_UI_UTF8_GERMANIC      // ß
-//#define TOUCH_UI_UTF8_SCANDINAVIAN  // Æ Ð Ø Þ æ ð ø þ
-//#define TOUCH_UI_UTF8_PUNCTUATION   // « » ¿ ¡
-//#define TOUCH_UI_UTF8_CURRENCY      // ¢ £ ¤ ¥
-//#define TOUCH_UI_UTF8_ORDINALS      // º ª
-//#define TOUCH_UI_UTF8_MATHEMATICS   // ± × ÷
-//#define TOUCH_UI_UTF8_FRACTIONS     // ¼ ½ ¾
-//#define TOUCH_UI_UTF8_SYMBOLS       // µ ¶ ¦ § ¬
-#endif
+  // UTF8 processing and rendering.
+  // Unsupported characters are shown as '?'.
+  //#define TOUCH_UI_USE_UTF8
+  #if ENABLED(TOUCH_UI_USE_UTF8)
+    // Western accents support. These accented characters use
+    // combined bitmaps and require relatively little storage.
+    #define TOUCH_UI_UTF8_WESTERN_CHARSET
+    #if ENABLED(TOUCH_UI_UTF8_WESTERN_CHARSET)
+      // Additional character groups. These characters require
+      // full bitmaps and take up considerable storage:
+      //#define TOUCH_UI_UTF8_SUPERSCRIPTS  // ¹ ² ³
+      //#define TOUCH_UI_UTF8_COPYRIGHT     // © ®
+      //#define TOUCH_UI_UTF8_GERMANIC      // ß
+      //#define TOUCH_UI_UTF8_SCANDINAVIAN  // Æ Ð Ø Þ æ ð ø þ
+      //#define TOUCH_UI_UTF8_PUNCTUATION   // « » ¿ ¡
+      //#define TOUCH_UI_UTF8_CURRENCY      // ¢ £ ¤ ¥
+      //#define TOUCH_UI_UTF8_ORDINALS      // º ª
+      //#define TOUCH_UI_UTF8_MATHEMATICS   // ± × ÷
+      //#define TOUCH_UI_UTF8_FRACTIONS     // ¼ ½ ¾
+      //#define TOUCH_UI_UTF8_SYMBOLS       // µ ¶ ¦ § ¬
+    #endif
 
-// Cyrillic character set, costs about 27KiB of flash
-//#define TOUCH_UI_UTF8_CYRILLIC_CHARSET
-#endif
+    // Cyrillic character set, costs about 27KiB of flash
+    //#define TOUCH_UI_UTF8_CYRILLIC_CHARSET
+  #endif
 
-// Use a smaller font when labels don't fit buttons
-#define TOUCH_UI_FIT_TEXT
+  // Use a smaller font when labels don't fit buttons
+  #define TOUCH_UI_FIT_TEXT
 
-// Use a numeric passcode for "Screen lock" keypad.
-// (recommended for smaller displays)
-//#define TOUCH_UI_PASSCODE
+  // Use a numeric passcode for "Screen lock" keypad.
+  // (recommended for smaller displays)
+  //#define TOUCH_UI_PASSCODE
 
-// Output extra debug info for Touch UI events
-//#define TOUCH_UI_DEBUG
+  // Output extra debug info for Touch UI events
+  //#define TOUCH_UI_DEBUG
 
-// Developer menu (accessed by touching "About Printer" copyright text)
-//#define TOUCH_UI_DEVELOPER_MENU
+  // Developer menu (accessed by touching "About Printer" copyright text)
+  //#define TOUCH_UI_DEVELOPER_MENU
 #endif
 
 //
@@ -2042,6 +2048,12 @@
 // of dropped bytes after a file transfer to SD.
 //#define SERIAL_STATS_DROPPED_RX
 #endif
+
+// Monitor RX buffer usage
+// Dump an error to the serial port if the serial receive buffer overflows.
+// If you see these errors, increase the RX_BUFFER_SIZE value.
+// Not supported on all platforms.
+//#define RX_BUFFER_MONITOR
 
 /**
  * Emergency Command Parser
