@@ -29,25 +29,25 @@
 // RAMPS 1.3 / 1.4 - ATmega1280, ATmega2560
 //
 
-#define BOARD_RAMPS_OLD               1000  // MEGA/RAMPS up to 1.2
+#define BOARD_RAMPS_OLD 1000 // MEGA/RAMPS up to 1.2
 
-#define BOARD_RAMPS_13_EFB            1010  // RAMPS 1.3 (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_13_EEB            1011  // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_13_EFF            1012  // RAMPS 1.3 (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_13_EEF            1013  // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_13_SF             1014  // RAMPS 1.3 (Power outputs: Spindle, Controller Fan)
+#define BOARD_RAMPS_13_EFB 1010 // RAMPS 1.3 (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_13_EEB 1011 // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_13_EFF 1012 // RAMPS 1.3 (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_13_EEF 1013 // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_13_SF 1014  // RAMPS 1.3 (Power outputs: Spindle, Controller Fan)
 
-#define BOARD_RAMPS_14_EFB            1020  // RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_14_EEB            1021  // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_14_EFF            1022  // RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_14_EEF            1023  // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_14_SF             1024  // RAMPS 1.4 (Power outputs: Spindle, Controller Fan)
+#define BOARD_RAMPS_14_EFB 1020 // RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_14_EEB 1021 // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_14_EFF 1022 // RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_14_EEF 1023 // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_14_SF 1024  // RAMPS 1.4 (Power outputs: Spindle, Controller Fan)
 
-#define BOARD_RAMPS_PLUS_EFB          1030  // RAMPS Plus 3DYMY (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_PLUS_EEB          1031  // RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_PLUS_EFF          1032  // RAMPS Plus 3DYMY (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_PLUS_EEF          1033  // RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_PLUS_SF           1034  // RAMPS Plus 3DYMY (Power outputs: Spindle, Controller Fan)
+#define BOARD_RAMPS_PLUS_EFB 1030 // RAMPS Plus 3DYMY (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_PLUS_EEB 1031 // RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_PLUS_EFF 1032 // RAMPS Plus 3DYMY (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_PLUS_EEF 1033 // RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_PLUS_SF 1034  // RAMPS Plus 3DYMY (Power outputs: Spindle, Controller Fan)
 
 //
 // RAMPS Derivatives - ATmega1280, ATmega2560
@@ -114,115 +114,115 @@
 // RAMBo and derivatives
 //
 
-#define BOARD_RAMBO                   1200  // Rambo
-#define BOARD_MINIRAMBO               1201  // Mini-Rambo
-#define BOARD_MINIRAMBO_10A           1202  // Mini-Rambo 1.0a
-#define BOARD_EINSY_RAMBO             1203  // Einsy Rambo
-#define BOARD_EINSY_RETRO             1204  // Einsy Retro
-#define BOARD_SCOOVO_X9H              1205  // abee Scoovo X9H
+#define BOARD_RAMBO 1200         // Rambo
+#define BOARD_MINIRAMBO 1201     // Mini-Rambo
+#define BOARD_MINIRAMBO_10A 1202 // Mini-Rambo 1.0a
+#define BOARD_EINSY_RAMBO 1203   // Einsy Rambo
+#define BOARD_EINSY_RETRO 1204   // Einsy Retro
+#define BOARD_SCOOVO_X9H 1205    // abee Scoovo X9H
 
 //
 // Other ATmega1280, ATmega2560
 //
 
-#define BOARD_CNCONTROLS_11           1300  // Cartesio CN Controls V11
-#define BOARD_CNCONTROLS_12           1301  // Cartesio CN Controls V12
-#define BOARD_CNCONTROLS_15           1302  // Cartesio CN Controls V15
-#define BOARD_CHEAPTRONIC             1303  // Cheaptronic v1.0
-#define BOARD_CHEAPTRONIC_V2          1304  // Cheaptronic v2.0
-#define BOARD_MIGHTYBOARD_REVE        1305  // Makerbot Mightyboard Revision E
-#define BOARD_MEGATRONICS             1306  // Megatronics
-#define BOARD_MEGATRONICS_2           1307  // Megatronics v2.0
-#define BOARD_MEGATRONICS_3           1308  // Megatronics v3.0
-#define BOARD_MEGATRONICS_31          1309  // Megatronics v3.1
-#define BOARD_MEGATRONICS_32          1310  // Megatronics v3.2
-#define BOARD_ELEFU_3                 1311  // Elefu Ra Board (v3)
-#define BOARD_LEAPFROG                1312  // Leapfrog
-#define BOARD_MEGACONTROLLER          1313  // Mega controller
-#define BOARD_GT2560_REV_A            1314  // Geeetech GT2560 Rev. A
-#define BOARD_GT2560_REV_A_PLUS       1315  // Geeetech GT2560 Rev. A+ (with auto level probe)
-#define BOARD_GT2560_V3               1316  // Geeetech GT2560 Rev B for A10(M/D)
-#define BOARD_GT2560_V3_MC2           1317  // Geeetech GT2560 Rev B for Mecreator2
-#define BOARD_GT2560_V3_A20           1318  // Geeetech GT2560 Rev B for A20(M/D)
-#define BOARD_EINSTART_S              1319  // Einstart retrofit
-#define BOARD_WANHAO_ONEPLUS          1320  // Wanhao 0ne+ i3 Mini
-#define BOARD_LEAPFROG_XEED2015       1321  // Leapfrog Xeed 2015
-#define BOARD_PICA_REVB               1322  // PICA Shield (original version)
-#define BOARD_PICA                    1323  // PICA Shield (rev C or later)
-#define BOARD_INTAMSYS40              1324  // Intamsys 4.0 (Funmat HT)
+#define BOARD_CNCONTROLS_11 1300     // Cartesio CN Controls V11
+#define BOARD_CNCONTROLS_12 1301     // Cartesio CN Controls V12
+#define BOARD_CNCONTROLS_15 1302     // Cartesio CN Controls V15
+#define BOARD_CHEAPTRONIC 1303       // Cheaptronic v1.0
+#define BOARD_CHEAPTRONIC_V2 1304    // Cheaptronic v2.0
+#define BOARD_MIGHTYBOARD_REVE 1305  // Makerbot Mightyboard Revision E
+#define BOARD_MEGATRONICS 1306       // Megatronics
+#define BOARD_MEGATRONICS_2 1307     // Megatronics v2.0
+#define BOARD_MEGATRONICS_3 1308     // Megatronics v3.0
+#define BOARD_MEGATRONICS_31 1309    // Megatronics v3.1
+#define BOARD_MEGATRONICS_32 1310    // Megatronics v3.2
+#define BOARD_ELEFU_3 1311           // Elefu Ra Board (v3)
+#define BOARD_LEAPFROG 1312          // Leapfrog
+#define BOARD_MEGACONTROLLER 1313    // Mega controller
+#define BOARD_GT2560_REV_A 1314      // Geeetech GT2560 Rev. A
+#define BOARD_GT2560_REV_A_PLUS 1315 // Geeetech GT2560 Rev. A+ (with auto level probe)
+#define BOARD_GT2560_V3 1316         // Geeetech GT2560 Rev B for A10(M/D)
+#define BOARD_GT2560_V3_MC2 1317     // Geeetech GT2560 Rev B for Mecreator2
+#define BOARD_GT2560_V3_A20 1318     // Geeetech GT2560 Rev B for A20(M/D)
+#define BOARD_EINSTART_S 1319        // Einstart retrofit
+#define BOARD_WANHAO_ONEPLUS 1320    // Wanhao 0ne+ i3 Mini
+#define BOARD_LEAPFROG_XEED2015 1321 // Leapfrog Xeed 2015
+#define BOARD_PICA_REVB 1322         // PICA Shield (original version)
+#define BOARD_PICA 1323              // PICA Shield (rev C or later)
+#define BOARD_INTAMSYS40 1324        // Intamsys 4.0 (Funmat HT)
 
 //
 // ATmega1281, ATmega2561
 //
 
-#define BOARD_MINITRONICS             1400  // Minitronics v1.0/1.1
-#define BOARD_SILVER_GATE             1401  // Silvergate v1.0
+#define BOARD_MINITRONICS 1400 // Minitronics v1.0/1.1
+#define BOARD_SILVER_GATE 1401 // Silvergate v1.0
 
 //
 // Sanguinololu and Derivatives - ATmega644P, ATmega1284P
 //
 
-#define BOARD_SANGUINOLOLU_11         1500  // Sanguinololu < 1.2
-#define BOARD_SANGUINOLOLU_12         1501  // Sanguinololu 1.2 and above
-#define BOARD_MELZI                   1502  // Melzi
-#define BOARD_MELZI_V2                1503  // Melzi V2
-#define BOARD_MELZI_MAKR3D            1504  // Melzi with ATmega1284 (MaKr3d version)
-#define BOARD_MELZI_CREALITY          1505  // Melzi Creality3D board (for CR-10 etc)
-#define BOARD_MELZI_MALYAN            1506  // Melzi Malyan M150 board
-#define BOARD_MELZI_TRONXY            1507  // Tronxy X5S
-#define BOARD_STB_11                  1508  // STB V1.1
-#define BOARD_AZTEEG_X1               1509  // Azteeg X1
-#define BOARD_ANET_10                 1510  // Anet 1.0 (Melzi clone)
-#define BOARD_ZMIB_V2                 1511  // ZoneStar ZMIB V2
+#define BOARD_SANGUINOLOLU_11 1500 // Sanguinololu < 1.2
+#define BOARD_SANGUINOLOLU_12 1501 // Sanguinololu 1.2 and above
+#define BOARD_MELZI 1502           // Melzi
+#define BOARD_MELZI_V2 1503        // Melzi V2
+#define BOARD_MELZI_MAKR3D 1504    // Melzi with ATmega1284 (MaKr3d version)
+#define BOARD_MELZI_CREALITY 1505  // Melzi Creality3D board (for CR-10 etc)
+#define BOARD_MELZI_MALYAN 1506    // Melzi Malyan M150 board
+#define BOARD_MELZI_TRONXY 1507    // Tronxy X5S
+#define BOARD_STB_11 1508          // STB V1.1
+#define BOARD_AZTEEG_X1 1509       // Azteeg X1
+#define BOARD_ANET_10 1510         // Anet 1.0 (Melzi clone)
+#define BOARD_ZMIB_V2 1511         // ZoneStar ZMIB V2
 
 //
 // Other ATmega644P, ATmega644, ATmega1284P
 //
 
-#define BOARD_GEN3_MONOLITHIC         1600  // Gen3 Monolithic Electronics
-#define BOARD_GEN3_PLUS               1601  // Gen3+
-#define BOARD_GEN6                    1602  // Gen6
-#define BOARD_GEN6_DELUXE             1603  // Gen6 deluxe
-#define BOARD_GEN7_CUSTOM             1604  // Gen7 custom (Alfons3 Version) "https://github.com/Alfons3/Generation_7_Electronics"
-#define BOARD_GEN7_12                 1605  // Gen7 v1.1, v1.2
-#define BOARD_GEN7_13                 1606  // Gen7 v1.3
-#define BOARD_GEN7_14                 1607  // Gen7 v1.4
-#define BOARD_OMCA_A                  1608  // Alpha OMCA board
-#define BOARD_OMCA                    1609  // Final OMCA board
-#define BOARD_SETHI                   1610  // Sethi 3D_1
+#define BOARD_GEN3_MONOLITHIC 1600 // Gen3 Monolithic Electronics
+#define BOARD_GEN3_PLUS 1601       // Gen3+
+#define BOARD_GEN6 1602            // Gen6
+#define BOARD_GEN6_DELUXE 1603     // Gen6 deluxe
+#define BOARD_GEN7_CUSTOM 1604     // Gen7 custom (Alfons3 Version) "https://github.com/Alfons3/Generation_7_Electronics"
+#define BOARD_GEN7_12 1605         // Gen7 v1.1, v1.2
+#define BOARD_GEN7_13 1606         // Gen7 v1.3
+#define BOARD_GEN7_14 1607         // Gen7 v1.4
+#define BOARD_OMCA_A 1608          // Alpha OMCA board
+#define BOARD_OMCA 1609            // Final OMCA board
+#define BOARD_SETHI 1610           // Sethi 3D_1
 
 //
 // Teensyduino - AT90USB1286, AT90USB1286P
 //
 
-#define BOARD_TEENSYLU                1700  // Teensylu
-#define BOARD_PRINTRBOARD             1701  // Printrboard (AT90USB1286)
-#define BOARD_PRINTRBOARD_REVF        1702  // Printrboard Revision F (AT90USB1286)
-#define BOARD_BRAINWAVE               1703  // Brainwave (AT90USB646)
-#define BOARD_BRAINWAVE_PRO           1704  // Brainwave Pro (AT90USB1286)
-#define BOARD_SAV_MKI                 1705  // SAV Mk-I (AT90USB1286)
-#define BOARD_TEENSY2                 1706  // Teensy++2.0 (AT90USB1286)
-#define BOARD_5DPRINT                 1707  // 5DPrint D8 Driver Board
+#define BOARD_TEENSYLU 1700         // Teensylu
+#define BOARD_PRINTRBOARD 1701      // Printrboard (AT90USB1286)
+#define BOARD_PRINTRBOARD_REVF 1702 // Printrboard Revision F (AT90USB1286)
+#define BOARD_BRAINWAVE 1703        // Brainwave (AT90USB646)
+#define BOARD_BRAINWAVE_PRO 1704    // Brainwave Pro (AT90USB1286)
+#define BOARD_SAV_MKI 1705          // SAV Mk-I (AT90USB1286)
+#define BOARD_TEENSY2 1706          // Teensy++2.0 (AT90USB1286)
+#define BOARD_5DPRINT 1707          // 5DPrint D8 Driver Board
 
 //
 // LPC1768 ARM Cortex M3
 //
 
-#define BOARD_RAMPS_14_RE_ARM_EFB     2000  // Re-ARM with RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_14_RE_ARM_EEB     2001  // Re-ARM with RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_14_RE_ARM_EFF     2002  // Re-ARM with RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_14_RE_ARM_EEF     2003  // Re-ARM with RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_14_RE_ARM_SF      2004  // Re-ARM with RAMPS 1.4 (Power outputs: Spindle, Controller Fan)
-#define BOARD_MKS_SBASE               2005  // MKS-Sbase (Power outputs: Hotend0, Hotend1, Bed, Fan)
-#define BOARD_AZSMZ_MINI              2006  // AZSMZ Mini
-#define BOARD_BIQU_BQ111_A4           2007  // BIQU BQ111-A4 (Power outputs: Hotend, Fan, Bed)
-#define BOARD_SELENA_COMPACT          2008  // Selena Compact (Power outputs: Hotend0, Hotend1, Bed0, Bed1, Fan0, Fan1)
-#define BOARD_BIQU_B300_V1_0          2009  // BIQU B300_V1.0 (Power outputs: Hotend0, Fan, Bed, SPI Driver)
-#define BOARD_MKS_SGEN_L              2010  // MKS-SGen-L (Power outputs: Hotend0, Hotend1, Bed, Fan)
-#define BOARD_GMARSH_X6_REV1          2011  // GMARSH X6 board, revision 1 prototype
-#define BOARD_BTT_SKR_V1_1            2012  // BigTreeTech SKR v1.1 (Power outputs: Hotend0, Hotend1, Fan, Bed)
-#define BOARD_BTT_SKR_V1_3            2013  // BigTreeTech SKR v1.3 (Power outputs: Hotend0, Hotend1, Fan, Bed)
-#define BOARD_BTT_SKR_V1_4            2014  // BigTreeTech SKR v1.4 (Power outputs: Hotend0, Hotend1, Fan, Bed)
+#define BOARD_RAMPS_14_RE_ARM_EFB 2000 // Re-ARM with RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_14_RE_ARM_EEB 2001 // Re-ARM with RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_14_RE_ARM_EFF 2002 // Re-ARM with RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_14_RE_ARM_EEF 2003 // Re-ARM with RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_14_RE_ARM_SF 2004  // Re-ARM with RAMPS 1.4 (Power outputs: Spindle, Controller Fan)
+#define BOARD_MKS_SBASE 2005           // MKS-Sbase (Power outputs: Hotend0, Hotend1, Bed, Fan)
+#define BOARD_AZSMZ_MINI 2006          // AZSMZ Mini
+#define BOARD_BIQU_BQ111_A4 2007       // BIQU BQ111-A4 (Power outputs: Hotend, Fan, Bed)
+#define BOARD_SELENA_COMPACT 2008      // Selena Compact (Power outputs: Hotend0, Hotend1, Bed0, Bed1, Fan0, Fan1)
+#define BOARD_BIQU_B300_V1_0 2009      // BIQU B300_V1.0 (Power outputs: Hotend0, Fan, Bed, SPI Driver)
+#define BOARD_MKS_SGEN_L 2010          // MKS-SGen-L (Power outputs: Hotend0, Hotend1, Bed, Fan)
+#define BOARD_GMARSH_X6_REV1 2011      // GMARSH X6 board, revision 1 prototype
+#define BOARD_BTT_SKR_V1_1 2012        // BigTreeTech SKR v1.1 (Power outputs: Hotend0, Hotend1, Fan, Bed)
+#define BOARD_BTT_SKR_V1_3 2013        // BigTreeTech SKR v1.3 (Power outputs: Hotend0, Hotend1, Fan, Bed)
+#define BOARD_BTT_SKR_V1_4 2014        // BigTreeTech SKR v1.4 (Power outputs: Hotend0, Hotend1, Fan, Bed)
 
 //
 // LPC1769 ARM Cortex M3
@@ -244,40 +244,40 @@
 // SAM3X8E ARM Cortex M3
 //
 
-#define BOARD_DUE3DOM                 3000  // DUE3DOM for Arduino DUE
-#define BOARD_DUE3DOM_MINI            3001  // DUE3DOM MINI for Arduino DUE
-#define BOARD_RADDS                   3002  // RADDS
-#define BOARD_RAMPS_FD_V1             3003  // RAMPS-FD v1
-#define BOARD_RAMPS_FD_V2             3004  // RAMPS-FD v2
-#define BOARD_RAMPS_SMART_EFB         3005  // RAMPS-SMART (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_SMART_EEB         3006  // RAMPS-SMART (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_SMART_EFF         3007  // RAMPS-SMART (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_SMART_EEF         3008  // RAMPS-SMART (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_SMART_SF          3009  // RAMPS-SMART (Power outputs: Spindle, Controller Fan)
-#define BOARD_RAMPS_DUO_EFB           3010  // RAMPS Duo (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_DUO_EEB           3011  // RAMPS Duo (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_DUO_EFF           3012  // RAMPS Duo (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_DUO_EEF           3013  // RAMPS Duo (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_DUO_SF            3014  // RAMPS Duo (Power outputs: Spindle, Controller Fan)
-#define BOARD_RAMPS4DUE_EFB           3015  // RAMPS4DUE (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS4DUE_EEB           3016  // RAMPS4DUE (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS4DUE_EFF           3017  // RAMPS4DUE (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS4DUE_EEF           3018  // RAMPS4DUE (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS4DUE_SF            3019  // RAMPS4DUE (Power outputs: Spindle, Controller Fan)
-#define BOARD_RURAMPS4D_11            3020  // RuRAMPS4Duo v1.1 (Power outputs: Hotend0, Hotend1, Hotend2, Fan0, Fan1, Bed)
-#define BOARD_RURAMPS4D_13            3021  // RuRAMPS4Duo v1.3 (Power outputs: Hotend0, Hotend1, Hotend2, Fan0, Fan1, Bed)
-#define BOARD_ULTRATRONICS_PRO        3022  // ReprapWorld Ultratronics Pro V1.0
-#define BOARD_ARCHIM1                 3023  // UltiMachine Archim1 (with DRV8825 drivers)
-#define BOARD_ARCHIM2                 3024  // UltiMachine Archim2 (with TMC2130 drivers)
-#define BOARD_ALLIGATOR               3025  // Alligator Board R2
-#define BOARD_CNCONTROLS_15D          3026  // Cartesio CN Controls V15 on DUE
+#define BOARD_DUE3DOM 3000          // DUE3DOM for Arduino DUE
+#define BOARD_DUE3DOM_MINI 3001     // DUE3DOM MINI for Arduino DUE
+#define BOARD_RADDS 3002            // RADDS
+#define BOARD_RAMPS_FD_V1 3003      // RAMPS-FD v1
+#define BOARD_RAMPS_FD_V2 3004      // RAMPS-FD v2
+#define BOARD_RAMPS_SMART_EFB 3005  // RAMPS-SMART (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_SMART_EEB 3006  // RAMPS-SMART (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_SMART_EFF 3007  // RAMPS-SMART (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_SMART_EEF 3008  // RAMPS-SMART (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_SMART_SF 3009   // RAMPS-SMART (Power outputs: Spindle, Controller Fan)
+#define BOARD_RAMPS_DUO_EFB 3010    // RAMPS Duo (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_DUO_EEB 3011    // RAMPS Duo (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_DUO_EFF 3012    // RAMPS Duo (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_DUO_EEF 3013    // RAMPS Duo (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_DUO_SF 3014     // RAMPS Duo (Power outputs: Spindle, Controller Fan)
+#define BOARD_RAMPS4DUE_EFB 3015    // RAMPS4DUE (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS4DUE_EEB 3016    // RAMPS4DUE (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS4DUE_EFF 3017    // RAMPS4DUE (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS4DUE_EEF 3018    // RAMPS4DUE (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS4DUE_SF 3019     // RAMPS4DUE (Power outputs: Spindle, Controller Fan)
+#define BOARD_RURAMPS4D_11 3020     // RuRAMPS4Duo v1.1 (Power outputs: Hotend0, Hotend1, Hotend2, Fan0, Fan1, Bed)
+#define BOARD_RURAMPS4D_13 3021     // RuRAMPS4Duo v1.3 (Power outputs: Hotend0, Hotend1, Hotend2, Fan0, Fan1, Bed)
+#define BOARD_ULTRATRONICS_PRO 3022 // ReprapWorld Ultratronics Pro V1.0
+#define BOARD_ARCHIM1 3023          // UltiMachine Archim1 (with DRV8825 drivers)
+#define BOARD_ARCHIM2 3024          // UltiMachine Archim2 (with TMC2130 drivers)
+#define BOARD_ALLIGATOR 3025        // Alligator Board R2
+#define BOARD_CNCONTROLS_15D 3026   // Cartesio CN Controls V15 on DUE
 
 //
 // SAM3X8C ARM Cortex M3
 //
 
-#define BOARD_PRINTRBOARD_G2          3100  // PRINTRBOARD G2
-#define BOARD_ADSK                    3101  // Arduino DUE Shield Kit (ADSK)
+#define BOARD_PRINTRBOARD_G2 3100 // PRINTRBOARD G2
+#define BOARD_ADSK 3101           // Arduino DUE Shield Kit (ADSK)
 
 //
 // STM32 ARM Cortex-M3
@@ -326,34 +326,34 @@
 // ARM Cortex-M4F
 //
 
-#define BOARD_TEENSY31_32             4100  // Teensy3.1 and Teensy3.2
-#define BOARD_TEENSY35_36             4101  // Teensy3.5 and Teensy3.6
+#define BOARD_TEENSY31_32 4100 // Teensy3.1 and Teensy3.2
+#define BOARD_TEENSY35_36 4101 // Teensy3.5 and Teensy3.6
 
 //
 // STM32 ARM Cortex-M4F
 //
 
-#define BOARD_BEAST                   4200  // STM32F4xxVxT6 Libmaple-based STM32F4 controller
-#define BOARD_GENERIC_STM32F4         4201  // STM32 STM32GENERIC-based STM32F4 controller
-#define BOARD_ARMED                   4202  // Arm'ed STM32F4-based controller
-#define BOARD_RUMBA32_V1_0            4203  // RUMBA32 STM32F446VET6 based controller from Aus3D
-#define BOARD_RUMBA32_V1_1            4204  // RUMBA32 STM32F446VET6 based controller from Aus3D
-#define BOARD_RUMBA32_MKS             4205  // RUMBA32 STM32F446VET6 based controller from Makerbase
-#define BOARD_BLACK_STM32F407VE       4206  // BLACK_STM32F407VE
-#define BOARD_BLACK_STM32F407ZE       4207  // BLACK_STM32F407ZE
-#define BOARD_STEVAL_3DP001V1         4208  // STEVAL-3DP001V1 3D PRINTER BOARD
-#define BOARD_BTT_SKR_PRO_V1_1        4209  // BigTreeTech SKR Pro v1.1 (STM32F407ZG)
-#define BOARD_BTT_SKR_PRO_V1_2        4210  // BigTreeTech SKR Pro v1.2 (STM32F407ZG)
-#define BOARD_BTT_BTT002_V1_0         4211  // BigTreeTech BTT002 v1.0 (STM32F407VG)
-#define BOARD_BTT_GTR_V1_0            4212  // BigTreeTech GTR v1.0 (STM32F407IGT)
-#define BOARD_LERDGE_K                4213  // Lerdge K (STM32F407ZG)
-#define BOARD_LERDGE_S                4214  // Lerdge S (STM32F407VE)
-#define BOARD_LERDGE_X                4215  // Lerdge X (STM32F407VE)
-#define BOARD_VAKE403D                4216  // VAkE 403D (STM32F446VET6)
-#define BOARD_FYSETC_S6               4217  // FYSETC S6 board
-#define BOARD_FYSETC_S6_V2_0          4218  // FYSETC S6 v2.0 board
-#define BOARD_FLYF407ZG               4219  // FLYF407ZG board (STM32F407ZG)
-#define BOARD_MKS_ROBIN2              4220  // MKS_ROBIN2 (STM32F407ZE)
+#define BOARD_BEAST 4200             // STM32F4xxVxT6 Libmaple-based STM32F4 controller
+#define BOARD_GENERIC_STM32F4 4201   // STM32 STM32GENERIC-based STM32F4 controller
+#define BOARD_ARMED 4202             // Arm'ed STM32F4-based controller
+#define BOARD_RUMBA32_V1_0 4203      // RUMBA32 STM32F446VET6 based controller from Aus3D
+#define BOARD_RUMBA32_V1_1 4204      // RUMBA32 STM32F446VET6 based controller from Aus3D
+#define BOARD_RUMBA32_MKS 4205       // RUMBA32 STM32F446VET6 based controller from Makerbase
+#define BOARD_BLACK_STM32F407VE 4206 // BLACK_STM32F407VE
+#define BOARD_BLACK_STM32F407ZE 4207 // BLACK_STM32F407ZE
+#define BOARD_STEVAL_3DP001V1 4208   // STEVAL-3DP001V1 3D PRINTER BOARD
+#define BOARD_BTT_SKR_PRO_V1_1 4209  // BigTreeTech SKR Pro v1.1 (STM32F407ZG)
+#define BOARD_BTT_SKR_PRO_V1_2 4210  // BigTreeTech SKR Pro v1.2 (STM32F407ZG)
+#define BOARD_BTT_BTT002_V1_0 4211   // BigTreeTech BTT002 v1.0 (STM32F407VG)
+#define BOARD_BTT_GTR_V1_0 4212      // BigTreeTech GTR v1.0 (STM32F407IGT)
+#define BOARD_LERDGE_K 4213          // Lerdge K (STM32F407ZG)
+#define BOARD_LERDGE_S 4214          // Lerdge S (STM32F407VE)
+#define BOARD_LERDGE_X 4215          // Lerdge X (STM32F407VE)
+#define BOARD_VAKE403D 4216          // VAkE 403D (STM32F446VET6)
+#define BOARD_FYSETC_S6 4217         // FYSETC S6 board
+#define BOARD_FYSETC_S6_V2_0 4218    // FYSETC S6 v2.0 board
+#define BOARD_FLYF407ZG 4219         // FLYF407ZG board (STM32F407ZG)
+#define BOARD_MKS_ROBIN2 4220        // MKS_ROBIN2 (STM32F407ZE)
 
 //
 // ARM Cortex M7
@@ -390,9 +390,9 @@
 // Simulations
 //
 
-#define BOARD_LINUX_RAMPS             9999
+#define BOARD_LINUX_RAMPS 9999
 
-#define _MB_1(B)  (defined(BOARD_##B) && MOTHERBOARD==BOARD_##B)
-#define MB(V...)  DO(MB,||,V)
+#define _MB_1(B) (defined(BOARD_##B) && MOTHERBOARD == BOARD_##B)
+#define MB(V...) DO(MB, ||, V)
 
 #define IS_MELZI MB(MELZI, MELZI_CREALITY, MELZI_MAKR3D, MELZI_MALYAN, MELZI_TRONXY, MELZI_V2)

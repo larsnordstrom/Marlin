@@ -1,4 +1,4 @@
-# NO SUPPORT REQUESTS PLEASE
+§<!--
 
 Do you want to ask a question? Are you looking for support? Please don't post here. Support Requests posted here will be automatically closed!
 
