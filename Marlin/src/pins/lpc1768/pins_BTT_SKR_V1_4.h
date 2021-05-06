@@ -24,7 +24,7 @@
 #include "env_validate.h"
 
 #ifndef BOARD_INFO_NAME
-#define BOARD_INFO_NAME "BTT SKR V1.4"
+  #define BOARD_INFO_NAME "BTT SKR V1.4"
 #endif
 
 #ifndef BOARD_CUSTOM_BUILD_FLAGS
@@ -34,16 +34,16 @@
 //
 // Servos
 //
-#define SERVO0_PIN P2_00
+#define SERVO0_PIN                         P2_00
 
 //
 // TMC StallGuard DIAG pins
 //
-#define X_DIAG_PIN P1_29  // X-STOP
-#define Y_DIAG_PIN P1_28  // Y-STOP
-#define Z_DIAG_PIN P1_27  // Z-STOP
-#define E0_DIAG_PIN P1_26 // E0DET
-#define E1_DIAG_PIN P1_25 // E1DET
+#define X_DIAG_PIN                         P1_29  // X-STOP
+#define Y_DIAG_PIN                         P1_28  // Y-STOP
+#define Z_DIAG_PIN                         P1_27  // Z-STOP
+#define E0_DIAG_PIN                        P1_26  // E0DET
+#define E1_DIAG_PIN                        P1_25  // E1DET
 
 //
 // Limit Switches
@@ -63,7 +63,7 @@
     #define X_MAX_PIN                      P1_26  // E0DET
   #endif
 #else
-#define X_STOP_PIN P1_29 // X-STOP
+  #define X_STOP_PIN                       P1_29  // X-STOP
 #endif
 
 #ifdef Y_STALL_SENSITIVITY
@@ -81,10 +81,7 @@
     #define Y_MAX_PIN                      P1_25  // E1DET
   #endif
 #else
-#define Y_MIN_PIN P1_25 // E1DET
-#endif
-#else
-#define Y_STOP_PIN P1_28 // Y-STOP
+  #define Y_STOP_PIN                       P1_28  // Y-STOP
 #endif
 
 #ifdef Z_STALL_SENSITIVITY
@@ -102,74 +99,74 @@
     #define Z_MAX_PIN                      P1_00  // PWRDET
   #endif
 #else
-#ifndef Z_STOP_PIN
-#define Z_STOP_PIN P0_10 //P1_27 // Z-STOP Need to be P0_10 for pinda to work.
-#endif
+  #ifndef Z_STOP_PIN
+     #define Z_STOP_PIN                     P0_10      //P1_27 // Z-STOP Need to be P0_10 for pinda to work.
+  #endif
 #endif
 
 //
 // Z Probe (when not Z_MIN_PIN)
 //
 #ifndef Z_MIN_PROBE_PIN
-#define Z_MIN_PROBE_PIN P0_10
+  #define Z_MIN_PROBE_PIN                  P0_10
 #endif
 
 //
 // Filament Runout Sensor
 //
-#define FIL_RUNOUT_PIN P1_26  // E0DET
-#define FIL_RUNOUT2_PIN P1_25 // E1DET
+#define FIL_RUNOUT_PIN                     P1_26  // E0DET
+#define FIL_RUNOUT2_PIN                    P1_25  // E1DET
 
 //
 // Power Supply Control
 //
 #ifndef PS_ON_PIN
-#define PS_ON_PIN P1_00 // PWRDET
+  #define PS_ON_PIN                        P1_00  // PWRDET
 #endif
 
 //
 // Power Loss Detection
 //
 #ifndef POWER_LOSS_PIN
-#define POWER_LOSS_PIN P1_00 // PWRDET
+  #define POWER_LOSS_PIN                   P1_00  // PWRDET
 #endif
 
 //
 // Steppers
 //
-#define X_STEP_PIN P2_02
-#define X_DIR_PIN P2_06
-#define X_ENABLE_PIN P2_01
+#define X_STEP_PIN                         P2_02
+#define X_DIR_PIN                          P2_06
+#define X_ENABLE_PIN                       P2_01
 #ifndef X_CS_PIN
-#define X_CS_PIN P1_10
+  #define X_CS_PIN                         P1_10
 #endif
 
-#define Y_STEP_PIN P0_19
-#define Y_DIR_PIN P0_20
-#define Y_ENABLE_PIN P2_08
+#define Y_STEP_PIN                         P0_19
+#define Y_DIR_PIN                          P0_20
+#define Y_ENABLE_PIN                       P2_08
 #ifndef Y_CS_PIN
-#define Y_CS_PIN P1_09
+  #define Y_CS_PIN                         P1_09
 #endif
 
-#define Z_STEP_PIN P0_22
-#define Z_DIR_PIN P2_11
-#define Z_ENABLE_PIN P0_21
+#define Z_STEP_PIN                         P0_22
+#define Z_DIR_PIN                          P2_11
+#define Z_ENABLE_PIN                       P0_21
 #ifndef Z_CS_PIN
-#define Z_CS_PIN P1_08
+  #define Z_CS_PIN                         P1_08
 #endif
 
-#define E0_STEP_PIN P2_13
-#define E0_DIR_PIN P0_11
-#define E0_ENABLE_PIN P2_12
+#define E0_STEP_PIN                        P2_13
+#define E0_DIR_PIN                         P0_11
+#define E0_ENABLE_PIN                      P2_12
 #ifndef E0_CS_PIN
-#define E0_CS_PIN P1_04
+  #define E0_CS_PIN                        P1_04
 #endif
 
-#define E1_STEP_PIN P1_15
-#define E1_DIR_PIN P1_14
-#define E1_ENABLE_PIN P1_16
+#define E1_STEP_PIN                        P1_15
+#define E1_DIR_PIN                         P1_14
+#define E1_ENABLE_PIN                      P1_16
 #ifndef E1_CS_PIN
-#define E1_CS_PIN P1_01
+  #define E1_CS_PIN                        P1_01
 #endif
 
 #define TEMP_1_PIN                      P0_23_A0  // A0 (T0) - (67) - TEMP_1_PIN
@@ -179,19 +176,19 @@
 // Software SPI pins for TMC2130 stepper drivers
 //
 #if ENABLED(TMC_USE_SW_SPI)
-#ifndef TMC_SW_MOSI
-#define TMC_SW_MOSI P1_17
-#endif
-#ifndef TMC_SW_MISO
-#define TMC_SW_MISO P0_05
-#endif
-#ifndef TMC_SW_SCK
-#define TMC_SW_SCK P0_04
-#endif
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI                    P1_17
+  #endif
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO                    P0_05
+  #endif
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK                     P0_04
+  #endif
 #endif
 
 #if HAS_TMC_UART
-/**
+  /**
    * TMC2208/TMC2209 stepper drivers
    *
    * Hardware serial communication ports.
@@ -487,14 +484,14 @@
 #endif // HAS_WIRED_LCD
 
 #if HAS_ADC_BUTTONS
-#error "ADC BUTTONS do not work unmodifed on SKR 1.4, The ADC ports cannot take more than 3.3v."
+  #error "ADC BUTTONS do not work unmodifed on SKR 1.4, The ADC ports cannot take more than 3.3v."
 #endif
 
 //
 // NeoPixel LED
 //
 #ifndef NEOPIXEL_PIN
-#define NEOPIXEL_PIN P1_24
+  #define NEOPIXEL_PIN                     P1_24
 #endif
 
 /**
