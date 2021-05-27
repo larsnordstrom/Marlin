@@ -35,7 +35,7 @@
  *
  * Advanced settings can be found in Configuration_adv.h
  */
-#define CONFIGURATION_H_VERSION 020008
+#define CONFIGURATION_H_VERSION 02000801
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -58,18 +58,13 @@
  */
 
 //===========================================================================
-//============================= DELTA Printer ===============================
+//========================== DELTA / SCARA / TPARA ==========================
 //===========================================================================
-// For a Delta printer, start with one of the configuration files in the config/examples/delta directory
-// from https://github.com/MarlinFirmware/Configurations/branches/all and customize for your machine.
 //
-
-//===========================================================================
-//============================= SCARA Printer ===============================
-//===========================================================================
-// For a SCARA printer, start with one of the configuration files in the config/examples/SCARA directory
-// from https://github.com/MarlinFirmware/Configurations/branches/all and customize for your machine.
+// Download configurations from the link above and customize for your machine.
+// Examples are located in config/examples/delta, .../SCARA, and .../TPARA.
 //
+//===========================================================================
 
 // @section info
 
@@ -110,14 +105,9 @@
 #define SERIAL_PORT 0
 
 /**
- * Select a secondary serial port on the board to use for communication with the host.
- * Currently Ethernet (-2) is only supported on Teensy 4.1 boards.
- * :[-2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
- */
-//#define SERIAL_PORT_2 -1
-
-/**
- * This setting determines the communication speed of the printer.
+ * Serial Port Baud Rate
+ * This is the default communication speed for all serial ports.
+ * Set the baud rate defaults for additional serial ports below.
  *
  * 250000 works in most cases, but you might try a lower speed if
  * you commonly experience drop-outs during host printing.
@@ -126,6 +116,23 @@
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
 #define BAUDRATE 250000
+//#define BAUD_RATE_GCODE     // Enable G-code M575 to set the baud rate
+
+/**
+ * Select a secondary serial port on the board to use for communication with the host.
+ * Currently Ethernet (-2) is only supported on Teensy 4.1 boards.
+ * :[-2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
+ */
+//#define SERIAL_PORT_2 -1
+//#define BAUDRATE_2 250000   // Enable to override BAUDRATE
+
+/**
+ * Select a third serial port on the board to use for communication with the host.
+ * Currently only supported for AVR, DUE, LPC1768/9 and STM32/STM32F1
+ * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
+ */
+//#define SERIAL_PORT_3 1
+//#define BAUDRATE_3 250000   // Enable to override BAUDRATE
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -165,11 +172,11 @@
  * Multi-Material Unit
  * Set to one of these predefined models:
  *
- *   PRUSA_MMU1      : Průša MMU1 (The "multiplexer" version)
- *   PRUSA_MMU2      : Průša MMU2
- *   PRUSA_MMU2S     : Průša MMU2S (Requires MK3S extruder with motion sensor, EXTRUDERS = 5)
- *   SMUFF_EMU_MMU2  : Technik Gegg SMUFF (Průša MMU2 emulation mode)
- *   SMUFF_EMU_MMU2S : Technik Gegg SMUFF (Průša MMU2S emulation mode)
+ *   PRUSA_MMU1           : Průša MMU1 (The "multiplexer" version)
+ *   PRUSA_MMU2           : Průša MMU2
+ *   PRUSA_MMU2S          : Průša MMU2S (Requires MK3S extruder with motion sensor, EXTRUDERS = 5)
+ *   EXTENDABLE_EMU_MMU2  : MMU with configurable number of filaments (ERCF, SMuFF or similar with Průša MMU2 compatible firmware)
+ *   EXTENDABLE_EMU_MMU2S : MMUS with configurable number of filaments (ERCF, SMuFF or similar with Průša MMU2 compatible firmware)
  *
  * Requires NOZZLE_PARK_FEATURE to park print head in case MMU unit fails.
  * See additional options in Configuration_adv.h.
@@ -338,25 +345,27 @@
 //#define PSU_NAME "Power Supply"
 
 #if ENABLED(PSU_CONTROL)
-#define PSU_ACTIVE_STATE LOW // Set 'LOW' for ATX, 'HIGH' for X-Box
+  #define PSU_ACTIVE_STATE LOW      // Set 'LOW' for ATX, 'HIGH' for X-Box
 
-//#define PSU_DEFAULT_OFF         // Keep power off until enabled directly with M80
-//#define PSU_POWERUP_DELAY 250   // (ms) Delay for the PSU to warm up to full power
+  //#define PSU_DEFAULT_OFF         // Keep power off until enabled directly with M80
+  //#define PSU_POWERUP_DELAY 250   // (ms) Delay for the PSU to warm up to full power
 
-//#define PSU_POWERUP_GCODE  "M355 S1"  // G-code to run after power-on (e.g., case light on)
-//#define PSU_POWEROFF_GCODE "M355 S0"  // G-code to run before power-off (e.g., case light off)
+  //#define PSU_POWERUP_GCODE  "M355 S1"  // G-code to run after power-on (e.g., case light on)
+  //#define PSU_POWEROFF_GCODE "M355 S0"  // G-code to run before power-off (e.g., case light off)
 
-//#define AUTO_POWER_CONTROL      // Enable automatic control of the PS_ON pin
-#if ENABLED(AUTO_POWER_CONTROL)
-#define AUTO_POWER_FANS // Turn on PSU if fans need power
-#define AUTO_POWER_E_FANS
-#define AUTO_POWER_CONTROLLERFAN
-#define AUTO_POWER_CHAMBER_FAN
-//#define AUTO_POWER_E_TEMP        50 // (°C) Turn on PSU if any extruder is over this temperature
-//#define AUTO_POWER_CHAMBER_TEMP  30 // (°C) Turn on PSU if the chamber is over this temperature
-#define POWER_TIMEOUT 30 // (s) Turn off power if the machine is idle for this duration
-//#define POWER_OFF_DELAY          60 // (s) Delay of poweroff after M81 command. Useful to let fans run for extra time.
-#endif
+  //#define AUTO_POWER_CONTROL      // Enable automatic control of the PS_ON pin
+  #if ENABLED(AUTO_POWER_CONTROL)
+    #define AUTO_POWER_FANS         // Turn on PSU if fans need power
+    #define AUTO_POWER_E_FANS
+    #define AUTO_POWER_CONTROLLERFAN
+    #define AUTO_POWER_CHAMBER_FAN
+    #define AUTO_POWER_COOLER_FAN
+    //#define AUTO_POWER_E_TEMP        50 // (°C) Turn on PSU if any extruder is over this temperature
+    //#define AUTO_POWER_CHAMBER_TEMP  30 // (°C) Turn on PSU if the chamber is over this temperature
+    //#define AUTO_POWER_COOLER_TEMP   26 // (°C) Turn on PSU if the cooler is over this temperature
+    #define POWER_TIMEOUT              30 // (s) Turn off power if the machine is idle for this duration
+    //#define POWER_OFF_DELAY          60 // (s) Delay of poweroff after M81 command. Useful to let fans run for extra time.
+  #endif
 #endif
 
 //===========================================================================
@@ -441,6 +450,7 @@
 #define TEMP_SENSOR_BED 0
 #define TEMP_SENSOR_PROBE 0
 #define TEMP_SENSOR_CHAMBER 0
+#define TEMP_SENSOR_COOLER 0
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
 #define DUMMY_THERMISTOR_998_VALUE  25
@@ -457,17 +467,17 @@
 //#define TEMP_SENSOR_1_AS_REDUNDANT
 #define MAX_REDUNDANT_TEMP_SENSOR_DIFF 10
 
-#define TEMP_RESIDENCY_TIME 10 // (seconds) Time to wait for hotend to "settle" in M109
-#define TEMP_WINDOW 1          // (°C) Temperature proximity for the "temperature reached" timer
-#define TEMP_HYSTERESIS 3      // (°C) Temperature proximity considered "close enough" to the target
+#define TEMP_RESIDENCY_TIME         10  // (seconds) Time to wait for hotend to "settle" in M109
+#define TEMP_WINDOW                  1  // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_HYSTERESIS              3  // (°C) Temperature proximity considered "close enough" to the target
 
-#define TEMP_BED_RESIDENCY_TIME 10 // (seconds) Time to wait for bed to "settle" in M190
-#define TEMP_BED_WINDOW 1          // (°C) Temperature proximity for the "temperature reached" timer
-#define TEMP_BED_HYSTERESIS 3      // (°C) Temperature proximity considered "close enough" to the target
+#define TEMP_BED_RESIDENCY_TIME     10  // (seconds) Time to wait for bed to "settle" in M190
+#define TEMP_BED_WINDOW              1  // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_BED_HYSTERESIS          3  // (°C) Temperature proximity considered "close enough" to the target
 
 #define TEMP_CHAMBER_RESIDENCY_TIME 10  // (seconds) Time to wait for chamber to "settle" in M191
-#define TEMP_CHAMBER_WINDOW      1  // (°C) Temperature proximity for the "temperature reached" timer
-#define TEMP_CHAMBER_HYSTERESIS  3  // (°C) Temperature proximity considered "close enough" to the target
+#define TEMP_CHAMBER_WINDOW          1  // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_CHAMBER_HYSTERESIS      3  // (°C) Temperature proximity considered "close enough" to the target
 
 // Below this temperature the heater will be switched off
 // because it probably indicates a broken thermistor wire.
@@ -495,6 +505,16 @@
 #define HEATER_7_MAXTEMP 275
 #define BED_MAXTEMP      150
 #define CHAMBER_MAXTEMP  60
+
+/**
+ * Thermal Overshoot
+ * During heatup (and printing) the temperature can often "overshoot" the target by many degrees
+ * (especially before PID tuning). Setting the target temperature too close to MAXTEMP guarantees
+ * a MAXTEMP shutdown! Use these values to forbid temperatures being set too close to MAXTEMP.
+ */
+#define HOTEND_OVERSHOOT 15   // (°C) Forbid temperatures over MAXTEMP - OVERSHOOT
+#define BED_OVERSHOOT    10   // (°C) Forbid temperatures over MAXTEMP - OVERSHOOT
+#define COOLER_OVERSHOOT  2   // (°C) Forbid temperatures closer than OVERSHOOT
 
 //===========================================================================
 //============================= PID Settings ================================
@@ -668,6 +688,7 @@
 #define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
 #define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
 #define THERMAL_PROTECTION_CHAMBER // Enable thermal protection for the heated chamber
+#define THERMAL_PROTECTION_COOLER  // Enable thermal protection for the laser cooling
 
 //===========================================================================
 //============================= Mechanical Settings =========================
@@ -970,7 +991,6 @@
  * or (with LCD_BED_LEVELING) the LCD controller.
  */
 //#define PROBE_MANUALLY
-//#define MANUAL_PROBE_START_Z 0.2
 
 /**
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
@@ -1264,7 +1284,7 @@
 
 // @section machine
 
-// The size of the print bed
+// The size of the printable area
 #define X_BED_SIZE 200
 #define Y_BED_SIZE 200
 
@@ -1320,61 +1340,64 @@
  */
 //#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
-#define FIL_RUNOUT_ENABLED_DEFAULT true // Enable the sensor on startup. Override with M412 followed by M500.
-#define NUM_RUNOUT_SENSORS 1            // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
+  #define FIL_RUNOUT_ENABLED_DEFAULT true // Enable the sensor on startup. Override with M412 followed by M500.
+  #define NUM_RUNOUT_SENSORS   1          // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
 
-#define FIL_RUNOUT_STATE LOW // Pin state indicating that filament is NOT present.
-#define FIL_RUNOUT_PULLUP    // Use internal pullup for filament runout pins.
-//#define FIL_RUNOUT_PULLDOWN           // Use internal pulldown for filament runout pins.
+  #define FIL_RUNOUT_STATE     LOW        // Pin state indicating that filament is NOT present.
+  #define FIL_RUNOUT_PULLUP               // Use internal pullup for filament runout pins.
+  //#define FIL_RUNOUT_PULLDOWN           // Use internal pulldown for filament runout pins.
+  //#define WATCH_ALL_RUNOUT_SENSORS      // Execute runout script on any triggering sensor, not only for the active extruder.
+                                          // This is automatically enabled for MIXING_EXTRUDERs.
 
-// Override individually if the runout sensors vary
-//#define FIL_RUNOUT1_STATE LOW
-//#define FIL_RUNOUT1_PULLUP
-//#define FIL_RUNOUT1_PULLDOWN
+  // Override individually if the runout sensors vary
+  //#define FIL_RUNOUT1_STATE LOW
+  //#define FIL_RUNOUT1_PULLUP
+  //#define FIL_RUNOUT1_PULLDOWN
 
-//#define FIL_RUNOUT2_STATE LOW
-//#define FIL_RUNOUT2_PULLUP
-//#define FIL_RUNOUT2_PULLDOWN
+  //#define FIL_RUNOUT2_STATE LOW
+  //#define FIL_RUNOUT2_PULLUP
+  //#define FIL_RUNOUT2_PULLDOWN
 
-//#define FIL_RUNOUT3_STATE LOW
-//#define FIL_RUNOUT3_PULLUP
-//#define FIL_RUNOUT3_PULLDOWN
+  //#define FIL_RUNOUT3_STATE LOW
+  //#define FIL_RUNOUT3_PULLUP
+  //#define FIL_RUNOUT3_PULLDOWN
 
-//#define FIL_RUNOUT4_STATE LOW
-//#define FIL_RUNOUT4_PULLUP
-//#define FIL_RUNOUT4_PULLDOWN
+  //#define FIL_RUNOUT4_STATE LOW
+  //#define FIL_RUNOUT4_PULLUP
+  //#define FIL_RUNOUT4_PULLDOWN
 
-//#define FIL_RUNOUT5_STATE LOW
-//#define FIL_RUNOUT5_PULLUP
-//#define FIL_RUNOUT5_PULLDOWN
+  //#define FIL_RUNOUT5_STATE LOW
+  //#define FIL_RUNOUT5_PULLUP
+  //#define FIL_RUNOUT5_PULLDOWN
 
-//#define FIL_RUNOUT6_STATE LOW
-//#define FIL_RUNOUT6_PULLUP
-//#define FIL_RUNOUT6_PULLDOWN
+  //#define FIL_RUNOUT6_STATE LOW
+  //#define FIL_RUNOUT6_PULLUP
+  //#define FIL_RUNOUT6_PULLDOWN
 
-//#define FIL_RUNOUT7_STATE LOW
-//#define FIL_RUNOUT7_PULLUP
-//#define FIL_RUNOUT7_PULLDOWN
+  //#define FIL_RUNOUT7_STATE LOW
+  //#define FIL_RUNOUT7_PULLUP
+  //#define FIL_RUNOUT7_PULLDOWN
 
-//#define FIL_RUNOUT8_STATE LOW
-//#define FIL_RUNOUT8_PULLUP
-//#define FIL_RUNOUT8_PULLDOWN
+  //#define FIL_RUNOUT8_STATE LOW
+  //#define FIL_RUNOUT8_PULLUP
+  //#define FIL_RUNOUT8_PULLDOWN
 
-// Set one or more commands to execute on filament runout.
-// (After 'M412 H' Marlin will ask the host to handle the process.)
-#define FILAMENT_RUNOUT_SCRIPT "M600"
+  // Commands to execute on filament runout.
+  // With multiple runout sensors use the %c placeholder for the current tool in commands (e.g., "M600 T%c")
+  // NOTE: After 'M412 H1' the host handles filament runout and this script does not apply.
+  #define FILAMENT_RUNOUT_SCRIPT "M600"
 
-// After a runout is detected, continue printing this length of filament
-// before executing the runout script. Useful for a sensor at the end of
-// a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
-//#define FILAMENT_RUNOUT_DISTANCE_MM 25
+  // After a runout is detected, continue printing this length of filament
+  // before executing the runout script. Useful for a sensor at the end of
+  // a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
+  //#define FILAMENT_RUNOUT_DISTANCE_MM 25
 
-#ifdef FILAMENT_RUNOUT_DISTANCE_MM
-// Enable this option to use an encoder disc that toggles the runout pin
-// as the filament moves. (Be sure to set FILAMENT_RUNOUT_DISTANCE_MM
-// large enough to avoid false positives.)
-//#define FILAMENT_MOTION_SENSOR
-#endif
+  #ifdef FILAMENT_RUNOUT_DISTANCE_MM
+    // Enable this option to use an encoder disc that toggles the runout pin
+    // as the filament moves. (Be sure to set FILAMENT_RUNOUT_DISTANCE_MM
+    // large enough to avoid false positives.)
+    //#define FILAMENT_MOTION_SENSOR
+  #endif
 #endif
 
 //===========================================================================
@@ -1444,6 +1467,11 @@
  * NOTE: Requires a lot of PROGMEM!
  */
 //#define DEBUG_LEVELING_FEATURE
+
+#if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL, PROBE_MANUALLY)
+  // Set a height for the start of manual adjustment
+  #define MANUAL_PROBE_START_Z 0.2  // (mm) Comment out to use the last-measured height
+#endif
 
 #if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_BILINEAR, AUTO_BED_LEVELING_UBL)
 // Gradually reduce leveling correction until a set height is reached,
@@ -1515,11 +1543,15 @@
 #define GRID_MAX_POINTS_X 10 // Don't use more than 15 points per axis, implementation limited.
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
-#define UBL_MESH_EDIT_MOVES_Z   // Sophisticated users prefer no movement of nozzle
-#define UBL_SAVE_ACTIVE_ON_M500 // Save the currently active mesh in the current slot on M500
+  //#define UBL_HILBERT_CURVE       // Use Hilbert distribution for less travel when probing multiple points
+
+  #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
+  #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
 
 //#define UBL_Z_RAISE_WHEN_OFF_MESH 2.5 // When the nozzle is off the mesh, this value is used
 // as the Z-Height correction value.
+
+  //#define UBL_MESH_WIZARD         // Run several commands in a row to get a complete mesh
 
 #elif ENABLED(MESH_BED_LEVELING)
 
@@ -2241,6 +2273,11 @@
 //#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
 
 //
+// K.3D Full Graphic Smart Controller
+//
+//#define K3D_FULL_GRAPHIC_SMART_CONTROLLER
+
+//
 // ReprapWorld Graphical LCD
 // https://reprapworld.com/?products_details&products_id/1218
 //
@@ -2305,7 +2342,8 @@
 // MKS LCD12864A/B with graphic controller and SD support. Follows MKS_MINI_12864 pinout.
 // https://www.aliexpress.com/item/33018110072.html
 //
-//#define MKS_LCD12864
+//#define MKS_LCD12864A
+//#define MKS_LCD12864B
 
 //
 // FYSETC variant of the MINI12864 graphic controller with SD support
@@ -2377,7 +2415,7 @@
 //#define OLED_PANEL_TINYBOY2
 
 //
-// MKS OLED 1.3" 128×64 FULL GRAPHICS CONTROLLER
+// MKS OLED 1.3" 128×64 Full Graphics Controller
 // https://reprap.org/wiki/MKS_12864OLED
 //
 // Tiny, but very sharp OLED display
@@ -2386,7 +2424,7 @@
 //#define MKS_12864OLED_SSD1306  // Uses the SSD1306 controller
 
 //
-// Zonestar OLED 128×64 FULL GRAPHICS CONTROLLER
+// Zonestar OLED 128×64 Full Graphics Controller
 //
 //#define ZONESTAR_12864LCD           // Graphical (DOGM) with ST7920 controller
 //#define ZONESTAR_12864OLED          // 1.3" OLED with SH1106 controller (default)
@@ -2403,9 +2441,14 @@
 //#define OVERLORD_OLED
 
 //
-// FYSETC OLED 2.42" 128×64 FULL GRAPHICS CONTROLLER with WS2812 RGB
+// FYSETC OLED 2.42" 128×64 Full Graphics Controller with WS2812 RGB
 // Where to find : https://www.aliexpress.com/item/4000345255731.html
 //#define FYSETC_242_OLED_12864   // Uses the SSD1309 controller
+
+//
+// K.3D SSD1309 OLED 2.42" 128×64 Full Graphics Controller
+//
+//#define K3D_242_OLED_CONTROLLER   // Software SPI
 
 //=============================================================================
 //========================== Extensible UI Displays ===========================
@@ -2419,7 +2462,11 @@
 //#define DGUS_LCD_UI_ORIGIN
 //#define DGUS_LCD_UI_FYSETC
 //#define DGUS_LCD_UI_HIPRECY
+
 //#define DGUS_LCD_UI_MKS
+#if ENABLED(DGUS_LCD_UI_MKS)
+  #define USE_MKS_GREEN_UI
+#endif
 
 //
 // Touch-screen LCD for Malyan M200/M300 printers
@@ -2443,6 +2490,14 @@
 #if EITHER(ANYCUBIC_LCD_I3MEGA, ANYCUBIC_LCD_CHIRON)
 #define LCD_SERIAL_PORT 3 // Default is 3 for Anycubic
 //#define ANYCUBIC_LCD_DEBUG
+#endif
+
+//
+// 320x240 Nextion 2.8" serial TFT Resistive Touch Screen NX3224T028
+//
+//#define NEXTION_TFT
+#if ENABLED(NEXTION_TFT)
+  #define LCD_SERIAL_PORT 1  // Default is 1 for Nextion
 #endif
 
 //
@@ -2531,6 +2586,11 @@
 //#define ANET_ET5_TFT35
 
 //
+// 1024x600, 7", RGB Stock Display from BIQU-BX
+//
+//#define BIQU_BX_TFT70
+
+//
 // Generic TFT with detailed options
 //
 //#define TFT_GENERIC
@@ -2586,7 +2646,7 @@
 //#define DWIN_CREALITY_LCD
 
 //
-// ADS7843/XPT2046 ADC Touchscreen such as ILI9341 2.8
+// Touch Screen Settings
 //
 //#define TOUCH_SCREEN
 #if ENABLED(TOUCH_SCREEN)
@@ -2699,29 +2759,30 @@
 // Support for Adafruit NeoPixel LED driver
 //#define NEOPIXEL_LED
 #if ENABLED(NEOPIXEL_LED)
-#define NEOPIXEL_TYPE NEO_GRBW // NEO_GRBW / NEO_GRB - four/three channel driver type (defined in Adafruit_NeoPixel.h)
-#define NEOPIXEL_PIN 4         // LED driving pin
-//#define NEOPIXEL2_TYPE NEOPIXEL_TYPE
-//#define NEOPIXEL2_PIN    5
-#define NEOPIXEL_PIXELS 30      // Number of LEDs in the strip. (Longest strip when NEOPIXEL2_SEPARATE is disabled.)
-#define NEOPIXEL_IS_SEQUENTIAL  // Sequential display for temperature change - LED by LED. Disable to change all LEDs at once.
-#define NEOPIXEL_BRIGHTNESS 127 // Initial brightness (0-255)
-//#define NEOPIXEL_STARTUP_TEST  // Cycle through colors at startup
+  #define NEOPIXEL_TYPE   NEO_GRBW // NEO_GRBW / NEO_GRB - four/three channel driver type (defined in Adafruit_NeoPixel.h)
+  //#define NEOPIXEL_PIN     4     // LED driving pin
+  //#define NEOPIXEL2_TYPE NEOPIXEL_TYPE
+  //#define NEOPIXEL2_PIN    5
+  #define NEOPIXEL_PIXELS 30       // Number of LEDs in the strip. (Longest strip when NEOPIXEL2_SEPARATE is disabled.)
+  #define NEOPIXEL_IS_SEQUENTIAL   // Sequential display for temperature change - LED by LED. Disable to change all LEDs at once.
+  #define NEOPIXEL_BRIGHTNESS 127  // Initial brightness (0-255)
+  //#define NEOPIXEL_STARTUP_TEST  // Cycle through colors at startup
 
-// Support for second Adafruit NeoPixel LED driver controlled with M150 S1 ...
-//#define NEOPIXEL2_SEPARATE
-#if ENABLED(NEOPIXEL2_SEPARATE)
-#define NEOPIXEL2_PIXELS 15      // Number of LEDs in the second strip
-#define NEOPIXEL2_BRIGHTNESS 127 // Initial brightness (0-255)
-#define NEOPIXEL2_STARTUP_TEST   // Cycle through colors at startup
-#else
-//#define NEOPIXEL2_INSERIES      // Default behavior is NeoPixel 2 in parallel
-#endif
+  // Support for second Adafruit NeoPixel LED driver controlled with M150 S1 ...
+  //#define NEOPIXEL2_SEPARATE
+  #if ENABLED(NEOPIXEL2_SEPARATE)
+    #define NEOPIXEL2_PIXELS      15  // Number of LEDs in the second strip
+    #define NEOPIXEL2_BRIGHTNESS 127  // Initial brightness (0-255)
+    #define NEOPIXEL2_STARTUP_TEST    // Cycle through colors at startup
+  #else
+    //#define NEOPIXEL2_INSERIES      // Default behavior is NeoPixel 2 in parallel
+  #endif
 
-  // Use a single NeoPixel LED for static (background) lighting
-  //#define NEOPIXEL_BKGD_LED_INDEX  0               // Index of the LED to use
-  //#define NEOPIXEL_BKGD_COLOR { 255, 255, 255, 0 } // R, G, B, W
-  //#define NEOPIXEL_BKGD_ALWAYS_ON                  // Keep the backlight on when other NeoPixels are off
+  // Use some of the NeoPixel LEDs for static (background) lighting
+  //#define NEOPIXEL_BKGD_INDEX_FIRST  0              // Index of the first background LED
+  //#define NEOPIXEL_BKGD_INDEX_LAST   5              // Index of the last background LED
+  //#define NEOPIXEL_BKGD_COLOR { 255, 255, 255, 0 }  // R, G, B, W
+  //#define NEOPIXEL_BKGD_ALWAYS_ON                   // Keep the backlight on when other NeoPixels are off
 #endif
 
 /**
