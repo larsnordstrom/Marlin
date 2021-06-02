@@ -1874,8 +1874,8 @@
 #if ENABLED(LIN_ADVANCE)
 //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
 #define LIN_ADVANCE_K 0.0 // Unit: mm compression per 1mm/s extruder speed                                                   \
-                          //#define LA_DEBUG            // If enabled, this will generate debug information output over USB. \
-                          //#define EXPERIMENTAL_SCURVE // Enable this option to permit S-Curve Acceleration
+                          //#define LA_DEBUG            // If enabled, this will generate debug information output over USB. 
+#define EXPERIMENTAL_SCURVE // Enable this option to permit S-Curve Acceleration
 #endif
 
 // @section leveling
@@ -2121,16 +2121,16 @@
 #if BOTH(SDSUPPORT, DIRECT_STEPPING)
 #define BLOCK_BUFFER_SIZE 8
 #elif ENABLED(SDSUPPORT)
-#define BLOCK_BUFFER_SIZE 16
+#define BLOCK_BUFFER_SIZE 64
 #else
-#define BLOCK_BUFFER_SIZE 16
+#define BLOCK_BUFFER_SIZE 64
 #endif
 
 // @section serial
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
-#define BUFSIZE 32
+#define BUFSIZE 64
 
 // Transmission to Host Buffer Size
 // To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
@@ -2139,7 +2139,7 @@
 // For debug-echo: 128 bytes for the optimal speed.
 // Other output doesn't need to be that speedy.
 // :[0, 2, 4, 8, 16, 32, 64, 128, 256]
-#define TX_BUFFER_SIZE 32
+#define TX_BUFFER_SIZE 64
 
 // Host Receive Buffer Size
 // Without XON/XOFF flow control (see SERIAL_XON_XOFF below) 32 bytes should be enough.
@@ -2532,7 +2532,7 @@
   #define INTERPOLATE      true
 
   #if AXIS_IS_TMC(X)
-    #define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT       600        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
     #define X_MICROSTEPS     16        // 0..256
     #define X_RSENSE          0.11
@@ -2550,7 +2550,7 @@
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       800
+    #define Y_CURRENT       600
     #define Y_CURRENT_HOME  Y_CURRENT
     #define Y_MICROSTEPS     16
     #define Y_RSENSE          0.11
@@ -2568,7 +2568,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       800
+    #define Z_CURRENT       600
     #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
@@ -2604,7 +2604,7 @@
   #endif
 
 #if AXIS_IS_TMC(E0)
-#define E0_CURRENT 800
+#define E0_CURRENT 600
 #define E0_MICROSTEPS 16
 #define E0_RSENSE 0.11
 #define E0_CHAIN_POS -1
@@ -2758,7 +2758,7 @@
    * Define your own with:
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-  #define CHOPPER_TIMING CHOPPER_DEFAULT_12V        // All axes (override below)
+  #define CHOPPER_TIMING CHOPPER_DEFAULT_24V        // All axes (override below)
   //#define CHOPPER_TIMING_X  CHOPPER_TIMING        // For X Axes (override below)
   //#define CHOPPER_TIMING_X2 CHOPPER_TIMING_X
   //#define CHOPPER_TIMING_Y  CHOPPER_TIMING        // For Y Axes (override below)
@@ -2787,7 +2787,7 @@
    * M912 - Clear stepper driver overtemperature pre-warn condition flag.
    * M122 - Report driver parameters (Requires TMC_DEBUG)
    */
-//#define MONITOR_DRIVER_STATUS
+#define MONITOR_DRIVER_STATUS
 
 #if ENABLED(MONITOR_DRIVER_STATUS)
 #define CURRENT_STEP_DOWN 50 // [mA]
@@ -2802,11 +2802,11 @@
    * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
    * M913 X/Y/Z/E to live tune the setting
    */
-//#define HYBRID_THRESHOLD
+#define HYBRID_THRESHOLD
 
-#define X_HYBRID_THRESHOLD 100 // [mm/s]
+#define X_HYBRID_THRESHOLD 70 // [mm/s]
 #define X2_HYBRID_THRESHOLD 100
-#define Y_HYBRID_THRESHOLD 100
+#define Y_HYBRID_THRESHOLD 70
 #define Y2_HYBRID_THRESHOLD 100
 #define Z_HYBRID_THRESHOLD 3
 #define Z2_HYBRID_THRESHOLD 3
@@ -2878,13 +2878,13 @@
    * Beta feature!
    * Create a 50/50 square wave step pulse optimal for stepper drivers.
    */
-//#define SQUARE_WAVE_STEPPING
+#define SQUARE_WAVE_STEPPING
 
 /**
    * Enable M122 debugging command for TMC stepper drivers.
    * M122 S0/1 will enable continuous reporting.
    */
-//#define TMC_DEBUG
+#define TMC_DEBUG
 
 /**
    * You can set your own advanced settings by filling in predefined functions.
