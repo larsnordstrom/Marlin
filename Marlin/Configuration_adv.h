@@ -2537,7 +2537,7 @@
     #define X_MICROSTEPS     16        // 0..256
     #define X_RSENSE          0.11
     #define X_CHAIN_POS      -1        // -1..0: Not chained. 1: MCU MOSI connected. 2: Next in chain, ...
-    //#define X_INTERPOLATE  true      // Enable to override 'INTERPOLATE' for the X axis
+    #define X_INTERPOLATE  true      // Enable to override 'INTERPOLATE' for the X axis
   #endif
 
   #if AXIS_IS_TMC(X2)
@@ -2555,7 +2555,7 @@
     #define Y_MICROSTEPS     16
     #define Y_RSENSE          0.11
     #define Y_CHAIN_POS      -1
-    //#define Y_INTERPOLATE  true
+    #define Y_INTERPOLATE  true
   #endif
 
   #if AXIS_IS_TMC(Y2)
@@ -2573,7 +2573,7 @@
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
     #define Z_CHAIN_POS      -1
-    //#define Z_INTERPOLATE  true
+    #define Z_INTERPOLATE  true
   #endif
 
   #if AXIS_IS_TMC(Z2)
@@ -2608,7 +2608,7 @@
 #define E0_MICROSTEPS 16
 #define E0_RSENSE 0.11
 #define E0_CHAIN_POS -1
-//#define E0_INTERPOLATE true
+#define E0_INTERPOLATE true
 #endif
 
   #if AXIS_IS_TMC(E1)
