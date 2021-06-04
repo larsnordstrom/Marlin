@@ -29,9 +29,9 @@
 
 // Board labeled pins:
 
-#define TG_HEATER_BED_PIN                      8
-#define TG_HEATER_0_PIN                       10
-#define TG_HEATER_1_PIN                       45  // Anycubic Kossel: Unused
+#define TG_HEATER_BED_PIN 8
+#define TG_HEATER_0_PIN 10
+#define TG_HEATER_1_PIN 45 // Anycubic Kossel: Unused
 
 #define TG_FAN0_PIN 9  // Anycubic Kossel: Usually the part cooling fan
 #define TG_FAN1_PIN 7  // Anycubic Kossel: Unused
@@ -41,10 +41,10 @@
 // Servos
 //
 #if MB(TRIGORILLA_14_11)
-  #define SERVO0_PIN                           5
-  #define SERVO1_PIN                           4
-  #define SERVO2_PIN                          11
-  #define SERVO3_PIN                           6
+#define SERVO0_PIN 5
+#define SERVO1_PIN 4
+#define SERVO2_PIN 11
+#define SERVO3_PIN 6
 #endif
 
 // Remap MOSFET pins to common usages:
@@ -70,15 +70,12 @@
     #define RAMPS_D8_PIN       TG_HEATER_BED_PIN
   #endif
 #else
+#define RAMPS_D8_PIN TG_HEATER_BED_PIN
+#endif
+#else
 // EFF
 #define RAMPS_D9_PIN TG_FAN1_PIN
 #define RAMPS_D8_PIN TG_FAN0_PIN
-#endif
-
-#if HAS_MULTI_HOTEND || TEMP_SENSOR_BED // EEF, EEB, EFB
-#define FAN1_PIN TG_FAN1_PIN
-#endif
-#define FAN2_PIN TG_FAN2_PIN
 
 #ifndef E0_AUTO_FAN_PIN
 #define E0_AUTO_FAN_PIN TG_FAN2_PIN // Used in Anycubic Kossel example config
@@ -88,7 +85,6 @@
   #define CONTROLLER_FAN_PIN         TG_FAN1_PIN
 #endif
 
-//
 // AnyCubic standard pin mappings
 //
 //  On most printers, endstops are NOT all wired to the appropriate pins on the Trigorilla board.
