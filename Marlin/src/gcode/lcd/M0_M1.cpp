@@ -34,48 +34,53 @@
 #if HAS_LCD_MENU
   #include "../../lcd/marlinui.h"
 #elif ENABLED(EXTENSIBLE_UI)
-  #include "../../lcd/extui/ui_api.h"
+#include "../../lcd/extui/ui_api.h"
 #endif
 
 #if ENABLED(HOST_PROMPT_SUPPORT)
-  #include "../../feature/host_actions.h"
+#include "../../feature/host_actions.h"
 #endif
 
 /**
  * M0: Unconditional stop - Wait for user button press on LCD
  * M1: Conditional stop   - Wait for user button press on LCD
  */
-void GcodeSuite::M0_M1() {
+void GcodeSuite::M0_M1()
+{
   millis_t ms = 0;
-  if (parser.seenval('P')) ms = parser.value_millis();              // Milliseconds to wait
-  if (parser.seenval('S')) ms = parser.value_millis_from_seconds(); // Seconds to wait
+  if (parser.seenval('P'))
+    ms = parser.value_millis(); // Milliseconds to wait
+  if (parser.seenval('S'))
+    ms = parser.value_millis_from_seconds(); // Seconds to wait
 
   planner.synchronize();
 
-  #if HAS_LCD_MENU
+#if HAS_LCD_MENU
 
-    if (parser.string_arg)
-      ui.set_status(parser.string_arg, true);
-    else {
-      LCD_MESSAGEPGM(MSG_USERWAIT);
-      #if ENABLED(LCD_PROGRESS_BAR) && PROGRESS_MSG_EXPIRE > 0
-        ui.reset_progress_bar_timeout();
-      #endif
-    }
+  if (parser.string_arg)
+    ui.set_status(parser.string_arg, true);
+  else
+  {
+    LCD_MESSAGEPGM(MSG_USERWAIT);
+#if ENABLED(LCD_PROGRESS_BAR) && PROGRESS_MSG_EXPIRE > 0
+    ui.reset_progress_bar_timeout();
+#endif
+  }
 
-  #elif ENABLED(EXTENSIBLE_UI)
-    if (parser.string_arg)
-      ExtUI::onUserConfirmRequired(parser.string_arg); // Can this take an SRAM string??
-    else
-      ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_USERWAIT));
-  #else
+#elif ENABLED(EXTENSIBLE_UI)
+  if (parser.string_arg)
+    ExtUI::onUserConfirmRequired(parser.string_arg); // Can this take an SRAM string??
+  else
+    ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_USERWAIT));
+#else
 
-    if (parser.string_arg) {
-      SERIAL_ECHO_START();
-      SERIAL_ECHOLN(parser.string_arg);
-    }
+  if (parser.string_arg)
+  {
+    SERIAL_ECHO_START();
+    SERIAL_ECHOLN(parser.string_arg);
+  }
 
-  #endif
+#endif
 
   TERN_(HOST_PROMPT_SUPPORT, host_prompt_do(PROMPT_USER_CONTINUE, parser.codenum ? PSTR("M1 Stop") : PSTR("M0 Stop"), CONTINUE_STR));
 

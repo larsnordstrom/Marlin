@@ -5,8 +5,8 @@
     "extra_flags": "-DARDUINO_GENERIC_STM32F103C -DMCU_STM32F103CB",
     "f_cpu": "72000000L",
     "hwids": [
-        ["0x1EAF", "0x0003"],
-        ["0x1EAF", "0x0004"]
+      ["0x1EAF", "0x0003"],
+      ["0x1EAF", "0x0004"]
     ],
     "ldscript": "jtagOffset.ld",
     "mcu": "stm32f103cb",
