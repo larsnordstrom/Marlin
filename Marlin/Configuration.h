@@ -540,10 +540,10 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    // E3d 24v, 40w, copper block. // 30w heater
-    #define DEFAULT_Kp 23.69 // 23.57
-    #define DEFAULT_Ki 1.88  // 1.94
-    #define DEFAULT_Kd 74.62 // 71.47
+    // E3d 24v, 40w, copper block. 
+    #define DEFAULT_Kp 22.75 
+    #define DEFAULT_Ki 1.79  
+    #define DEFAULT_Kd 72.33 
   #endif
 #endif // PIDTEMP
 
@@ -580,12 +580,11 @@
   //#define MIN_BED_POWER 0
   //#define PID_BED_DEBUG // Sends debug data to the serial port.
 //Mk52 24V Pid tune 80c 8times
-// Pidtune: M303 E-1 C8 S80 U
-#define DEFAULT_bedKp 45.26
-#define DEFAULT_bedKi 2.4
-#define DEFAULT_bedKd 569.08
+// Pidtune: M303 E-1 C8 S85 U
+#define DEFAULT_bedKp 51.92
+#define DEFAULT_bedKi 2.89
+#define DEFAULT_bedKd 621.93
 
-// Pidtune: M303 E-1 C8 S80 U
 #endif // PIDTEMPBED
 
 //===========================================================================
