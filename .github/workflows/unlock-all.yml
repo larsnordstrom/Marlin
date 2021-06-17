@@ -1,0 +1,17 @@
+#
+# unlock-all.yml
+# Unlock all locked issues
+#
+
+name: "Unlock issue"
+
+on:
+  repository_dispatch
+
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: OSDKDev/unlock-issues@v1.1
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"

@@ -29,25 +29,25 @@
 // RAMPS 1.3 / 1.4 - ATmega1280, ATmega2560
 //
 
-#define BOARD_RAMPS_OLD               1000  // MEGA/RAMPS up to 1.2
+#define BOARD_RAMPS_OLD 1000 // MEGA/RAMPS up to 1.2
 
-#define BOARD_RAMPS_13_EFB            1010  // RAMPS 1.3 (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_13_EEB            1011  // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_13_EFF            1012  // RAMPS 1.3 (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_13_EEF            1013  // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_13_SF             1014  // RAMPS 1.3 (Power outputs: Spindle, Controller Fan)
+#define BOARD_RAMPS_13_EFB 1010 // RAMPS 1.3 (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_13_EEB 1011 // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_13_EFF 1012 // RAMPS 1.3 (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_13_EEF 1013 // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_13_SF 1014  // RAMPS 1.3 (Power outputs: Spindle, Controller Fan)
 
-#define BOARD_RAMPS_14_EFB            1020  // RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_14_EEB            1021  // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_14_EFF            1022  // RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_14_EEF            1023  // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_14_SF             1024  // RAMPS 1.4 (Power outputs: Spindle, Controller Fan)
+#define BOARD_RAMPS_14_EFB 1020 // RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_14_EEB 1021 // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_14_EFF 1022 // RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_14_EEF 1023 // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_14_SF 1024  // RAMPS 1.4 (Power outputs: Spindle, Controller Fan)
 
-#define BOARD_RAMPS_PLUS_EFB          1030  // RAMPS Plus 3DYMY (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_PLUS_EEB          1031  // RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_PLUS_EFF          1032  // RAMPS Plus 3DYMY (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_PLUS_EEF          1033  // RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_PLUS_SF           1034  // RAMPS Plus 3DYMY (Power outputs: Spindle, Controller Fan)
+#define BOARD_RAMPS_PLUS_EFB 1030 // RAMPS Plus 3DYMY (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_PLUS_EEB 1031 // RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_PLUS_EFF 1032 // RAMPS Plus 3DYMY (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_PLUS_EEF 1033 // RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_PLUS_SF 1034  // RAMPS Plus 3DYMY (Power outputs: Spindle, Controller Fan)
 
 //
 // RAMPS Derivatives - ATmega1280, ATmega2560
@@ -165,8 +165,8 @@
 // ATmega1281, ATmega2561
 //
 
-#define BOARD_MINITRONICS             1400  // Minitronics v1.0/1.1
-#define BOARD_SILVER_GATE             1401  // Silvergate v1.0
+#define BOARD_MINITRONICS 1400 // Minitronics v1.0/1.1
+#define BOARD_SILVER_GATE 1401 // Silvergate v1.0
 
 //
 // Sanguinololu and Derivatives - ATmega644P, ATmega1284P
@@ -205,14 +205,14 @@
 // Teensyduino - AT90USB1286, AT90USB1286P
 //
 
-#define BOARD_TEENSYLU                1700  // Teensylu
-#define BOARD_PRINTRBOARD             1701  // Printrboard (AT90USB1286)
-#define BOARD_PRINTRBOARD_REVF        1702  // Printrboard Revision F (AT90USB1286)
-#define BOARD_BRAINWAVE               1703  // Brainwave (AT90USB646)
-#define BOARD_BRAINWAVE_PRO           1704  // Brainwave Pro (AT90USB1286)
-#define BOARD_SAV_MKI                 1705  // SAV Mk-I (AT90USB1286)
-#define BOARD_TEENSY2                 1706  // Teensy++2.0 (AT90USB1286)
-#define BOARD_5DPRINT                 1707  // 5DPrint D8 Driver Board
+#define BOARD_TEENSYLU 1700         // Teensylu
+#define BOARD_PRINTRBOARD 1701      // Printrboard (AT90USB1286)
+#define BOARD_PRINTRBOARD_REVF 1702 // Printrboard Revision F (AT90USB1286)
+#define BOARD_BRAINWAVE 1703        // Brainwave (AT90USB646)
+#define BOARD_BRAINWAVE_PRO 1704    // Brainwave Pro (AT90USB1286)
+#define BOARD_SAV_MKI 1705          // SAV Mk-I (AT90USB1286)
+#define BOARD_TEENSY2 1706          // Teensy++2.0 (AT90USB1286)
+#define BOARD_5DPRINT 1707          // 5DPrint D8 Driver Board
 
 //
 // LPC1768 ARM Cortex M3
@@ -288,8 +288,8 @@
 // SAM3X8C ARM Cortex M3
 //
 
-#define BOARD_PRINTRBOARD_G2          3100  // PRINTRBOARD G2
-#define BOARD_ADSK                    3101  // Arduino DUE Shield Kit (ADSK)
+#define BOARD_PRINTRBOARD_G2 3100 // PRINTRBOARD G2
+#define BOARD_ADSK 3101           // Arduino DUE Shield Kit (ADSK)
 
 //
 // STM32 ARM Cortex-M3
@@ -350,8 +350,8 @@
 // ARM Cortex-M4F
 //
 
-#define BOARD_TEENSY31_32             4100  // Teensy3.1 and Teensy3.2
-#define BOARD_TEENSY35_36             4101  // Teensy3.5 and Teensy3.6
+#define BOARD_TEENSY31_32 4100 // Teensy3.1 and Teensy3.2
+#define BOARD_TEENSY35_36 4101 // Teensy3.5 and Teensy3.6
 
 //
 // STM32 ARM Cortex-M4F
@@ -425,7 +425,7 @@
 // Simulations
 //
 
-#define BOARD_LINUX_RAMPS             9999
+#define BOARD_LINUX_RAMPS 9999
 
 #define _MB_1(B)  (defined(BOARD_##B) && MOTHERBOARD==BOARD_##B)
 #define MB(V...)  DO(MB,||,V)
