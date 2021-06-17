@@ -1063,17 +1063,6 @@
 #define CALIBRATION_MEASURE_LEFT
 #define CALIBRATION_MEASURE_BACK
 
-// Probing at the exact top center only works if the center is flat. If
-// probing on a screwhead or hollow washer, probe near the edges.
-//#define CALIBRATION_MEASURE_AT_TOP_EDGES
-
-  // Comment out any sides which are unreachable by the probe. For best
-  // auto-calibration results, all sides must be reachable.
-  #define CALIBRATION_MEASURE_RIGHT
-  #define CALIBRATION_MEASURE_FRONT
-  #define CALIBRATION_MEASURE_LEFT
-  #define CALIBRATION_MEASURE_BACK
-
   //#define CALIBRATION_MEASURE_IMIN
   //#define CALIBRATION_MEASURE_IMAX
   //#define CALIBRATION_MEASURE_JMIN
@@ -1085,13 +1074,13 @@
   // probing on a screwhead or hollow washer, probe near the edges.
   //#define CALIBRATION_MEASURE_AT_TOP_EDGES
 
-  // Define the pin to read during calibration
-  #ifndef CALIBRATION_PIN
-    //#define CALIBRATION_PIN -1            // Define here to override the default pin
-    #define CALIBRATION_PIN_INVERTING false // Set to true to invert the custom pin
-    //#define CALIBRATION_PIN_PULLDOWN
-    #define CALIBRATION_PIN_PULLUP
-  #endif
+// Define the pin to read during calibration
+#ifndef CALIBRATION_PIN
+//#define CALIBRATION_PIN -1            // Define here to override the default pin
+#define CALIBRATION_PIN_INVERTING false // Set to true to invert the custom pin
+//#define CALIBRATION_PIN_PULLDOWN
+#define CALIBRATION_PIN_PULLUP
+#endif
 #endif
 
 /**
@@ -1969,10 +1958,6 @@
     // Probe position to probe and wait for probe to reach target temperature
     #define PTC_PROBE_POS  { 90, 100 }
 
-    // Enable additional compensation using hotend temperature
-    // Note: this values cannot be calibrated automatically but have to be set manually
-    //#define USE_TEMP_EXT_COMPENSATION
-
     // Probe temperature calibration generates a table of values starting at PTC_SAMPLE_START
     // (e.g., 30), in steps of PTC_SAMPLE_RES (e.g., 5) with PTC_SAMPLE_COUNT (e.g., 10) samples.
 
@@ -1990,9 +1975,9 @@
     // calibration.
     //#define BTC_PROBE_TEMP    30  // (°C)
 
-    // Height above Z=0.0f to raise the nozzle. Lowering this can help the probe to heat faster.
-    // Note: the Z=0.0f offset is determined by the probe offset which can be set using M851.
-    //#define PTC_PROBE_HEATING_OFFSET 0.5f
+// Height above Z=0.0f to raise the nozzle. Lowering this can help the probe to heat faster.
+// Note: the Z=0.0f offset is determined by the probe offset which can be set using M851.
+//#define PTC_PROBE_HEATING_OFFSET 0.5f
 
     // Height to raise the Z-probe between heating and taking the next measurement. Some probes
     // may fail to untrigger if they have been triggered for a long time, which can be solved by
