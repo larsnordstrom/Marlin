@@ -1879,6 +1879,7 @@
 #define PREHEAT_4_TEMP_HOTEND     245
 #define PREHEAT_4_TEMP_BED        90
 #define PREHEAT_4_FAN_SPEED       0 // Value from 0 to 255
+
 /**
  * Nozzle Park
  *
