@@ -292,7 +292,7 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
   #endif
 
   #if ENABLED(FLOWMETER_SAFETY)
-    if (cooler.fault) {
+    if (cooler.flowfault) {
       SERIAL_ECHO_MSG(STR_FLOWMETER_FAULT);
       return;
     }
@@ -727,6 +727,10 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
 
       #if HAS_LCD_CONTRAST
         case 250: M250(); break;                                  // M250: Set LCD contrast
+      #endif
+
+      #if HAS_LCD_BRIGHTNESS
+        case 256: M256(); break;                                  // M256: Set LCD brightness
       #endif
 
       #if ENABLED(EXPERIMENTAL_I2CBUS)

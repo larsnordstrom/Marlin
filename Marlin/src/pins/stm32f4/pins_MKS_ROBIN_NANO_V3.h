@@ -172,8 +172,8 @@
 //
 // Thermocouples
 //
-//#define MAX6675_SS_PIN            HEATER_0_PIN  // TC1 - CS1
-//#define MAX6675_SS_PIN            HEATER_1_PIN  // TC2 - CS2
+//#define TEMP_0_CS_PIN             HEATER_0_PIN  // TC1 - CS1
+//#define TEMP_0_CS_PIN             HEATER_1_PIN  // TC2 - CS2
 
 //
 // Misc. Functions
@@ -189,19 +189,36 @@
   #define FIL_RUNOUT2_PIN           MT_DET_2_PIN
 #endif
 
-#ifndef POWER_LOSS_PIN
-  #define POWER_LOSS_PIN                    PA13  // PW_DET
-#endif
-#define PS_ON_PIN                           PB2   // PW_OFF
-
 //
 // Enable MKSPWC support
 //
 //#define SUICIDE_PIN                       PB2
-//#define KILL_PIN                          PA2
-//#define KILL_PIN_INVERTING                true
-
 //#define LED_PIN                           PB2
+//#define KILL_PIN                          PA2
+//#define KILL_PIN_STATE                    HIGH
+
+//
+// Power Supply Control
+//
+#if ENABLED(PSU_CONTROL)                          // MKSPWC
+  #if HAS_TFT_LVGL_UI
+    #error "PSU_CONTROL cannot be used with TFT_LVGL_UI. Disable PSU_CONTROL to continue."
+  #endif
+  #ifndef PS_ON_PIN
+    #define PS_ON_PIN                       PB2   // SUICIDE
+  #endif
+  #ifndef KILL_PIN
+    #define KILL_PIN                        PA13  // PW_DET
+    #define KILL_PIN_STATE                  HIGH
+  #endif
+#else
+  #define SUICIDE_PIN                       PB2
+  #define SUICIDE_PIN_INVERTING            false
+#endif
+
+#ifndef POWER_LOSS_PIN
+  #define POWER_LOSS_PIN                    PA13  // PW_DET
+#endif
 
 // Random Info
 #define USB_SERIAL              -1  // USB Serial
@@ -220,10 +237,16 @@
   #define WIFI_RESET_PIN                    PE9   // MKS ESP WIFI RESET PIN
 #endif
 
+// MKS TEST
+#if ENABLED(MKS_TEST)
+  #define MKS_TEST_POWER_LOSS_PIN           PA13  // PW_DET
+  #define MKS_TEST_PS_ON_PIN                PB2   // PW_OFF
+#endif
+
 //
 // Onboard SD card
 //
-// detect pin dont work when ONBOARD and NO_SD_HOST_DRIVE disabled
+// detect pin doesn't work when ONBOARD and NO_SD_HOST_DRIVE disabled
 #if SD_CONNECTION_IS(ONBOARD)
   #define ENABLE_SPI3
   #define SD_SS_PIN                         -1
@@ -249,7 +272,7 @@
 //
 // LCD / Controller
 #define SPI_FLASH
-#define HAS_SPI_FLASH 1
+#define HAS_SPI_FLASH                          1
 #define SPI_DEVICE                             2
 #define SPI_FLASH_SIZE                 0x1000000
 #if ENABLED(SPI_FLASH)
@@ -346,6 +369,20 @@
     // Required for MKS_MINI_12864 with this board
     //#define MKS_LCD12864B
     //#undef SHOW_BOOTSCREEN
+
+  #elif ENABLED(MKS_MINI_12864_V3)
+    #define DOGLCD_CS                       PD13
+    #define DOGLCD_A0                       PC6
+    #define LCD_PINS_DC                DOGLCD_A0
+    #define LCD_BACKLIGHT_PIN               -1
+    #define LCD_RESET_PIN                   PE14
+    #define NEOPIXEL_PIN                    PE15
+    #define DOGLCD_MOSI                     PA7
+    #define DOGLCD_SCK                      PA5
+    #if SD_CONNECTION_IS(ONBOARD)
+      #define FORCE_SOFT_SPI
+    #endif
+	//#define LCD_SCREEN_ROT_180
 
   #else // !MKS_MINI_12864
 
