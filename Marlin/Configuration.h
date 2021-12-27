@@ -1915,8 +1915,8 @@
 #define PREHEAT_3_FAN_SPEED       0 // Value from 0 to 255
 
 #define PREHEAT_4_LABEL         "ABS"
-#define PREHEAT_4_TEMP_HOTEND     245
-#define PREHEAT_4_TEMP_BED        90
+#define PREHEAT_4_TEMP_HOTEND     250
+#define PREHEAT_4_TEMP_BED        100
 #define PREHEAT_4_FAN_SPEED       0 // Value from 0 to 255
 
 /**
