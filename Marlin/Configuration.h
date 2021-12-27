@@ -616,9 +616,9 @@
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
     // E3d 24v, 40w, copper block. 
-    #define DEFAULT_Kp 22.75 
-    #define DEFAULT_Ki 1.79  
-    #define DEFAULT_Kd 72.33 
+    #define DEFAULT_Kp 22.61
+    #define DEFAULT_Ki 1.78  
+    #define DEFAULT_Kd 71.95 
   #endif
 #endif // PIDTEMP
 
