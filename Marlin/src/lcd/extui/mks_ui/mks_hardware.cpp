@@ -38,21 +38,14 @@
 
 #if ENABLED(MKS_TEST)
 
-<<<<<<< HEAD:Marlin/src/lcd/extui/mks_ui/mks_hardware_test.cpp
-  #include "mks_hardware_test.h"
-=======
   #include "mks_hardware.h"
   #include "../../../module/endstops.h"
->>>>>>> 2.0.x:Marlin/src/lcd/extui/mks_ui/mks_hardware.cpp
 
   bool pw_det_sta, pw_off_sta, mt_det_sta;
   #if PIN_EXISTS(MT_DET_2)
     bool mt_det2_sta;
   #endif
-<<<<<<< HEAD:Marlin/src/lcd/extui/mks_ui/mks_hardware_test.cpp
-  bool endstopx1_sta, endstopx2_sta, endstopy1_sta, endstopy2_sta, endstopz1_sta, endstopz2_sta;
-=======
-  #if HAS_X_MIN || HAS_X_MAX
+  #if X_HOME_DIR
     bool endstopx1_sta;
   #else
     constexpr static bool endstopx1_sta = true;
@@ -62,7 +55,7 @@
   #else
     constexpr static bool endstopx2_sta = true;
   #endif
-  #if HAS_Y_MIN || HAS_Y_MAX
+  #if HAS_Y_AXIS && Y_HOME_DIR
     bool endstopy1_sta;
   #else
     constexpr static bool endstopy1_sta = true;
@@ -72,7 +65,7 @@
   #else
     constexpr static bool endstopy2_sta = true;
   #endif
-  #if HAS_Z_MIN || HAS_Z_MAX
+  #if HAS_Z_AXIS && Z_HOME_DIR
     bool endstopz1_sta;
   #else
     constexpr static bool endstopz1_sta = true;
@@ -84,7 +77,6 @@
   #endif
 
   #define ESTATE(S) (READ(S##_PIN) != S##_ENDSTOP_INVERTING)
->>>>>>> 2.0.x:Marlin/src/lcd/extui/mks_ui/mks_hardware.cpp
 
   void test_gpio_readlevel_L() {
     WRITE(WIFI_IO0_PIN, HIGH);
@@ -95,12 +87,6 @@
     #if PIN_EXISTS(MT_DET_2)
       mt_det2_sta = (READ(MT_DET_2_PIN) == LOW);
     #endif
-<<<<<<< HEAD:Marlin/src/lcd/extui/mks_ui/mks_hardware_test.cpp
-    endstopx1_sta = (READ(X_MIN_PIN) == LOW);
-    endstopy1_sta = (READ(Y_MIN_PIN) == LOW);
-    endstopz1_sta = (READ(Z_MIN_PIN) == LOW);
-    endstopz2_sta = (READ(Z_MAX_PIN) == LOW);
-=======
     #if HAS_X_MIN
       endstopx1_sta = ESTATE(X_MIN);
     #elif HAS_X_MAX
@@ -131,7 +117,6 @@
     #elif HAS_Z2_MAX
       endstopz2_sta = ESTATE(Z2_MAX);
     #endif
->>>>>>> 2.0.x:Marlin/src/lcd/extui/mks_ui/mks_hardware.cpp
   }
 
   void test_gpio_readlevel_H() {
@@ -143,19 +128,6 @@
     #if PIN_EXISTS(MT_DET_2)
       mt_det2_sta = (READ(MT_DET_2_PIN) == HIGH);
     #endif
-<<<<<<< HEAD:Marlin/src/lcd/extui/mks_ui/mks_hardware_test.cpp
-    endstopx1_sta = (READ(X_MIN_PIN) == HIGH);
-    endstopy1_sta = (READ(Y_MIN_PIN) == HIGH);
-    endstopz1_sta = (READ(Z_MIN_PIN) == HIGH);
-    endstopz2_sta = (READ(Z_MAX_PIN) == HIGH);
-  }
-
-  void init_test_gpio() {
-    SET_INPUT_PULLUP(X_MIN_PIN);
-    SET_INPUT_PULLUP(Y_MIN_PIN);
-    SET_INPUT_PULLUP(Z_MIN_PIN);
-    SET_INPUT_PULLUP(Z_MAX_PIN);
-=======
     #if HAS_X_MIN
       endstopx1_sta = !ESTATE(X_MIN);
     #elif HAS_X_MAX
@@ -190,7 +162,6 @@
 
   void init_test_gpio() {
     endstops.init();
->>>>>>> 2.0.x:Marlin/src/lcd/extui/mks_ui/mks_hardware.cpp
 
     SET_OUTPUT(WIFI_IO0_PIN);
 
@@ -205,22 +176,6 @@
     SET_INPUT_PULLUP(MKS_TEST_PS_ON_PIN);
     SET_INPUT_PULLUP(SERVO0_PIN);
 
-<<<<<<< HEAD:Marlin/src/lcd/extui/mks_ui/mks_hardware_test.cpp
-    SET_OUTPUT(X_ENABLE_PIN);
-    SET_OUTPUT(Y_ENABLE_PIN);
-    SET_OUTPUT(Z_ENABLE_PIN);
-    SET_OUTPUT(E0_ENABLE_PIN);
-    #if DISABLED(MKS_HARDWARE_TEST_ONLY_E0)
-      SET_OUTPUT(E1_ENABLE_PIN);
-    #endif
-
-    WRITE(X_ENABLE_PIN, LOW);
-    WRITE(Y_ENABLE_PIN, LOW);
-    WRITE(Z_ENABLE_PIN, LOW);
-    WRITE(E0_ENABLE_PIN, LOW);
-    #if DISABLED(MKS_HARDWARE_TEST_ONLY_E0)
-      WRITE(E1_ENABLE_PIN, LOW);
-=======
     OUT_WRITE(X_ENABLE_PIN, LOW);
     #if HAS_Y_AXIS
       OUT_WRITE(Y_ENABLE_PIN, LOW);
@@ -233,7 +188,6 @@
     #endif
     #if HAS_MULTI_EXTRUDER && DISABLED(MKS_HARDWARE_TEST_ONLY_E0)
       OUT_WRITE(E1_ENABLE_PIN, LOW);
->>>>>>> 2.0.x:Marlin/src/lcd/extui/mks_ui/mks_hardware.cpp
     #endif
 
     #if ENABLED(MKS_HARDWARE_TEST_ONLY_E0)
@@ -254,80 +208,6 @@
     delay(100);
   }
 
-<<<<<<< HEAD:Marlin/src/lcd/extui/mks_ui/mks_hardware_test.cpp
-  void mks_gpio_test() {
-    init_test_gpio();
-
-    test_gpio_readlevel_L();
-    test_gpio_readlevel_H();
-    test_gpio_readlevel_L();
-    if (pw_det_sta && pw_off_sta && mt_det_sta
-      #if PIN_EXISTS(MT_DET_2)
-        && mt_det2_sta
-      #endif
-      #if ENABLED(MKS_HARDWARE_TEST_ONLY_E0)
-        && (READ(PA1) == LOW)
-        && (READ(PA3) == LOW)
-        && (READ(PC2) == LOW)
-        && (READ(PD8) == LOW)
-        && (READ(PE5) == LOW)
-        && (READ(PE6) == LOW)
-        && (READ(PE7) == LOW)
-      #endif
-    )
-      disp_det_ok();
-    else
-      disp_det_error();
-
-    if (endstopx1_sta && endstopy1_sta && endstopz1_sta && endstopz2_sta)
-      disp_Limit_ok();
-    else
-      disp_Limit_error();
-  }
-
-  void mks_hardware_test() {
-    if (millis() % 2000 < 1000) {
-      WRITE(X_DIR_PIN, LOW);
-      WRITE(Y_DIR_PIN, LOW);
-      WRITE(Z_DIR_PIN, LOW);
-      WRITE(E0_DIR_PIN, LOW);
-      #if DISABLED(MKS_HARDWARE_TEST_ONLY_E0)
-        WRITE(E1_DIR_PIN, LOW);
-      #endif
-      thermalManager.fan_speed[0] = 255;
-      #if DISABLED(MKS_HARDWARE_TEST_ONLY_E0)
-        WRITE(HEATER_1_PIN, HIGH); // HE1
-      #endif
-      WRITE(HEATER_0_PIN, HIGH); // HE0
-      WRITE(HEATER_BED_PIN, HIGH); // HOT-BED
-    }
-    else {
-      WRITE(X_DIR_PIN, HIGH);
-      WRITE(Y_DIR_PIN, HIGH);
-      WRITE(Z_DIR_PIN, HIGH);
-      WRITE(E0_DIR_PIN, HIGH);
-      #if DISABLED(MKS_HARDWARE_TEST_ONLY_E0)
-        WRITE(E1_DIR_PIN, HIGH);
-      #endif
-      thermalManager.fan_speed[0] = 0;
-      #if DISABLED(MKS_HARDWARE_TEST_ONLY_E0)
-        WRITE(HEATER_1_PIN, LOW); // HE1
-      #endif
-      WRITE(HEATER_0_PIN, LOW); // HE0
-      WRITE(HEATER_BED_PIN, LOW); // HOT-BED
-    }
-
-    if (endstopx1_sta && endstopx2_sta && endstopy1_sta && endstopy2_sta && endstopz1_sta && endstopz2_sta) {
-      // nothing here
-    }
-    else {
-    }
-
-    if (disp_state == PRINT_READY_UI)
-      mks_disp_test();
-  }
-
-=======
   #if ENABLED(SDSUPPORT)
 
     void mks_gpio_test() {
@@ -424,7 +304,6 @@
 
   #endif
 
->>>>>>> 2.0.x:Marlin/src/lcd/extui/mks_ui/mks_hardware.cpp
 #endif // MKS_TEST
 
 static const uint16_t ASCII_Table_16x24[] PROGMEM = {
