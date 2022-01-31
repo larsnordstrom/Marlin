@@ -41,20 +41,17 @@
 #endif
 
 #if ENABLED(HOST_PROMPT_SUPPORT)
-#include "../../feature/host_actions.h"
+  #include "../../feature/host_actions.h"
 #endif
 
 /**
  * M0: Unconditional stop - Wait for user button press on LCD
  * M1: Conditional stop   - Wait for user button press on LCD
  */
-void GcodeSuite::M0_M1()
-{
+void GcodeSuite::M0_M1() {
   millis_t ms = 0;
-  if (parser.seenval('P'))
-    ms = parser.value_millis(); // Milliseconds to wait
-  if (parser.seenval('S'))
-    ms = parser.value_millis_from_seconds(); // Seconds to wait
+  if (parser.seenval('P')) ms = parser.value_millis();              // Milliseconds to wait
+  if (parser.seenval('S')) ms = parser.value_millis_from_seconds(); // Seconds to wait
 
   planner.synchronize();
 

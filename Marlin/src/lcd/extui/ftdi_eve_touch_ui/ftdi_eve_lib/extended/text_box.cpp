@@ -77,8 +77,6 @@ namespace FTDI {
       if (*line_end == '\0') break;
       if (line_end == line_start) break;
       line_start = line_end;
-      if (line_start[0] == '\n' || line_start[0] == ' ') line_start++;
-      if (line_start[0] == '\0') break;
     }
   }
 
@@ -134,8 +132,6 @@ namespace FTDI {
       if (*line_end == '\0') break;
       if (line_end == line_start) break;
       line_start = line_end;
-      if (line_start[0] == '\n' || line_start[0] == ' ') line_start++;
-      if (line_start[0] == '\0') break;
     }
   }
 

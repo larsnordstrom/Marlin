@@ -31,10 +31,10 @@
 // Servos
 //
 #if MB(TRIGORILLA_14_11)
-#define SERVO0_PIN 5
-#define SERVO1_PIN 4
-#define SERVO2_PIN 11
-#define SERVO3_PIN 6
+  #define SERVO0_PIN                           5
+  #define SERVO1_PIN                           4
+  #define SERVO2_PIN                          11
+  #define SERVO3_PIN                           6
 #endif
 
 //
@@ -78,6 +78,7 @@
   #define CONTROLLER_FAN_PIN                   7
 #endif
 
+//
 // AnyCubic standard pin mappings
 //
 //  On most printers, endstops are NOT all wired to the appropriate pins on the Trigorilla board.
