@@ -38,6 +38,10 @@
   #include "../lcd/marlinui.h"
 #endif
 
+#if ENABLED(POLAR)
+  #include "polar.h"
+#endif
+
 #if HAS_BED_PROBE
   #include "probe.h"
 #endif
@@ -145,11 +149,14 @@ xyz_pos_t cartes;
   #if HAS_SOFTWARE_ENDSTOPS
     float delta_max_radius, delta_max_radius_2;
   #elif IS_SCARA
-    constexpr float delta_max_radius = SCARA_PRINTABLE_RADIUS,
-                    delta_max_radius_2 = sq(SCARA_PRINTABLE_RADIUS);
+    constexpr float delta_max_radius = PRINTABLE_RADIUS,
+                    delta_max_radius_2 = sq(PRINTABLE_RADIUS);
+  #elif ENABLED(POLAR)
+    constexpr float delta_max_radius = PRINTABLE_RADIUS,
+                    delta_max_radius_2 = sq(PRINTABLE_RADIUS);
   #else // DELTA
-    constexpr float delta_max_radius = DELTA_PRINTABLE_RADIUS,
-                    delta_max_radius_2 = sq(DELTA_PRINTABLE_RADIUS);
+    constexpr float delta_max_radius = PRINTABLE_RADIUS,
+                    delta_max_radius_2 = sq(PRINTABLE_RADIUS);
   #endif
 
 #endif
@@ -183,6 +190,7 @@ xyz_pos_t cartes;
 inline void report_more_positions() {
   stepper.report_positions();
   TERN_(IS_SCARA, scara_report_positions());
+  TERN_(POLAR, polar_report_positions());
 }
 
 // Report the logical position for a given machine position
@@ -277,8 +285,7 @@ void report_current_position_projected() {
       #endif
     );
 
-    stepper.report_positions();
-    TERN_(IS_SCARA, scara_report_positions());
+    report_more_positions();
     report_current_grblstate_moving();
   }
 
@@ -299,6 +306,74 @@ void report_current_position_projected() {
   }
 
 #endif
+
+#if IS_KINEMATIC
+
+  bool position_is_reachable(const_float_t rx, const_float_t ry, const float inset/*=0*/) {
+
+    bool can_reach;
+
+    #if ENABLED(DELTA)
+
+      can_reach = HYPOT2(rx, ry) <= sq(PRINTABLE_RADIUS - inset + fslop);
+
+    #elif ENABLED(AXEL_TPARA)
+
+      const float R2 = HYPOT2(rx - TPARA_OFFSET_X, ry - TPARA_OFFSET_Y);
+      can_reach = (
+        R2 <= sq(L1 + L2) - inset
+        #if MIDDLE_DEAD_ZONE_R > 0
+          && R2 >= sq(float(MIDDLE_DEAD_ZONE_R))
+        #endif
+      );
+
+    #elif IS_SCARA
+
+      const float R2 = HYPOT2(rx - SCARA_OFFSET_X, ry - SCARA_OFFSET_Y);
+      can_reach = (
+        R2 <= sq(L1 + L2) - inset
+        #if MIDDLE_DEAD_ZONE_R > 0
+          && R2 >= sq(float(MIDDLE_DEAD_ZONE_R))
+        #endif
+      );
+
+    #elif ENABLED(POLARGRAPH)
+
+      const float d1 = rx - (draw_area_min.x),
+                  d2 = (draw_area_max.x) - rx,
+                   y = ry - (draw_area_max.y),
+                   a = HYPOT(d1, y),
+                   b = HYPOT(d2, y);
+
+      can_reach = (
+           a < polargraph_max_belt_len + 1
+        && b < polargraph_max_belt_len + 1
+      );
+
+    #elif ENABLED(POLAR)
+      can_reach = HYPOT(rx, ry) <= PRINTABLE_RADIUS;
+    #endif
+
+    return can_reach;
+  }
+
+#else // CARTESIAN
+
+  // Return true if the given position is within the machine bounds.
+  bool position_is_reachable(const_float_t rx, const_float_t ry) {
+    if (!COORDINATE_OKAY(ry, Y_MIN_POS - fslop, Y_MAX_POS + fslop)) return false;
+    #if ENABLED(DUAL_X_CARRIAGE)
+      if (active_extruder)
+        return COORDINATE_OKAY(rx, X2_MIN_POS - fslop, X2_MAX_POS + fslop);
+      else
+        return COORDINATE_OKAY(rx, X1_MIN_POS - fslop, X1_MAX_POS + fslop);
+    #else
+      return COORDINATE_OKAY(rx, X_MIN_POS - fslop, X_MAX_POS + fslop);
+    #endif
+  }
+
+#endif // CARTESIAN
+
 
 void home_if_needed(const bool keeplev/*=false*/) {
   if (!all_axes_trusted()) gcode.home_all_axes(keeplev);
@@ -359,6 +434,9 @@ void get_cartesian_from_steppers() {
       planner.get_axis_position_degrees(A_AXIS), planner.get_axis_position_degrees(B_AXIS)
       OPTARG(AXEL_TPARA, planner.get_axis_position_degrees(C_AXIS))
     );
+    cartes.z = planner.get_axis_position_mm(Z_AXIS);
+  #elif ENABLED(POLAR)
+    forward_kinematics(planner.get_axis_position_mm(X_AXIS), planner.get_axis_position_degrees(B_AXIS));
     cartes.z = planner.get_axis_position_mm(Z_AXIS);
   #else
     NUM_AXIS_CODE(
@@ -495,7 +573,8 @@ void do_blocking_move_to(NUM_AXIS_ARGS(const float), const_feedRate_t fr_mm_s/*=
     const feedRate_t w_feedrate = fr_mm_s ?: homing_feedrate(W_AXIS)
   );
 
-  #if IS_KINEMATIC
+  #if IS_KINEMATIC && DISABLED(POLARGRAPH)
+    // kinematic machines are expected to home to a point 1.5x their range? never reachable.
     if (!position_is_reachable(x, y)) return;
     destination = current_position;          // sync destination at the start
   #endif
@@ -847,16 +926,25 @@ void restore_feedrate_and_scaling() {
       #if BOTH(HAS_HOTEND_OFFSET, DELTA)
         // The effector center position will be the target minus the hotend offset.
         const xy_pos_t offs = hotend_offset[active_extruder];
+      #elif ENABLED(POLAR)
+        // For now, we don't limit POLAR
       #else
         // SCARA needs to consider the angle of the arm through the entire move, so for now use no tool offset.
         constexpr xy_pos_t offs{0};
       #endif
 
-      if (TERN1(IS_SCARA, axis_was_homed(X_AXIS) && axis_was_homed(Y_AXIS))) {
-        const float dist_2 = HYPOT2(target.x - offs.x, target.y - offs.y);
-        if (dist_2 > delta_max_radius_2)
-          target *= float(delta_max_radius / SQRT(dist_2)); // 200 / 300 = 0.66
-      }
+      #if ENABLED(POLARGRAPH)
+        LIMIT(target.x, draw_area_min.x, draw_area_max.x);
+        LIMIT(target.y, draw_area_min.y, draw_area_max.y);
+      #elif ENABLED(POLAR)
+        // Motion limits are as same as cartesian limits.
+      #else
+        if (TERN1(IS_SCARA, axis_was_homed(X_AXIS) && axis_was_homed(Y_AXIS))) {
+          const float dist_2 = HYPOT2(target.x - offs.x, target.y - offs.y);
+          if (dist_2 > delta_max_radius_2)
+            target *= float(delta_max_radius / SQRT(dist_2)); // 200 / 300 = 0.66
+        }
+      #endif
 
     #else
 
@@ -966,7 +1054,7 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
     next_idle_ms = ms + 200UL;
     return idle();
   }
-  thermalManager.manage_heater();  // Returns immediately on most calls
+  thermalManager.task();  // Returns immediately on most calls
 }
 
 #if IS_KINEMATIC
@@ -983,6 +1071,8 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
      * and compare the difference.
      */
     #define SCARA_MIN_SEGMENT_LENGTH 0.5f
+  #elif ENABLED(POLAR)
+    #define POLAR_MIN_SEGMENT_LENGTH 0.5f
   #endif
 
   /**
@@ -1017,7 +1107,7 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
     if (!position_is_reachable(destination)) return true;
 
     // Get the linear distance in XYZ
-    float cartesian_mm = diff.magnitude();
+    float cartesian_mm = xyz_float_t(diff).magnitude();
 
     // If the move is very short, check the E move distance
     TERN_(HAS_EXTRUDERS, if (UNEAR_ZERO(cartesian_mm)) cartesian_mm = ABS(diff.e));
@@ -1035,25 +1125,26 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
     // For SCARA enforce a minimum segment size
     #if IS_SCARA
       NOMORE(segments, cartesian_mm * RECIPROCAL(SCARA_MIN_SEGMENT_LENGTH));
+    #elif ENABLED(POLAR)
+      NOMORE(segments, cartesian_mm * RECIPROCAL(POLAR_MIN_SEGMENT_LENGTH));
     #endif
 
     // At least one segment is required
     NOLESS(segments, 1U);
 
     // The approximate length of each segment
-    const float inv_segments = 1.0f / float(segments),
-                cartesian_segment_mm = cartesian_mm * inv_segments;
+    const float inv_segments = 1.0f / float(segments);
     const xyze_float_t segment_distance = diff * inv_segments;
 
-    #if ENABLED(SCARA_FEEDRATE_SCALING)
-      const float inv_duration = scaled_fr_mm_s / cartesian_segment_mm;
-    #endif
+    // Add hints to help optimize the move
+    PlannerHints hints(cartesian_mm * inv_segments);
+    TERN_(FEEDRATE_SCALING, hints.inv_duration = scaled_fr_mm_s / hints.millimeters);
 
     /*
     SERIAL_ECHOPGM("mm=", cartesian_mm);
     SERIAL_ECHOPGM(" seconds=", seconds);
     SERIAL_ECHOPGM(" segments=", segments);
-    SERIAL_ECHOPGM(" segment_mm=", cartesian_segment_mm);
+    SERIAL_ECHOPGM(" segment_mm=", hints.millimeters);
     SERIAL_EOL();
     //*/
 
@@ -1065,11 +1156,12 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
     while (--segments) {
       segment_idle(next_idle_ms);
       raw += segment_distance;
-      if (!planner.buffer_line(raw, scaled_fr_mm_s, active_extruder, cartesian_segment_mm OPTARG(SCARA_FEEDRATE_SCALING, inv_duration))) break;
+      if (!planner.buffer_line(raw, scaled_fr_mm_s, active_extruder, hints))
+        break;
     }
 
     // Ensure last segment arrives at target location.
-    planner.buffer_line(destination, scaled_fr_mm_s, active_extruder, cartesian_segment_mm OPTARG(SCARA_FEEDRATE_SCALING, inv_duration));
+    planner.buffer_line(destination, scaled_fr_mm_s, active_extruder, hints);
 
     return false; // caller will update current_position
   }
@@ -1108,17 +1200,16 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
       NOLESS(segments, 1U);
 
       // The approximate length of each segment
-      const float inv_segments = 1.0f / float(segments),
-                  cartesian_segment_mm = cartesian_mm * inv_segments;
+      const float inv_segments = 1.0f / float(segments);
       const xyze_float_t segment_distance = diff * inv_segments;
 
-      #if ENABLED(SCARA_FEEDRATE_SCALING)
-        const float inv_duration = scaled_fr_mm_s / cartesian_segment_mm;
-      #endif
+      // Add hints to help optimize the move
+      PlannerHints hints(cartesian_mm * inv_segments);
+      TERN_(FEEDRATE_SCALING, hints.inv_duration = scaled_fr_mm_s / hints.millimeters);
 
       //SERIAL_ECHOPGM("mm=", cartesian_mm);
       //SERIAL_ECHOLNPGM(" segments=", segments);
-      //SERIAL_ECHOLNPGM(" segment_mm=", cartesian_segment_mm);
+      //SERIAL_ECHOLNPGM(" segment_mm=", hints.millimeters);
 
       // Get the raw current position as starting point
       xyze_pos_t raw = current_position;
@@ -1128,12 +1219,13 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
       while (--segments) {
         segment_idle(next_idle_ms);
         raw += segment_distance;
-        if (!planner.buffer_line(raw, fr_mm_s, active_extruder, cartesian_segment_mm OPTARG(SCARA_FEEDRATE_SCALING, inv_duration))) break;
+        if (!planner.buffer_line(raw, fr_mm_s, active_extruder, hints))
+          break;
       }
 
       // Since segment_distance is only approximate,
       // the final move must be to the exact destination.
-      planner.buffer_line(destination, fr_mm_s, active_extruder, cartesian_segment_mm OPTARG(SCARA_FEEDRATE_SCALING, inv_duration));
+      planner.buffer_line(destination, fr_mm_s, active_extruder, hints);
     }
 
   #endif // SEGMENT_LEVELED_MOVES && !AUTO_BED_LEVELING_UBL
@@ -1924,6 +2016,17 @@ void prepare_line_to_destination() {
         const float backoff_length = -ABS(backoff[axis]) * axis_home_dir;
         if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Sensorless backoff: ", backoff_length, "mm");
         do_homing_move(axis, backoff_length, homing_feedrate(axis));
+      }
+    #endif
+
+    //
+    // Back away to prevent opposite endstop damage
+    //
+    #if !defined(SENSORLESS_BACKOFF_MM) && XY_COUNTERPART_BACKOFF_MM
+      if (!(axis_was_homed(X_AXIS) || axis_was_homed(Y_AXIS)) && (axis == X_AXIS || axis == Y_AXIS)) {
+        const AxisEnum opposite_axis = axis == X_AXIS ? Y_AXIS : X_AXIS;
+        const float backoff_length = -ABS(XY_COUNTERPART_BACKOFF_MM) * home_dir(opposite_axis);
+        do_homing_move(opposite_axis, backoff_length, homing_feedrate(opposite_axis));
       }
     #endif
 
